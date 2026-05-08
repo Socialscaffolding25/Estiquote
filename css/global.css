@@ -358,8 +358,9 @@ input:focus {
 /* ── SKIP TO CONTENT — accessibility ── */
 .skip-to-content {
   position: fixed;
-  top: -60px;
+  top: -100px;
   left: 1rem;
+  opacity: 0;
   background: var(--teal);
   color: var(--navy);
   padding: 8px 16px;
@@ -372,6 +373,7 @@ input:focus {
 }
 .skip-to-content:focus {
   top: 0;
+  opacity: 1;
 }
 
 /* ── SMOOTH SCROLLING ── */
