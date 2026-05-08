@@ -508,7 +508,7 @@
           <div style="font-size:32px">🏗</div>
           <div style="flex:1;min-width:200px">
             <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Help make these prices more accurate</div>
-            <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:10px">If you've bought materials recently, share what you paid. Every submission improves the price index for all Estiquote users — and makes this data genuinely more accurate than BCIS.</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:10px">If you have bought materials recently, share what you paid. Every submission improves the price index for all Estiquote users — and makes this data genuinely more accurate than BCIS.</div>
             <button onclick="showPriceSubmitModal()" style="padding:8px 18px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Submit a price →</button>
           </div>
         </div>
@@ -1106,13 +1106,13 @@
           linksDiv.innerHTML = '<div style="margin-top:1rem">' +
             '<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px">Search "' + mat.name + '" at each merchant</div>' +
             '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">' +
-            data.merchants.map(m =>
-              '<a href="' + m.searchUrl + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:12px;color:var(--text-muted);transition:var(--transition)" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">' +
+            data.merchants.map(m => (
+              '<a href="' + m.searchUrl + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:12px;color:var(--text-muted);">' +
                 '<span style="width:22px;height:22px;border-radius:4px;background:' + m.bg + ';color:' + m.color + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0">' + m.shortName + '</span>' +
                 '<span>' + m.name + '</span>' +
-                '<span style="margin-left:auto;font-size:10px">→</span>' +
+                '<span style="margin-left:auto;font-size:10px">&#8594;</span>' +
               '</a>'
-            ).join('') +
+            )).join('') +
             '</div></div>';
         }
       }
@@ -1339,7 +1339,7 @@
     const greeting = document.getElementById('b-greeting');
     const subheading = document.getElementById('b-subheading');
     if (greeting) greeting.textContent = 'Good ' + getTimeOfDay() + ', ' + (user.name?.split(' ')[0] || 'there');
-    if (subheading) subheading.textContent = 'Here's how your Estiquote listing is performing';
+    if (subheading) subheading.textContent = 'Here is how your Estiquote listing is performing';
 
     // Plan status card
     const badge = document.getElementById('b-tier-badge');
@@ -1419,14 +1419,14 @@
       container.innerHTML = allEnquiries.map(e => renderEnquiryCard(e, true)).join('');
     } catch(err) {
       console.log('Enquiries load error:', err);
-      // Show demo data if Supabase table doesn't exist yet
+      // Show demo data if Supabase table does not exist yet
       loadDemoEnquiries();
     }
   }
 
   function loadDemoEnquiries() {
     const demo = [
-      { id:'demo1', homeowner_name:'Sarah J.', trade:'Extension', location:'Tunbridge Wells', budget:'£58,000–£72,000', message:'I've run the estimate and I'm ready to get quotes. Can you visit for a look?', created_at: new Date(Date.now() - 2*3600000).toISOString(), read_at: null },
+      { id:'demo1', homeowner_name:'Sarah J.', trade:'Extension', location:'Tunbridge Wells', budget:'£58,000–£72,000', message:'I have run the estimate and I am ready to get quotes. Can you visit for a look?', created_at: new Date(Date.now() - 2*3600000).toISOString(), read_at: null },
       { id:'demo2', homeowner_name:'Mark T.', trade:'Loft Conversion', location:'East Grinstead', budget:'£48,000–£66,000', message:'Looking for a builder to do a dormer loft conversion. Can you come for a survey?', created_at: new Date(Date.now() - 24*3600000).toISOString(), read_at: new Date().toISOString() },
     ];
     allEnquiries = demo;
