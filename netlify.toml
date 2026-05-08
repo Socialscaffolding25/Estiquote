@@ -51,7 +51,12 @@
   from = "/api/push-notify"
   to = "/.netlify/functions/push-notify"
   status = 200
+
+[[redirects]]
+  from = "/api/find-merchants"
+  to = "/.netlify/functions/find-merchants"
+  status = 200
 [[headers]]
   for = "/*.html"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://buy.stripe.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://wvultsxiqjkisbeidjcl.supabase.co https://api.postcodes.io https://formspree.io; frame-src https://buy.stripe.com; img-src 'self' data: https:;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://buy.stripe.com https://fonts.googleapis.com https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://wvultsxiqjkisbeidjcl.supabase.co https://api.postcodes.io https://formspree.io https://plausible.io https://resend.com; frame-src https://buy.stripe.com; img-src 'self' data: https:;"
