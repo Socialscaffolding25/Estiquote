@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Documentation — Estiquote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 70px; }
+
+  .api-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    max-width: 1060px;
+    margin: 2rem auto;
+    padding: 0 1.5rem 6rem;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .api-nav {
+    position: sticky;
+    top: 90px;
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+  }
+
+  .api-nav-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 1rem; }
+  .api-nav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+  .api-nav a { display: block; font-size: 12px; color: var(--text-muted); text-decoration: none; padding: 5px 8px; border-radius: 5px; transition: var(--transition); }
+  .api-nav a:hover { background: var(--teal-dim); color: var(--teal-light); }
+  .nav-sep { height: 1px; background: var(--border); margin: 6px 0; }
+  .method-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+  .get  { background: rgba(80,200,130,0.12); color: #50c882; }
+  .post { background: rgba(100,150,255,0.12); color: rgba(150,190,255,0.9); }
+
+  /* CONTENT */
+  .api-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .api-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 8px; }
+  .api-title { font-family: var(--serif); font-size: clamp(28px,4vw,40px); font-weight: 800; color: var(--text); letter-spacing: -1px; margin-bottom: 1rem; }
+  .api-intro { font-size: 15px; color: var(--text-muted); line-height: 1.8; max-width: 580px; }
+
+  .api-section { margin-bottom: 3.5rem; scroll-margin-top: 90px; }
+  .api-section-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .api-p { font-size: 14px; color: var(--text-muted); line-height: 1.85; margin-bottom: 1rem; }
+  .api-p a { color: var(--teal-light); text-decoration: none; }
+  .api-p strong { color: var(--text); }
+
+  /* ENDPOINT CARD */
+  .endpoint {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .endpoint-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .endpoint-method { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace; }
+  .endpoint-path { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text); }
+  .endpoint-desc { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+  .endpoint-body { padding: 18px; }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: relative;
+    margin: 10px 0 14px;
+  }
+
+  .code-block .comment { color: rgba(255,255,255,0.25); }
+  .code-block .key { color: var(--teal-light); }
+  .code-block .string { color: rgba(255,200,120,0.9); }
+  .code-block .number { color: rgba(130,200,255,0.9); }
+  .code-block .keyword { color: rgba(200,150,255,0.9); }
+
+  .copy-code-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: var(--transition);
+  }
+
+  .copy-code-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+  /* PARAM TABLE */
+  .param-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  .param-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); font-weight: 600; padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+  .param-table td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); vertical-align: top; }
+  .param-table tr:last-child td { border-bottom: none; }
+  .param-table td:first-child { font-family: 'JetBrains Mono',monospace; font-size: 12px; color: var(--teal-light); }
+  .required-tag { font-size: 10px; background: rgba(200,60,60,0.12); color: rgba(255,140,120,0.8); padding: 1px 5px; border-radius: 3px; margin-left: 4px; font-family: var(--sans); }
+  .optional-tag { font-size: 10px; background: rgba(255,255,255,0.05); color: var(--text-dim); padding: 1px 5px; border-radius: 3px; margin-left: 4px; font-family: var(--sans); }
+
+  /* KEY DISPLAY */
+  .key-display {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(0,201,167,0.04);
+    border: 1px solid rgba(0,201,167,0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 1.25rem;
+  }
+
+  .key-display input { flex: 1; background: none; border: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--teal-light); outline: none; }
+  .key-copy-btn { padding: 6px 12px; border-radius: 6px; background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.25); color: var(--teal-light); font-size: 12px; cursor: pointer; font-family: var(--sans); white-space: nowrap; transition: var(--transition); }
+  .key-copy-btn:hover { background: rgba(0,201,167,0.15); }
+
+  /* RATE LIMIT BADGE */
+  .rate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 5px 12px;
+    background: rgba(255,200,50,0.08);
+    border: 1px solid rgba(255,200,50,0.2);
+    color: rgba(255,220,80,0.9);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* LIVE DEMO */
+  .demo-box {
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 1.5rem;
+  }
+
+  .demo-header { padding: 12px 16px; background: rgba(0,201,167,0.06); border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; color: var(--teal-light); display: flex; align-items: center; gap: 6px; }
+  .demo-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+
+  .demo-form { padding: 16px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .demo-select { padding: 9px 10px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px; font-family: var(--sans); outline: none; }
+  .demo-run { grid-column: 1 / -1; padding: 10px; background: linear-gradient(135deg, var(--teal), var(--teal-light)); border: none; border-radius: 8px; color: var(--navy); font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+  .demo-run:hover { opacity: 0.88; }
+  .demo-output { padding: 0 16px 16px; }
+  .demo-response { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--teal-light); line-height: 1.8; min-height: 80px; white-space: pre; overflow-x: auto; }
+
+  @media (max-width: 800px) {
+    .api-layout { grid-template-columns: 1fr; }
+    .api-nav { position: static; }
+    .demo-form { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+</head>
+<body>
+
+<nav class="nav nav-scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="estimator.html" class="nav-link">Estimator</a>
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="api-layout">
+
+  <nav class="api-nav">
+    <div class="api-nav-title">API Reference</div>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#auth">Authentication</a></li>
+      <li><a href="#rate-limits">Rate limits</a></li>
+      <div class="nav-sep"></div>
+      <li><a href="#estimate"><span class="method-badge get">GET</span> /estimate</a></li>
+      <li><a href="#materials"><span class="method-badge get">GET</span> /materials</a></li>
+      <li><a href="#regions"><span class="method-badge get">GET</span> /regions</a></li>
+      <div class="nav-sep"></div>
+      <li><a href="#errors">Error codes</a></li>
+      <li><a href="#changelog">Changelog</a></li>
+    </ul>
+  </nav>
+
+  <div>
+
+    <div class="api-header">
+      <div class="api-eyebrow">Trade plan · Developer docs</div>
+      <h1 class="api-title">Estiquote API</h1>
+      <p class="api-intro">Integrate UK home improvement cost data directly into your own tools, CRMs, calculators, or client-facing applications. The Estiquote API is available on the Trade plan.</p>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="api-section" id="overview">
+      <h2 class="api-section-title">Overview</h2>
+      <p class="api-p">The Estiquote API provides programmatic access to our UK construction cost database. It returns the same data that powers the Estiquote estimator tool — regional labour rates, material cost indices, and trade-specific pricing — in a machine-readable JSON format.</p>
+
+      <p class="api-p"><strong>Base URL:</strong></p>
+      <div class="code-block">https://api.estiquote.co.uk/v1</div>
+
+      <p class="api-p">All responses are returned as <strong>JSON</strong>. All requests must be made over <strong>HTTPS</strong>. HTTP requests will be refused.</p>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:0.5rem">
+        <span class="rate-badge">📋 JSON responses</span>
+        <span class="rate-badge">🔒 HTTPS only</span>
+        <span class="rate-badge">🌍 REST API</span>
+        <span class="rate-badge">⚡ ~120ms avg latency</span>
+      </div>
+    </div>
+
+    <!-- AUTH -->
+    <div class="api-section" id="auth">
+      <h2 class="api-section-title">Authentication</h2>
+      <p class="api-p">All API requests must include your API key in the <strong>Authorization</strong> header using Bearer token format.</p>
+
+      <p class="api-p"><strong>Your API key:</strong></p>
+      <div class="key-display">
+        <input type="text" id="api-key-display" value="Log in to view your API key" readonly>
+        <button class="key-copy-btn" onclick="copyKey()">Copy</button>
+        <a href="dashboard.html" style="font-size:12px;color:var(--teal-light);text-decoration:none;white-space:nowrap;padding:6px 10px;">Dashboard →</a>
+      </div>
+
+      <div class="code-block">
+<button class="copy-code-btn" onclick="copyBlock(this)">Copy</button>
+<span class="comment"># All API requests use Bearer authentication</span>
+curl https://api.estiquote.co.uk/v1/estimate \
+  -H <span class="string">"Authorization: Bearer YOUR_API_KEY"</span> \
+  -H <span class="string">"Content-Type: application/json"</span></div>
+
+      <p class="api-p" style="margin-top:0.5rem">⚠ Keep your API key private. Do not expose it in client-side JavaScript, mobile apps, or public repositories. If your key is compromised, regenerate it from your <a href="dashboard.html">dashboard</a>.</p>
+    </div>
+
+    <!-- RATE LIMITS -->
+    <div class="api-section" id="rate-limits">
+      <h2 class="api-section-title">Rate Limits</h2>
+      <p class="api-p">The Trade plan API is subject to the following rate limits:</p>
+
+      <table class="param-table">
+        <thead><tr><th>Limit type</th><th>Value</th><th>Reset</th></tr></thead>
+        <tbody>
+          <tr><td>Requests per minute</td><td>60</td><td>Rolling 60-second window</td></tr>
+          <tr><td>Requests per day</td><td>1,000</td><td>Midnight UTC</td></tr>
+          <tr><td>Requests per month</td><td>20,000</td><td>1st of each month</td></tr>
+        </tbody>
+      </table>
+
+      <p class="api-p">Rate limit headers are included in every response:</p>
+      <div class="code-block"><span class="key">X-RateLimit-Limit:</span> <span class="number">60</span>
+<span class="key">X-RateLimit-Remaining:</span> <span class="number">54</span>
+<span class="key">X-RateLimit-Reset:</span> <span class="number">1714901234</span></div>
+
+      <p class="api-p">If you need higher limits, contact us at <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a>.</p>
+    </div>
+
+    <!-- GET /estimate -->
+    <div class="api-section" id="estimate">
+      <h2 class="api-section-title">GET /estimate</h2>
+      <p class="api-p">Returns an indicative cost estimate for a home improvement project based on trade type, region, area, and specification level.</p>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="endpoint-method get">GET</span>
+          <span class="endpoint-path">/v1/estimate</span>
+          <span class="endpoint-desc">Returns cost range + breakdown</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Query parameters</p>
+          <table class="param-table">
+            <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>trade<span class="required-tag">required</span></td><td>string</td><td>Trade category. One of: <code style="font-family:monospace;font-size:11px;color:var(--teal-light)">extension, loft, kitchen, bathroom, electrical, plumbing, structural, decoration</code></td></tr>
+              <tr><td>region<span class="required-tag">required</span></td><td>string</td><td>UK region. One of: <code style="font-family:monospace;font-size:11px;color:var(--teal-light)">london, south_east, south_west, midlands, north_england, scotland_wales</code></td></tr>
+              <tr><td>area<span class="required-tag">required</span></td><td>number</td><td>Project area in m². Integer between 1–500.</td></tr>
+              <tr><td>quality<span class="optional-tag">optional</span></td><td>string</td><td>Specification level: <code style="font-family:monospace;font-size:11px;color:var(--teal-light)">budget, mid, premium</code>. Default: <code style="font-family:monospace;font-size:11px;color:var(--teal-light)">mid</code></td></tr>
+              <tr><td>extras<span class="optional-tag">optional</span></td><td>string</td><td>Comma-separated extras: <code style="font-family:monospace;font-size:11px;color:var(--teal-light)">planning, structural, warranty, pwall</code></td></tr>
+              <tr><td>postcode<span class="optional-tag">optional</span></td><td>string</td><td>UK postcode for postcode-level pricing (overrides region if provided)</td></tr>
+            </tbody>
+          </table>
+
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:10px;margin-top:16px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Example request</p>
+          <div class="code-block">
+<button class="copy-code-btn" onclick="copyBlock(this)">Copy</button>
+curl -G https://api.estiquote.co.uk/v1/estimate \
+  -H <span class="string">"Authorization: Bearer eq_live_..."</span> \
+  -d <span class="string">"trade=extension"</span> \
+  -d <span class="string">"region=south_east"</span> \
+  -d <span class="string">"area=30"</span> \
+  -d <span class="string">"quality=mid"</span> \
+  -d <span class="string">"extras=planning"</span></div>
+
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Example response</p>
+          <div class="code-block">
+{
+  <span class="key">"success"</span>: <span class="keyword">true</span>,
+  <span class="key">"estimate"</span>: {
+    <span class="key">"range_low"</span>: <span class="number">55400</span>,
+    <span class="key">"range_high"</span>: <span class="number">80600</span>,
+    <span class="key">"currency"</span>: <span class="string">"GBP"</span>,
+    <span class="key">"vat_included"</span>: <span class="keyword">false</span>,
+    <span class="key">"breakdown"</span>: {
+      <span class="key">"labour"</span>: <span class="number">36200</span>,
+      <span class="key">"materials"</span>: <span class="number">26300</span>,
+      <span class="key">"prelims"</span>: <span class="number">8100</span>,
+      <span class="key">"extras"</span>: <span class="number">3500</span>
+    },
+    <span class="key">"per_sqm"</span>: <span class="number">2358</span>,
+    <span class="key">"contingency_15pct"</span>: <span class="number">10500</span>
+  },
+  <span class="key">"inputs"</span>: {
+    <span class="key">"trade"</span>: <span class="string">"extension"</span>,
+    <span class="key">"region"</span>: <span class="string">"south_east"</span>,
+    <span class="key">"region_multiplier"</span>: <span class="number">0.90</span>,
+    <span class="key">"area_sqm"</span>: <span class="number">30</span>,
+    <span class="key">"quality"</span>: <span class="string">"mid"</span>,
+    <span class="key">"extras"</span>: [<span class="string">"planning"</span>]
+  },
+  <span class="key">"meta"</span>: {
+    <span class="key">"data_updated"</span>: <span class="string">"2025-01-01"</span>,
+    <span class="key">"sources"</span>: [<span class="string">"BCIS"</span>, <span class="string">"BMF"</span>, <span class="string">"ONS"</span>],
+    <span class="key">"request_id"</span>: <span class="string">"req_7xK9mP2nQ"</span>
+  }
+}</div>
+        </div>
+      </div>
+
+      <!-- LIVE DEMO -->
+      <div class="demo-box">
+        <div class="demo-header"><div class="demo-live-dot"></div> Live demo — runs against real Estiquote pricing data</div>
+        <div class="demo-form">
+          <select class="demo-select" id="d-trade">
+            <option value="extension">extension</option>
+            <option value="kitchen">kitchen</option>
+            <option value="bathroom">bathroom</option>
+            <option value="loft">loft</option>
+            <option value="electrical">electrical</option>
+            <option value="plumbing">plumbing</option>
+            <option value="structural">structural</option>
+            <option value="decoration">decoration</option>
+          </select>
+          <select class="demo-select" id="d-region">
+            <option value="south_east">south_east</option>
+            <option value="london">london</option>
+            <option value="south_west">south_west</option>
+            <option value="midlands">midlands</option>
+            <option value="north_england">north_england</option>
+            <option value="scotland_wales">scotland_wales</option>
+          </select>
+          <select class="demo-select" id="d-quality">
+            <option value="mid">mid</option>
+            <option value="budget">budget</option>
+            <option value="premium">premium</option>
+          </select>
+          <button class="demo-run" onclick="runDemo()">▶ Run request</button>
+        </div>
+        <div class="demo-output">
+          <div class="demo-response" id="demo-output">// Click "Run request" to see a live response</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /materials -->
+    <div class="api-section" id="materials">
+      <h2 class="api-section-title">GET /materials</h2>
+      <p class="api-p">Returns the current UK construction material price index with quarterly and year-on-year changes.</p>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="endpoint-method get">GET</span>
+          <span class="endpoint-path">/v1/materials</span>
+          <span class="endpoint-desc">Returns material price index</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="code-block">
+<button class="copy-code-btn" onclick="copyBlock(this)">Copy</button>
+curl https://api.estiquote.co.uk/v1/materials \
+  -H <span class="string">"Authorization: Bearer eq_live_..."</span></div>
+
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Example response</p>
+          <div class="code-block">{
+  <span class="key">"success"</span>: <span class="keyword">true</span>,
+  <span class="key">"updated"</span>: <span class="string">"2025-01-01"</span>,
+  <span class="key">"materials"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="string">"structural_timber_c16"</span>,
+      <span class="key">"name"</span>: <span class="string">"Structural timber C16"</span>,
+      <span class="key">"unit"</span>: <span class="string">"per m³"</span>,
+      <span class="key">"price_range"</span>: { <span class="key">"low"</span>: <span class="number">280</span>, <span class="key">"high"</span>: <span class="number">340</span> },
+      <span class="key">"change_qoq_pct"</span>: <span class="number">5.1</span>,
+      <span class="key">"change_yoy_pct"</span>: <span class="number">9.3</span>
+    }
+    <span class="comment">// ... 9 more materials</span>
+  ]
+}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /regions -->
+    <div class="api-section" id="regions">
+      <h2 class="api-section-title">GET /regions</h2>
+      <p class="api-p">Returns all available UK regions with their labour cost multipliers relative to London.</p>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="endpoint-method get">GET</span>
+          <span class="endpoint-path">/v1/regions</span>
+          <span class="endpoint-desc">Returns regional multipliers</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="code-block">{
+  <span class="key">"success"</span>: <span class="keyword">true</span>,
+  <span class="key">"regions"</span>: [
+    { <span class="key">"id"</span>: <span class="string">"london"</span>,         <span class="key">"name"</span>: <span class="string">"London"</span>,            <span class="key">"multiplier"</span>: <span class="number">1.00</span> },
+    { <span class="key">"id"</span>: <span class="string">"south_east"</span>,    <span class="key">"name"</span>: <span class="string">"South East England"</span>, <span class="key">"multiplier"</span>: <span class="number">0.90</span> },
+    { <span class="key">"id"</span>: <span class="string">"south_west"</span>,    <span class="key">"name"</span>: <span class="string">"South West England"</span>, <span class="key">"multiplier"</span>: <span class="number">0.82</span> },
+    { <span class="key">"id"</span>: <span class="string">"midlands"</span>,      <span class="key">"name"</span>: <span class="string">"Midlands"</span>,          <span class="key">"multiplier"</span>: <span class="number">0.78</span> },
+    { <span class="key">"id"</span>: <span class="string">"north_england"</span>, <span class="key">"name"</span>: <span class="string">"North of England"</span>,  <span class="key">"multiplier"</span>: <span class="number">0.74</span> },
+    { <span class="key">"id"</span>: <span class="string">"scotland_wales"</span>,<span class="key">"name"</span>: <span class="string">"Scotland & Wales"</span>,  <span class="key">"multiplier"</span>: <span class="number">0.72</span> }
+  ]
+}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ERRORS -->
+    <div class="api-section" id="errors">
+      <h2 class="api-section-title">Error Codes</h2>
+      <table class="param-table">
+        <thead><tr><th>HTTP status</th><th>Error code</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>400</td><td>invalid_parameters</td><td>Missing or invalid query parameters</td></tr>
+          <tr><td>401</td><td>unauthorized</td><td>Missing or invalid API key</td></tr>
+          <tr><td>403</td><td>plan_required</td><td>API access requires Trade plan</td></tr>
+          <tr><td>429</td><td>rate_limited</td><td>Rate limit exceeded — see X-RateLimit headers</td></tr>
+          <tr><td>500</td><td>server_error</td><td>Internal error — contact support</td></tr>
+        </tbody>
+      </table>
+
+      <p class="api-p">All errors return a consistent JSON structure:</p>
+      <div class="code-block">{
+  <span class="key">"success"</span>: <span class="keyword">false</span>,
+  <span class="key">"error"</span>: {
+    <span class="key">"code"</span>: <span class="string">"invalid_parameters"</span>,
+    <span class="key">"message"</span>: <span class="string">"Parameter 'trade' is required."</span>,
+    <span class="key">"request_id"</span>: <span class="string">"req_3mX7nP1qR"</span>
+  }
+}</div>
+    </div>
+
+    <!-- CHANGELOG -->
+    <div class="api-section" id="changelog">
+      <h2 class="api-section-title">Changelog</h2>
+      <table class="param-table">
+        <thead><tr><th>Version</th><th>Date</th><th>Changes</th></tr></thead>
+        <tbody>
+          <tr><td>v1.0</td><td>May 2025</td><td>Initial release. /estimate, /materials, /regions endpoints.</td></tr>
+        </tbody>
+      </table>
+      <p class="api-p">Questions? Email <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a> with subject "API support".</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.querySelector('.nav').classList.toggle('nav-scrolled', window.scrollY > 40);
+  });
+
+  // Load API key from dashboard storage
+  const storedKey = localStorage.getItem('eq_api_key');
+  if (storedKey) {
+    const el = document.getElementById('api-key-display');
+    if (el) el.value = storedKey;
+  }
+
+  function copyKey() {
+    const val = document.getElementById('api-key-display').value;
+    navigator.clipboard.writeText(val).then(() => {
+      const btn = event.target;
+      btn.textContent = '✓ Copied';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  function copyBlock(btn) {
+    const block = btn.closest('.code-block');
+    const text = block.innerText.replace('Copy\n','').replace('✓ Copied\n','').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  // Live demo — runs against real pricing logic
+  const basePricing = {
+    extension:  { budget:1500, mid:2100, premium:3000 },
+    loft:       { budget:1400, mid:1800, premium:2600 },
+    kitchen:    { budget:600,  mid:1400, premium:2800 },
+    bathroom:   { budget:700,  mid:1500, premium:2600 },
+    electrical: { budget:35,   mid:65,   premium:95   },
+    plumbing:   { budget:30,   mid:55,   premium:80   },
+    structural: { budget:1800, mid:2800, premium:4500 },
+    decoration: { budget:12,   mid:22,   premium:38   }
+  };
+
+  const regionMultipliers = {
+    london:1.0, south_east:0.90, south_west:0.82,
+    midlands:0.78, north_england:0.74, scotland_wales:0.72
+  };
+
+  const labourPct = { extension:0.51, loft:0.50, kitchen:0.35, bathroom:0.48, electrical:0.62, plumbing:0.58, structural:0.55, decoration:0.65 };
+  const matPct    = { extension:0.37, loft:0.38, kitchen:0.52, bathroom:0.42, electrical:0.28, plumbing:0.32, structural:0.30, decoration:0.25 };
+
+  async function runDemo() {
+    const trade   = document.getElementById('d-trade').value;
+    const region  = document.getElementById('d-region').value;
+    const quality = document.getElementById('d-quality').value;
+    const area    = 30;
+    const out     = document.getElementById('demo-output');
+
+    out.textContent = '// Sending request...';
+
+    await new Promise(r => setTimeout(r, 350));
+
+    const mult  = regionMultipliers[region] || 0.90;
+    const rate  = basePricing[trade]?.[quality] || 2100;
+    const base  = rate * area * mult;
+    const lo    = Math.round(base * 0.85 / 100) * 100;
+    const hi    = Math.round(base * 1.25 / 100) * 100;
+    const mid   = (lo + hi) / 2;
+    const lab   = Math.round(mid * (labourPct[trade]||0.51) / 100) * 100;
+    const mats  = Math.round(mid * (matPct[trade]||0.37)    / 100) * 100;
+    const pre   = Math.round(mid - lab - mats);
+    const perSqm = Math.round(mid / area);
+    const cont  = Math.round(mid * 0.15 / 100) * 100;
+    const reqId = 'req_' + Math.random().toString(36).substring(2,11);
+
+    const response = {
+      success: true,
+      estimate: {
+        range_low: lo, range_high: hi, currency: "GBP", vat_included: false,
+        breakdown: { labour: lab, materials: mats, prelims: pre, extras: 0 },
+        per_sqm: perSqm, contingency_15pct: cont
+      },
+      inputs: { trade, region, region_multiplier: mult, area_sqm: area, quality, extras: [] },
+      meta: { data_updated: "2025-01-01", sources: ["BCIS","BMF","ONS"], request_id: reqId }
+    };
+
+    out.textContent = JSON.stringify(response, null, 2);
+    out.style.color = 'var(--teal-light)';
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

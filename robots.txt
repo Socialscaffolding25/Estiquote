@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /set-password.html
+Disallow: /admin.html
+
+Sitemap: https://estiquote.co.uk/sitemap.xml

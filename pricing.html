@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Estiquote | Homeowner & Builder Plans</title>
+<meta name="description" content="Simple, transparent pricing. Homeowners from £0. Builders from £29/month — cancel any time, no lock-in, better leads than Checkatrade.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+<style>
+body { padding-top: 80px; }
+.pricing-wrap { max-width:1100px; margin:0 auto; padding:4rem 1.5rem 6rem; }
+.pricing-header { text-align:center; margin-bottom:3rem; }
+.audience-tabs { display:flex; gap:8px; justify-content:center; margin-bottom:3rem; }
+.aud-tab { padding:10px 28px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; border:1px solid var(--border); color:var(--text-muted); background:transparent; transition:var(--transition); }
+.aud-tab.active { background:var(--teal-dim); border-color:var(--teal); color:var(--teal-light); }
+.aud-panel { display:none; }
+.aud-panel.active { display:block; }
+.toggle-row { display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:2.5rem; }
+.toggle-label { font-size:14px;color:var(--text-muted); }
+.toggle-label.active { color:var(--text);font-weight:500; }
+.toggle { width:44px;height:24px;border-radius:12px;background:var(--teal);position:relative;cursor:pointer;border:none; }
+.toggle::after { content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#0b1120;top:3px;right:3px;transition:var(--transition); }
+.toggle.monthly::after { right:auto;left:3px; }
+.save-badge { font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(80,200,130,0.12);border:1px solid rgba(80,200,130,0.3);color:rgba(100,220,160,0.9);font-weight:600; }
+.plans-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:3rem; }
+.plan-card { background:var(--navy-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;position:relative;transition:var(--transition); }
+.plan-card:hover { border-color:var(--border-hover);transform:translateY(-2px); }
+.plan-card.featured { border-color:rgba(0,201,167,0.5);background:rgba(0,201,167,0.04); }
+.plan-badge { position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--teal),var(--teal-light));color:#0b1120;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;white-space:nowrap;letter-spacing:0.5px; }
+.plan-name { font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px; }
+.plan-price { font-family:var(--serif);font-size:46px;font-weight:900;color:var(--text);letter-spacing:-2px;line-height:1; }
+.plan-period { font-size:13px;color:var(--text-dim);margin-top:4px;margin-bottom:1.25rem; }
+.plan-desc { font-size:13px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6;padding-bottom:1.25rem;border-bottom:1px solid var(--border); }
+.features-list { list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:1.75rem; }
+.features-list li { font-size:13px;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;line-height:1.4; }
+.features-list li.excluded { color:var(--text-dim); }
+.feat-check { flex-shrink:0;color:var(--teal-light);margin-top:1px;font-weight:700; }
+.feat-x { flex-shrink:0;color:var(--text-dim);margin-top:1px; }
+.vs-note { background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--text-dim);text-align:center;margin-top:12px; }
+.vs-note strong { color:#ef4444; }
+
+/* comparison bar */
+.compare-bar { background:var(--navy-2);border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:3rem; }
+.compare-bar-title { font-size:15px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center; }
+.compare-row { display:grid;grid-template-columns:200px 1fr 1fr;gap:4px;margin-bottom:4px; }
+.compare-cell { padding:10px 16px;border-radius:6px;font-size:13px; }
+.compare-head { background:transparent;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim); }
+.compare-head:nth-child(2) { color:#ef4444; }
+.compare-head:nth-child(3) { color:var(--teal); }
+.compare-cell-dark { background:var(--navy-3);color:var(--text); }
+.compare-cell-bad { background:rgba(239,68,68,0.06);color:#ef4444;text-align:center; }
+.compare-cell-good { background:rgba(0,201,167,0.06);color:var(--teal-light);font-weight:600;text-align:center; }
+
+.faq-section { max-width:700px;margin:0 auto; }
+.faq-item { border-bottom:1px solid var(--border);padding:1.25rem 0;cursor:pointer; }
+.faq-q { display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text);font-weight:500; }
+.faq-a { font-size:14px;color:var(--text-muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease; }
+.faq-item.open .faq-a { max-height:300px;padding-top:12px; }
+.faq-toggle { color:var(--teal);font-size:18px;transition:var(--transition);flex-shrink:0; }
+.faq-item.open .faq-toggle { transform:rotate(45deg); }
+
+@media(max-width:768px){.plans-grid{grid-template-columns:1fr;}.compare-row{grid-template-columns:120px 1fr 1fr;}.compare-cell{padding:8px 10px;font-size:12px;}}
+</style>
+  <meta name="theme-color" content="#00c9a7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Estiquote">
+  <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://estiquote.co.uk/pricing.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estiquote.co.uk/pricing.html">
+  <meta property="og:title" content="Pricing — Estiquote | From £0 for homeowners, £29 for builders">
+  <meta property="og:description" content="Simple transparent pricing. Homeowners from free. Builders from £29/month — better leads than Checkatrade at a fraction of the price.">
+  <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
+  <meta property="og:site_name" content="Estiquote">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pricing — Estiquote | From £0 for homeowners, £29 for builders">
+  <meta name="twitter:description" content="Simple transparent pricing. Homeowners from free. Builders from £29/month — better leads than Checkatrade at a fraction of the price.">
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
+  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
+</div>
+<script>
+(function(){
+  function checkStripeMode(){
+    if(typeof STRIPE_LINKS !== 'undefined'){
+      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
+        var b = document.getElementById('test-mode-banner');
+        if(b) b.style.display = 'block';
+      }
+    } else {
+      setTimeout(checkStripeMode, 300);
+    }
+  }
+  checkStripeMode();
+})();
+</script>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+
+
+<nav class="nav nav-scrolled" style="top:37px">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="estimator.html" class="nav-link">Estimator</a>
+      <a href="materials.html" class="nav-link">Material prices</a>
+      <a href="builders.html" class="nav-link">For Builders</a>
+      <a href="find-builders.html" class="nav-link">Find builders</a>
+      <a href="pricing.html" class="nav-link" style="color:var(--teal)">Pricing</a>
+      <a href="login.html" class="nav-link">Sign in</a>
+      <button onclick="EQ.signOut()" id="logout-btn" style="display:none;padding:8px 16px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer;" aria-label="Sign out">Sign out</button>
+      <a href="signup.html" class="nav-cta">Get started free</a>
+    </div>
+    <button class="nav-burger" onclick="document.getElementById('nm').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="nm">
+    <a href="estimator.html">Estimator</a>
+    <a href="builders.html">For Builders</a>
+    <a href="find-builders.html">Find builders</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="login.html">Sign in</a>
+    <a href="signup.html" class="mobile-cta">Get started free</a>
+  </div>
+</nav>
+
+<div class="pricing-wrap">
+  <div class="pricing-header">
+    <div class="section-label" style="text-align:center">Transparent pricing</div>
+    <h1 class="section-h2" style="text-align:center;max-width:100%">Simple plans for homeowners and builders</h1>
+    <p style="font-size:15px;color:var(--text-muted);text-align:center;margin-top:10px">No hidden fees. No lock-in. Cancel any time.</p>
+  </div>
+
+  <!-- AUDIENCE TABS -->
+  <div class="audience-tabs">
+    <button class="aud-tab active" onclick="showAudience('homeowners',this)">🏠 Homeowners &amp; Professionals</button>
+    <button class="aud-tab" onclick="showAudience('builders',this)">🏗 Builders &amp; Tradespeople</button>
+  </div>
+
+  <!-- ══ HOMEOWNER PLANS ══ -->
+  <div class="aud-panel active" id="panel-homeowners">
+    <div class="toggle-row">
+      <span class="toggle-label active" id="monthly-label">Monthly</span>
+      <button class="toggle monthly" id="billing-toggle" onclick="toggleBilling()"></button>
+      <span class="toggle-label" id="annual-label">Annual</span>
+      <span class="save-badge">Save 20%</span>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">£0</div>
+        <div class="plan-period">forever</div>
+        
+  <!-- ANNUAL / MONTHLY TOGGLE -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:2rem;">
+    <span id="toggle-monthly-label" style="font-size:14px;color:var(--text);font-weight:600">Monthly</span>
+    <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer">
+      <input type="checkbox" id="annual-toggle" onchange="toggleBilling()" style="opacity:0;width:0;height:0">
+      <span style="position:absolute;inset:0;background:rgba(255,255,255,0.1);border-radius:28px;transition:0.3s;border:1px solid var(--border)"></span>
+      <span id="toggle-knob" style="position:absolute;left:3px;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s"></span>
+    </label>
+    <span id="toggle-annual-label" style="font-size:14px;color:var(--text-dim)">Annual <span style="background:rgba(0,201,167,0.12);color:var(--teal-light);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:4px">Save 20%</span></span>
+  </div>
+<div class="plan-desc">Everything you need to get a solid ballpark on your project before you call anyone.</div>
+        <ul class="features-list">
+          <li><span class="feat-check">✓</span> All 8 trade categories</li>
+          <li><span class="feat-check">✓</span> 6 UK regions</li>
+          <li><span class="feat-check">✓</span> Instant cost estimates</li>
+          <li><span class="feat-check">✓</span> 3 saved projects</li>
+          <li><span class="feat-check">✓</span> Basic material price index</li>
+          <li class="excluded"><span class="feat-x">✗</span> PDF export</li>
+          <li class="excluded"><span class="feat-x">✗</span> Line-item cost breakdown</li>
+          <li class="excluded"><span class="feat-x">✗</span> Quote comparison tool</li>
+          <li class="excluded"><span class="feat-x">✗</span> Material price alerts</li>
+        </ul>
+        <a href="signup.html" class="btn-outline" style="display:block;text-align:center;padding:14px">Get started free</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Most popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price" id="pro-price">£9.99</div>
+        <div class="plan-period" id="pro-period">per month · 14-day free trial</div>
+        <div class="plan-desc">For homeowners actively planning a project who need accurate, detailed cost intelligence to negotiate with confidence.</div>
+        <ul class="features-list">
+          <li><span class="feat-check">✓</span> Everything in Free</li>
+          <li><span class="feat-check">✓</span> Unlimited saved projects</li>
+          <li><span class="feat-check">✓</span> PDF report export</li>
+          <li><span class="feat-check">✓</span> Full line-item cost breakdown</li>
+          <li><span class="feat-check">✓</span> Contractor quote comparison</li>
+          <li><span class="feat-check">✓</span> Postcode-level pricing</li>
+          <li><span class="feat-check">✓</span> Full material price tracker</li>
+          <li><span class="feat-check">✓</span> Monthly price alert emails</li>
+        </ul>
+        <button onclick="(async()=>{const u=EQ.getUserSync();goToStripe('homeowner_pro',u?u.email:null);})()" class="btn-primary" style="display:block;text-align:center;width:100%;cursor:pointer">Start free trial →</button>
+        <div style="text-align:center;font-size:11px;color:var(--text-dim);margin-top:8px">14 days free · then £9.99/mo · cancel any time</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:11px;color:var(--text-dim);">
+        <span style="color:var(--teal);">✓</span> No credit card for trial &nbsp;·&nbsp;
+        <span style="color:var(--teal);">✓</span> Cancel any time &nbsp;·&nbsp;
+        <span style="color:var(--teal);">✓</span> Instant access
+      </div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Trade</div>
+        <div class="plan-price" id="trade-price">£29</div>
+        <div class="plan-period" id="trade-period">per month</div>
+        <div class="plan-desc">For architects, surveyors, developers and agents who run estimates for clients and need white-label reports.</div>
+        <ul class="features-list">
+          <li><span class="feat-check">✓</span> Everything in Pro</li>
+          <li><span class="feat-check">✓</span> White-label PDF reports</li>
+          <li><span class="feat-check">✓</span> Client-facing share links</li>
+          <li><span class="feat-check">✓</span> Multiple properties</li>
+          <li><span class="feat-check">✓</span> API data access</li>
+          <li><span class="feat-check">✓</span> CSV data export</li>
+          <li><span class="feat-check">✓</span> Priority support</li>
+          <li><span class="feat-check">✓</span> Early access to new features</li>
+        </ul>
+        <button onclick="(async()=>{const u=EQ.getUserSync();goToStripe('homeowner_trade',u?u.email:null);})()" class="btn-outline" style="display:block;text-align:center;padding:14px;width:100%;cursor:pointer">Get started</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BUILDER PLANS ══ -->
+  <div class="aud-panel" id="panel-builders">
+    <div style="background:rgba(0,201,167,0.04);border:1px solid rgba(0,201,167,0.15);border-radius:12px;padding:16px 20px;margin-bottom:2rem;text-align:center;">
+      <div style="font-size:14px;font-weight:700;color:var(--teal-light);margin-bottom:4px">Every homeowner already knows their budget before they contact you</div>
+      <div style="font-size:13px;color:var(--text-muted)">No shared leads. No race to the bottom. Cancel any time.</div>
+    </div>
+
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Listed</div>
+        <div class="plan-price">£29</div>
+        <div class="plan-period">per month · cancel any time</div>
+        <div class="plan-desc">Get found by budget-aware homeowners in your area. A professional profile with direct, exclusive enquiry contact.</div>
+        <ul class="features-list">
+          <li><span class="feat-check">✓</span> Map listing with full profile</li>
+          <li><span class="feat-check">✓</span> Direct exclusive enquiries</li>
+          <li><span class="feat-check">✓</span> 5 portfolio photos</li>
+          <li><span class="feat-check">✓</span> Verified badge</li>
+          <li><span class="feat-check">✓</span> Customer review collection</li>
+          <li><span class="feat-check">✓</span> Contact details visible</li>
+          <li class="excluded"><span class="feat-x">✗</span> Priority placement</li>
+          <li class="excluded"><span class="feat-x">✗</span> Analytics dashboard</li>
+        </ul>
+        <button onclick="goToStripe('builder_listed')" class="btn-outline" style="display:block;text-align:center;padding:14px;width:100%;cursor:pointer">Get listed →</button>
+        <div class="vs-note">Checkatrade basic: <strong>£80–100/mo</strong> for shared leads</div>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Most popular</div>
+        <div class="plan-name">Featured</div>
+        <div class="plan-price">£59</div>
+        <div class="plan-period">per month · cancel any time</div>
+        <div class="plan-desc">Priority placement, project gallery, and response analytics. Stand out to homeowners who are ready to build.</div>
+        <ul class="features-list">
+          <li><span class="feat-check">✓</span> Everything in Listed</li>
+          <li><span class="feat-check">✓</span> Priority placement in results</li>
+          <li><span class="feat-check">✓</span> 20 portfolio photos</li>
+          <li><span class="feat-check">✓</span> Response time badge</li>
+          <li><span class="feat-check">✓</span> Compliance document storage</li>
+          <li><span class="feat-check">✓</span> Enquiry analytics dashboard</li>
+          <li><span class="feat-check">✓</span> Monthly performance report</li>
+          <li class="excluded"><span class="feat-x">✗</span> Top placement guarantee</li>
+        </ul>
+        <button onclick="goToStripe('builder_featured')" class="btn-primary" style="display:block;text-align:center;width:100%;cursor:pointer">Get featured →</button>
+        <div class="vs-note">Checkatrade enhanced: <strong>£150–200/mo</strong> + still shared leads</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">£99</div>
+        <div class="plan-period">per month · cancel any time</div>
+        <div class="plan-desc">Top of search results in your area. Full analytics and verified professional status. Support from builders who get it.</div>
+        <ul class="features-list">
+          <li><span class="feat-check">✓</span> Everything in Featured</li>
+          <li><span class="feat-check">✓</span> Top placement — first in area</li>
+          <li><span class="feat-check">✓</span> Unlimited portfolio photos</li>
+          <li><span class="feat-check">✓</span> Verified professional status</li>
+          <li><span class="feat-check">✓</span> Lead value analytics</li>
+          <li><span class="feat-check">✓</span> Priority builder support</li>
+          <li><span class="feat-check">✓</span> Estiquote Pro badge</li>
+          <li><span class="feat-check">✓</span> Data export</li>
+        </ul>
+        <button onclick="goToStripe('builder_pro')" class="btn-outline" style="display:block;text-align:center;padding:14px;width:100%;cursor:pointer">Go Pro →</button>
+        <div class="vs-note">Checkatrade Pro: <strong>£300–370/mo</strong> for the same visibility</div>
+      </div>
+    </div>
+
+    <!-- COMPARISON BAR -->
+    <div class="compare-bar">
+      <div class="compare-bar-title">Estiquote vs Checkatrade — the honest numbers</div>
+      <div class="compare-row">
+        <div class="compare-cell compare-head"></div>
+        <div class="compare-cell compare-head">Checkatrade</div>
+        <div class="compare-cell compare-head">Estiquote</div>
+      </div>
+      ${[
+        ['Monthly cost','£80–370/mo','£29–99/mo'],
+        ['Lead type','Shared with 3–4 builders','Exclusive to you'],
+        ['Annual lock-in','Yes — 14-day trap','No — monthly, cancel any time'],
+        ['You own your reviews','No','Yes — always'],
+        ['Homeowner budget-qualified','No','Yes — every single one'],
+        ['Compliance document storage','No','Yes (Featured+)'],
+        ['Founded by','Canadian asset fund','Active UK contractor'],
+      ].map(([f,ct,eq],i) => `
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">${f}</div>
+        <div class="compare-cell compare-cell-bad">${ct}</div>
+        <div class="compare-cell compare-cell-good">${eq}</div>
+      </div>`).join('')}
+    </div>
+
+    <div style="text-align:center;">
+      <a href="builders.html" class="btn-ghost">Learn more about builder plans →</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section" style="margin-top:4rem;">
+    <div style="text-align:center;margin-bottom:2.5rem;">
+      <div class="section-label">Common questions</div>
+      <h2 class="section-h2">FAQ</h2>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">How accurate are Estiquote's estimates?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Our estimates are based on BCIS, BMF, and ONS data, calibrated against real project quotes. They're accurate enough to spot a bad quote and enter negotiations informed — not a substitute for a professional tender. Always get 3 quotes from vetted contractors.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Can builders really cancel any time?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Yes. Monthly billing, no annual commitment, no 14-day cancellation trap. Cancel from your dashboard and billing stops at end of the current month. Your profile data is always yours to export — unlike Checkatrade where everything disappears when you stop paying.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">How often are prices updated?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Material prices are updated monthly based on BCIS and ONS data. Regional labour multipliers are reviewed quarterly. Pro users receive an email alert whenever significant price movements occur.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Do estimates include VAT?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">All estimates are shown ex-VAT. Most building contractors charge 20% VAT. Some conversions and new builds may qualify for reduced rates — we flag this where relevant.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">What areas do builder listings cover?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">We launched in SE England (Sussex, Surrey, Kent) and are expanding nationally. Register now outside our coverage area and you'll go live automatically when we reach your region — at founding member pricing.</div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div style="text-align:center;font-size:12px;color:var(--text-dim);padding:2rem 0">
+      © 2026 Estiquote Ltd · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a> · All estimates are indicative only
+    </div>
+  </div>
+</footer>
+
+<script>
+  let isAnnual = false;
+  function showAudience(id, btn) {
+    document.querySelectorAll('.aud-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.aud-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+  function toggleBilling() {
+    isAnnual = !isAnnual;
+    document.getElementById('billing-toggle').classList.toggle('monthly', !isAnnual);
+    document.getElementById('monthly-label').classList.toggle('active', !isAnnual);
+    document.getElementById('annual-label').classList.toggle('active', isAnnual);
+    document.getElementById('pro-price').textContent = isAnnual ? '£7.99' : '£9.99';
+    document.getElementById('pro-period').textContent = isAnnual ? 'per month, billed annually' : 'per month · 14-day free trial';
+    document.getElementById('trade-price').textContent = isAnnual ? '£23' : '£29';
+    document.getElementById('trade-period').textContent = isAnnual ? 'per month, billed annually' : 'per month';
+  }
+  function toggleFaq(el) {
+    const wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) el.classList.add('open');
+  }
+  window.addEventListener('scroll', () => {
+    document.querySelector('.nav').classList.toggle('nav-scrolled', window.scrollY > 40);
+  });
+  // Show builder tab if ?for=builders in URL
+  if (new URLSearchParams(window.location.search).get('for') === 'builders') {
+    showAudience('builders', document.querySelectorAll('.aud-tab')[1]);
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener"
+   aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 28px rgba(37,211,102,0.5)'"
+   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 20px rgba(37,211,102,0.4)'"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 600));
+  const user = EQ.getUserSync();
+  if (user) {
+    const lb = document.getElementById('logout-btn');
+    if (lb) lb.style.display = 'inline-flex';
+  }
+})();
+</script>
+
+  <script>
+  let isAnnual = false;
+  const prices = {
+    homeowner_pro:    { monthly: '£9.99',  annual: '£7.99',  stripe_m: STRIPE_LINKS.homeowner_pro,    stripe_a: STRIPE_LINKS.homeowner_pro },
+    homeowner_trade:  { monthly: '£29',    annual: '£23.20', stripe_m: STRIPE_LINKS.homeowner_trade,  stripe_a: STRIPE_LINKS.homeowner_trade },
+    builder_listed:   { monthly: '£29',    annual: '£23.20', stripe_m: STRIPE_LINKS.builder_listed,   stripe_a: STRIPE_LINKS.builder_listed },
+    builder_featured: { monthly: '£59',    annual: '£47.20', stripe_m: STRIPE_LINKS.builder_featured, stripe_a: STRIPE_LINKS.builder_featured },
+    builder_pro:      { monthly: '£99',    annual: '£79.20', stripe_m: STRIPE_LINKS.builder_pro,      stripe_a: STRIPE_LINKS.builder_pro },
+  };
+
+  function toggleBilling() {
+    isAnnual = document.getElementById('annual-toggle').checked;
+    const knob = document.getElementById('toggle-knob');
+    const annualLabel = document.getElementById('toggle-annual-label');
+    const monthlyLabel = document.getElementById('toggle-monthly-label');
+    knob.style.transform = isAnnual ? 'translateX(24px)' : 'translateX(0)';
+    document.getElementById('annual-toggle').parentElement.querySelector('span').style.background = isAnnual ? 'rgba(0,201,167,0.25)' : 'rgba(255,255,255,0.1)';
+    annualLabel.style.color = isAnnual ? 'var(--text)' : 'var(--text-dim)';
+    monthlyLabel.style.color = isAnnual ? 'var(--text-dim)' : 'var(--text)';
+
+    // Update displayed prices
+    document.querySelectorAll('[data-plan]').forEach(el => {
+      const plan = el.dataset.plan;
+      const field = el.dataset.field;
+      if (prices[plan]) {
+        if (field === 'price') el.textContent = isAnnual ? prices[plan].annual : prices[plan].monthly;
+        if (field === 'period') el.textContent = isAnnual ? '/mo, billed annually' : '/month';
+      }
+    });
+  }
+  </script>
+</body>
+</html>

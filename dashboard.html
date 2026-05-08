@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="description" content="Your Estiquote dashboard — saved estimates, material price tracker, and account settings.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Estiquote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 110px; }
+
+  .dash-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 70px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    position: sticky;
+    top: 90px;
+  }
+
+  .user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: #0b1120;
+    margin-bottom: 10px;
+  }
+
+  .user-name { font-size: 15px; font-weight: 600; color: var(--text); }
+  .user-plan {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--teal-dim);
+    border: 1px solid rgba(0,201,167,0.3);
+    color: var(--teal-light);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    margin-bottom: 1.25rem;
+  }
+
+  .nav-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+
+  .side-nav { display: flex; flex-direction: column; gap: 4px; }
+
+  .side-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: var(--sans);
+  }
+
+  .side-link:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+  .side-link.active { background: var(--teal-dim); color: var(--teal-light); }
+  .side-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* MAIN CONTENT */
+  .dash-main { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .dash-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .dash-greeting {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .dash-date { font-size: 13px; color: var(--text-muted); }
+
+  /* METRIC CARDS */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .metric-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; }
+  .metric-val { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--text); letter-spacing: -1px; }
+  .metric-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  /* PROJECTS TABLE */
+  .section-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .sc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .sc-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--text); }
+
+  .project-table { width: 100%; border-collapse: collapse; }
+  .project-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); font-weight: 600; padding: 8px 0; text-align: left; border-bottom: 1px solid var(--border); }
+  .project-table td { font-size: 14px; color: var(--text-muted); padding: 14px 0; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .project-table tr:last-child td { border-bottom: none; }
+  .project-table tr:hover td { color: var(--text); }
+
+  .trade-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .est-val { font-weight: 600; color: var(--teal-light); font-family: var(--serif); font-size: 16px; }
+
+  .row-actions { display: flex; gap: 6px; }
+
+  .row-btn {
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--sans);
+    transition: var(--transition);
+  }
+
+  .row-btn:hover { border-color: var(--border-hover); color: var(--teal-light); }
+  .row-btn.del:hover { border-color: rgba(200,60,60,0.4); color: rgba(255,120,100,0.8); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+  }
+
+  .empty-icon { font-size: 40px; margin-bottom: 1rem; opacity: 0.5; }
+  .empty-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .empty-sub { font-size: 14px; margin-bottom: 1.5rem; }
+
+  /* UPGRADE BANNER */
+  .upgrade-banner {
+    background: linear-gradient(135deg, rgba(0,201,167,0.08), rgba(77,255,214,0.04));
+    border: 1px solid rgba(0,201,167,0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ub-text { flex: 1; }
+  .ub-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--teal-light); margin-bottom: 4px; }
+  .ub-sub { font-size: 13px; color: var(--text-muted); }
+
+  /* MATERIAL UPDATES */
+  .mat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+  .mat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .mat-item-name { font-size: 13px; color: var(--text-muted); }
+  .mat-item-chg { font-size: 13px; font-weight: 600; }
+  .mat-up { color: #f07050; }
+  .mat-down { color: #50c882; }
+  .mat-flat { color: var(--text-dim); }
+
+  @media (max-width: 900px) {
+    .dash-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+    .mat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .metrics-row { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/stripe-links.js"></script>
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
+  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
+</div>
+<script>
+(function(){
+  function checkStripeMode(){
+    if(typeof STRIPE_LINKS !== 'undefined'){
+      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
+        var b = document.getElementById('test-mode-banner');
+        if(b) b.style.display = 'block';
+      }
+    } else {
+      setTimeout(checkStripeMode, 300);
+    }
+  }
+  checkStripeMode();
+})();
+</script>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+<!-- TEST MODE BANNER — remove when Stripe goes live -->
+
+
+<nav class="nav nav-scrolled" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="estimator.html" class="nav-link">Estimator</a>
+      <a href="dashboard.html" class="nav-link" style="color:var(--teal)">Dashboard</a>
+      <button onclick="signOut()" class="nav-link" style="border:none;background:none;cursor:pointer;font-family:var(--sans);font-size:14px">Sign out</button>
+    </div>
+    <button class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="estimator.html">Estimator</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html">Sign out</a>
+  </div>
+</nav>
+
+<div id="load-timeout-msg" class="load-timeout">
+  <p>Taking longer than usual... <a onclick="window.location.reload()">Click to refresh</a></p>
+</div>
+<div class="dash-layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="user-avatar" id="avatarInitials">J</div>
+    <div class="user-name" id="userName"><span class="skeleton skeleton-text"></span></div>
+    <div class="user-plan" id="userPlan"><span class="skeleton skeleton-badge"></span></div>
+
+    <div class="nav-divider"></div>
+
+    <div class="side-nav">
+      <button class="side-link active" onclick="showTab('overview')">
+        <span class="side-icon">📊</span> Overview
+      </button>
+      <button class="side-link" onclick="showTab('projects')">
+        <span class="side-icon">📁</span> My Projects
+      </button>
+      <button class="side-link" onclick="showTab('materials')">
+        <span class="side-icon">📈</span> Material Prices
+      </button>
+      <a href="estimator.html" class="side-link">
+        <span class="side-icon">🔧</span> New Estimate
+      </a>
+    </div>
+
+    <!-- BUILDER NAV (shown when builder plan detected) -->
+    <div id="builder-nav-section" style="display:none">
+      <div class="nav-divider"></div>
+      <div class="side-nav">
+        <button class="side-link" onclick="showTab('b-overview')">
+          <span class="side-icon">📊</span> Overview
+        </button>
+        <button class="side-link" onclick="showTab('b-enquiries')">
+          <span class="side-icon">📥</span> Enquiries
+          <span id="new-enquiry-dot" style="display:none;width:7px;height:7px;border-radius:50%;background:#ef4444;margin-left:auto;flex-shrink:0;"></span>
+        </button>
+        <button class="side-link" onclick="showTab('b-profile')">
+          <span class="side-icon">🏗</span> My Profile
+        </button>
+        <button class="side-link" onclick="showTab('b-docs')">
+          <span class="side-icon">📄</span> Documents
+        </button>
+        <button class="side-link" onclick="showTab('b-analytics')">
+          <span class="side-icon">📈</span> Analytics
+        </button>
+      </div>
+    </div>
+
+    <!-- HOMEOWNER NAV (hidden for builders) -->
+    <div id="homeowner-nav-section">
+      <div class="nav-divider"></div>
+      <div class="side-nav">
+        <button class="side-link" onclick="showTab('settings')">
+          <span class="side-icon">⚙</span> Settings
+        </button>
+        <button class="side-link" onclick="goToStripe('homeowner_pro')" style="color:var(--teal)" id="upgrade-nav-btn">
+          <span class="side-icon">⭐</span> Upgrade to Pro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="dash-main">
+
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview">
+      <div class="dash-header">
+        <div>
+          <div class="dash-greeting" id="greetingText">Good morning, Josh</div>
+          <div class="dash-date" id="dateText"></div>
+        </div>
+        <a href="estimator.html" class="btn-primary">+ New estimate</a>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-label">Saved projects</div>
+          <div class="metric-val" id="m-projects">0</div>
+          <div class="metric-sub">across all trades</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Total estimated</div>
+          <div class="metric-val" id="m-total">£0</div>
+          <div class="metric-sub">combined project value</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Material index</div>
+          <div class="metric-val" style="color:var(--teal-light)">+3.2%</div>
+          <div class="metric-sub">YTD Jan 2025</div>
+        </div>
+      </div>
+
+      <!-- UPGRADE BANNER (free users) -->
+      <div class="upgrade-banner" id="upgradeBanner" style="display:none">
+        <div class="ub-text">
+          <div class="ub-title">Unlock Pro features</div>
+          <div class="ub-sub">PDF reports, full material tracker, postcode-level pricing and contractor quote comparison.</div>
+        </div>
+        <button onclick="goToStripe('homeowner_pro', EQ.getUser()?.email || '')" class="btn-primary" style="cursor:pointer">Upgrade for £9.99/mo →</button>
+      </div>
+
+      <!-- RECENT PROJECTS -->
+      <div class="section-card">
+        <div class="sc-header">
+          <div class="sc-title">Recent estimates</div>
+          <button class="row-btn" onclick="showTab('projects')">View all</button>
+        </div>
+        <div id="recent-projects-content"></div>
+      </div>
+
+      <!-- MATERIAL UPDATES -->
+      <div class="section-card">
+        <div class="sc-header">
+          <div class="sc-title">Material price snapshot</div>
+          <div style="font-size:12px;color:var(--text-dim)">Updated Jan 2025</div>
+        </div>
+        <div class="mat-grid">
+          <div class="mat-item"><span class="mat-item-name">Structural timber (C16)</span><span class="mat-item-chg mat-up">▲ +5.1%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Concrete blocks</span><span class="mat-item-chg mat-up">▲ +2.3%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Rigid insulation (PIR)</span><span class="mat-item-chg mat-up">▲ +2.8%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Copper pipe (22mm)</span><span class="mat-item-chg mat-flat">— 0.0%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Plasterboard (12.5mm)</span><span class="mat-item-chg mat-down">▼ -1.2%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Clay roof tiles</span><span class="mat-item-chg mat-up">▲ +3.7%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Sand & aggregate</span><span class="mat-item-chg mat-up">▲ +1.9%</span></div>
+          <div class="mat-item"><span class="mat-item-name">Steel reinforcement</span><span class="mat-item-chg mat-down">▼ -0.8%</span></div>
+        </div>
+        <div style="margin-top:1rem;font-size:11px;color:var(--text-dim)">Source: BCIS, BMF, ONS construction price index.</div>
+      </div>
+    </div>
+
+    <!-- PROJECTS TAB -->
+    <div id="tab-projects" style="display:none">
+      <div class="dash-header">
+        <div>
+          <div class="dash-greeting">My projects</div>
+          <div class="dash-date">All saved estimates</div>
+        </div>
+        <a href="estimator.html" class="btn-primary">+ New estimate</a>
+      </div>
+      <div class="section-card">
+        <div id="all-projects-content"></div>
+      </div>
+    </div>
+
+    <!-- MATERIALS TAB -->
+    <div id="tab-materials" style="display:none">
+      <div class="dash-header">
+        <div>
+          <div class="dash-greeting">Material prices</div>
+          <div class="dash-date">UK construction price index — updated May 2026</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="mat-header-actions">
+          <input type="text" id="mat-postcode" placeholder="Enter postcode" style="padding:8px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;width:130px;text-transform:uppercase" maxlength="8">
+          <button onclick="findNearbyMerchants()" style="padding:8px 16px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer">Find merchants →</button>
+        </div>
+      </div>
+
+      <!-- FREE USER LOCK -->
+      <div id="materials-lock" class="section-card" style="text-align:center;padding:3rem 2rem;">
+        <div style="font-size:40px;margin-bottom:1rem;opacity:0.4">📈</div>
+        <div style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">Full material price tracker</div>
+        <div style="font-size:14px;color:var(--text-muted);max-width:420px;margin:0 auto 1.5rem;line-height:1.75">
+          Track 10 key UK construction materials with quarterly and year-on-year changes. Know when to buy, when to wait, and flag price spikes to your contractor.
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem">
+          <span style="font-size:12px;padding:5px 12px;border-radius:4px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-muted)">Timber · Concrete · Insulation</span>
+          <span style="font-size:12px;padding:5px 12px;border-radius:4px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-muted)">Copper · Plasterboard · Bricks</span>
+          <span style="font-size:12px;padding:5px 12px;border-radius:4px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-muted)">Steel · Tiles · Sand + more</span>
+        </div>
+        <button onclick="goToStripe('homeowner_pro')" style="padding:13px 28px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;">Unlock with Pro — £9.99/mo</button>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:10px">14-day free trial · Cancel any time</div>
+      </div>
+
+      <!-- PRO CONTENT -->
+      <div id="materials-content" style="display:none">
+
+        <!-- PRICE INDEX TABLE -->
+        <div class="section-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div class="sc-title">UK construction material index</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:3px">Source: BCIS, BMF, ONS · Updated May 2026</div>
+            </div>
+            <span style="font-size:11px;background:rgba(0,201,167,0.08);border:1px solid rgba(0,201,167,0.2);color:var(--teal-light);padding:4px 10px;border-radius:4px;font-weight:600;">✓ Monthly email alerts on</span>
+          </div>
+          <div style="overflow-x:auto">
+          <table class="project-table" id="materials-table">
+            <thead><tr>
+              <th>Material</th>
+              <th>Unit</th>
+              <th>Price range</th>
+              <th>QoQ</th>
+              <th>YoY</th>
+              <th style="text-align:center">Source materials</th>
+            </tr></thead>
+            <tbody id="materials-tbody"></tbody>
+          </table>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:var(--text-dim)">
+            Trade prices vary by account, quantity and region. These are indicative market rates from BMF quarterly price survey. Click "Source materials" to find these at a merchant near you.
+          </div>
+        </div>
+
+        <!-- NEARBY MERCHANTS -->
+        <div class="section-card" id="merchants-section" style="display:none">
+          <div class="sc-header" style="margin-bottom:1rem">
+            <div>
+              <div class="sc-title" id="merchants-title">Builders merchants near you</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:3px">Branch locations · Click to open in maps or visit website</div>
+            </div>
+            <button onclick="document.getElementById('merchants-section').style.display='none'" style="background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;line-height:1">✕</button>
+          </div>
+          <div id="merchants-list"></div>
+          <div id="merchant-material-links" style="margin-top:1.5rem"></div>
+        </div>
+
+        <!-- DATA CONTRIBUTION BANNER -->
+        <div style="background:linear-gradient(135deg,rgba(0,201,167,0.06),rgba(0,201,167,0.02));border:1px solid rgba(0,201,167,0.2);border-radius:14px;padding:20px 24px;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+          <div style="font-size:32px">🏗</div>
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Help make these prices more accurate</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:10px">If you've bought materials recently, share what you paid. Every submission improves the price index for all Estiquote users — and makes this data genuinely more accurate than BCIS.</div>
+            <button onclick="showPriceSubmitModal()" style="padding:8px 18px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Submit a price →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="tab-settings" style="display:none">
+      <div class="dash-greeting" style="margin-bottom:1.5rem">Account settings</div>
+
+      <!-- PROFILE -->
+      <div class="section-card">
+        <div class="sc-header"><div class="sc-title">Profile</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">
+          <div class="form-group">
+            <label>Full name</label>
+            <input type="text" id="settingsName" placeholder="Josh Smith">
+          </div>
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" id="settingsEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Postcode</label>
+            <input type="text" id="settingsPostcode" placeholder="TN1 1AA" style="text-transform:uppercase">
+          </div>
+        </div>
+        <button class="btn-primary" style="width:auto" onclick="saveSettings()" id="save-settings-btn">Save changes</button>
+      </div>
+
+      <!-- MONTHLY PRICE ALERTS — Pro feature, fully functional via Formspree -->
+      <div class="section-card" id="alerts-card">
+        <div class="sc-header">
+          <div>
+            <div class="sc-title">Monthly material price alerts</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Get emailed when UK construction material prices move significantly</div>
+          </div>
+          <span id="alerts-plan-badge" style="font-size:11px;padding:3px 9px;border-radius:4px;background:var(--teal-dim);color:var(--teal-light);border:1px solid rgba(0,201,167,0.25);font-weight:600;">Pro</span>
+        </div>
+
+        <!-- FREE USER LOCK -->
+        <div id="alerts-lock" onclick="showUpgradeModal('Monthly material price alerts')" style="cursor:pointer;" title="Upgrade to Pro to unlock" style="padding:1.25rem;background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">Upgrade to Pro to receive monthly material price update emails</div>
+          <button onclick="goToStripe('homeowner_pro')" style="padding:8px 20px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Upgrade to Pro →</button>
+        </div>
+
+        <!-- PRO USER ALERTS SETTINGS -->
+        <div id="alerts-pro" style="display:none">
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
+              <input type="checkbox" id="alert-timber" style="width:auto;accent-color:var(--teal)" checked>
+              <span style="font-size:13px;color:var(--text-muted);flex:1">Structural timber</span>
+              <span style="font-size:11px;color:#f07050">▲ +5.1% this month</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
+              <input type="checkbox" id="alert-insulation" style="width:auto;accent-color:var(--teal)" checked>
+              <span style="font-size:13px;color:var(--text-muted);flex:1">Insulation (PIR)</span>
+              <span style="font-size:11px;color:#f07050">▲ +2.8% this month</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
+              <input type="checkbox" id="alert-bricks" style="width:auto;accent-color:var(--teal)" checked>
+              <span style="font-size:13px;color:var(--text-muted);flex:1">Facing bricks</span>
+              <span style="font-size:11px;color:#f07050">▲ +4.1% this month</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
+              <input type="checkbox" id="alert-all" style="width:auto;accent-color:var(--teal)">
+              <span style="font-size:13px;color:var(--text-muted);flex:1">All 10 tracked materials</span>
+              <span style="font-size:11px;color:var(--text-dim)">Monthly digest</span>
+            </label>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button onclick="saveAlertPrefs()" style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Save alert preferences</button>
+            <span id="alerts-saved-msg" style="font-size:12px;color:var(--teal-light);display:none">✓ Preferences saved</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSV EXPORT — Trade feature -->
+      <div class="section-card" id="csv-card">
+        <div class="sc-header">
+          <div>
+            <div class="sc-title">Export saved estimates</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Download all your saved project estimates as a spreadsheet</div>
+          </div>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:rgba(255,200,50,0.1);color:rgba(255,220,80,0.9);border:1px solid rgba(255,200,50,0.2);font-weight:600;">Trade</span>
+        </div>
+
+        <!-- FREE/PRO LOCK -->
+        <div id="csv-lock" onclick="showUpgradeModal('CSV data export')" style="cursor:pointer;" title="Upgrade to Trade to unlock" style="padding:1.25rem;background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">CSV export is available on the Trade plan</div>
+          <button onclick="goToStripe('homeowner_trade')" style="padding:8px 20px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Upgrade to Trade — £29/mo →</button>
+        </div>
+
+        <!-- TRADE USER CSV -->
+        <div id="csv-trade" style="display:none">
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;line-height:1.6">Exports all saved estimates including trade, region, spec, estimate range, date, and any professional fees selected.</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button onclick="exportCSV()" style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">
+              📥 Download CSV
+            </button>
+            <span id="csv-count" style="font-size:12px;color:var(--text-dim)"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- API ACCESS — Trade feature -->
+      <div class="section-card" id="api-card">
+        <div class="sc-header">
+          <div>
+            <div class="sc-title">API access</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Integrate Estiquote pricing data into your own tools and workflows</div>
+          </div>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:rgba(255,200,50,0.1);color:rgba(255,220,80,0.9);border:1px solid rgba(255,200,50,0.2);font-weight:600;">Trade</span>
+        </div>
+
+        <!-- FREE/PRO LOCK -->
+        <div id="api-lock" onclick="showUpgradeModal('API access')" style="cursor:pointer;" title="Upgrade to Trade to unlock" style="padding:1.25rem;background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">API access is available on the Trade plan</div>
+          <button onclick="goToStripe('homeowner_trade')" style="padding:8px 20px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Upgrade to Trade — £29/mo →</button>
+        </div>
+
+        <!-- TRADE USER API KEY -->
+        <div id="api-trade" style="display:none">
+          <div style="margin-bottom:1.25rem">
+            <label style="font-size:12px;color:var(--text-muted);margin-bottom:6px;display:block">Your API key</label>
+            <div style="display:flex;gap:8px">
+              <input type="text" id="apiKey" readonly style="font-family:monospace;font-size:13px;letter-spacing:1px;flex:1;background:rgba(0,201,167,0.04);border-color:rgba(0,201,167,0.2);">
+              <button onclick="copyApiKey()" style="padding:10px 16px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-muted);font-family:var(--sans);font-size:12px;cursor:pointer;white-space:nowrap;" id="copy-key-btn">Copy</button>
+              <button onclick="regenerateKey()" style="padding:10px 16px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-muted);font-family:var(--sans);font-size:12px;cursor:pointer;white-space:nowrap;">Regenerate</button>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:6px">Keep this key private. Do not expose it in client-side code.</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:monospace;font-size:12px;color:var(--teal-light);line-height:1.8;overflow-x:auto;">
+            <div style="color:var(--text-dim);margin-bottom:8px"># Example: Get extension cost estimate</div>
+            <div>curl https://api.estiquote.co.uk/v1/estimate \</div>
+            <div>&nbsp;&nbsp;-H "Authorization: Bearer <span id="api-key-inline">eq_live_...</span>" \</div>
+            <div>&nbsp;&nbsp;-d "trade=extension&region=south_east&area=30&quality=mid"</div>
+          </div>
+          <div style="margin-top:10px">
+            <a href="api-docs.html" style="font-size:13px;color:var(--teal-light);text-decoration:none;display:inline-flex;align-items:center;gap:4px;">View full API documentation →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DANGER ZONE -->
+      <div class="section-card" style="border-color:rgba(200,60,60,0.2);">
+        <div class="sc-title" style="color:rgba(255,120,100,0.9);margin-bottom:1rem">Account</div>
+        <button onclick="signOut()" style="background:none;border:1px solid rgba(200,60,60,0.3);color:rgba(255,120,100,0.8);font-size:13px;cursor:pointer;font-family:var(--sans);padding:9px 18px;border-radius:8px;transition:all 0.2s;">Sign out of Estiquote</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navMobile').classList.toggle('open');
+  }
+
+  const ALL_TABS = ['overview','projects','materials','settings',
+                    'b-overview','b-enquiries','b-profile','b-docs','b-analytics'];
+
+  function showTab(tab) {
+    const user = EQ.getUserSync();
+    const pro = !!(user && (user.pro === true || user.plan === 'pro' || user.plan === 'trade'));
+
+    // Materials lock for free users
+    if (tab === 'materials') {
+      const lockEl = document.getElementById('materials-lock');
+      const contentEl = document.getElementById('materials-content');
+      if (lockEl) lockEl.style.display = pro ? 'none' : 'block';
+      if (contentEl) contentEl.style.display = pro ? 'block' : 'none';
+    }
+
+    // Builder docs & analytics tier lock
+    if (tab === 'materials') renderMaterialsTable();
+
+    if (tab === 'b-docs' || tab === 'b-analytics') {
+      const isFeatureOrPro = user && (user.plan === 'builder_featured' || user.plan === 'builder_pro');
+      const lockId = tab === 'b-docs' ? 'docs-tier-lock' : 'analytics-tier-lock';
+      const contentId = tab === 'b-docs' ? 'docs-content' : 'analytics-content';
+      const lockEl = document.getElementById(lockId);
+      const contentEl = document.getElementById(contentId);
+      if (lockEl) lockEl.style.display = isFeatureOrPro ? 'none' : 'block';
+      if (contentEl) {
+        contentEl.style.display = isFeatureOrPro ? 'flex' : 'none';
+        if (isFeatureOrPro) { contentEl.style.flexDirection = 'column'; contentEl.style.gap = '1rem'; }
+      }
+    }
+
+    // Load enquiries when switching to that tab
+    if (tab === 'b-enquiries') loadBuilderEnquiries();
+    if (tab === 'b-overview') loadBuilderOverview();
+    if (tab === 'b-profile') loadBuilderProfileForm();
+    if (tab === 'b-docs') loadBuilderDocs();
+    if (tab === 'b-analytics') loadBuilderAnalytics();
+
+    ALL_TABS.forEach(t => {
+      const el = document.getElementById('tab-' + t);
+      if (el) {
+        el.style.display = t === tab ? 'flex' : 'none';
+        if (t === tab) { el.style.flexDirection = 'column'; el.style.gap = '1.5rem'; }
+      }
+    });
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+  }
+
+  async function signOut() {
+    await EQ.signOut(true); // clears session and redirects to index
+  }
+
+  async function saveSettings() {
+    const user = await EQ.getUser();
+    if (!user) return;
+    const name     = document.getElementById('settingsName')?.value.trim() || user.name;
+    const email    = document.getElementById('settingsEmail')?.value.trim() || user.email;
+    const postcode = document.getElementById('settingsPostcode')?.value.trim().toUpperCase() || user.postcode || '';
+    const updated = { ...user, name, email, postcode };
+    localStorage.setItem('eq_user', JSON.stringify(updated));
+    try {
+      await fetch('https://formspree.io/f/xwvadzvz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ _subject: `[Estiquote] Profile updated — ${name}`, form_type: 'Profile Update', name, email, postcode, plan: user.plan || 'free', updated_at: new Date().toLocaleString('en-GB') })
+      });
+    } catch(e) {}
+    const btn = document.getElementById('save-settings-btn');
+    if (btn) { const orig = btn.textContent; btn.textContent = '✓ Saved'; setTimeout(() => { btn.textContent = orig; loadDashboard(); }, 1800); }
+  }
+
+  async function saveAlertPrefs() {
+    const user = await EQ.getUser();
+    if (!user) return;
+    const labels = [];
+    if (document.getElementById('alert-timber')?.checked)     labels.push('Structural timber');
+    if (document.getElementById('alert-insulation')?.checked) labels.push('Insulation (PIR)');
+    if (document.getElementById('alert-bricks')?.checked)     labels.push('Facing bricks');
+    if (document.getElementById('alert-all')?.checked)        labels.push('All 10 materials (monthly digest)');
+    try {
+      await fetch('https://formspree.io/f/xwvadzvz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ _subject: `[Estiquote] Material alert preferences — ${user.name}`, form_type: 'Material Alert Signup', name: user.name, email: user.email, alerts_selected: labels.join(', ') || 'None', updated_at: new Date().toLocaleString('en-GB') })
+      });
+    } catch(e) {}
+    const msg = document.getElementById('alerts-saved-msg');
+    if (msg) { msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 3000); }
+  }
+
+  async function exportCSV() {
+    const projects = await EQ.getProjects();
+    if (projects.length === 0) { alert('No saved projects to export yet.'); return; }
+    const headers = ['Project ID','Trade','Region','Specification','Estimate Range','Extras','Date Saved'];
+    const rows = projects.map(p => [p.id, p.trade, p.region, p.quality, p.estimate, (p.extras||[]).join('; '), p.created_at ? new Date(p.created_at).toLocaleDateString('en-GB') : p.date || '']);
+    const csv = [headers,...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([csv],{type:'text/csv'})), download: `estiquote-${new Date().toISOString().split('T')[0]}.csv` });
+    a.click();
+    const countEl = document.getElementById('csv-count');
+    if (countEl) countEl.textContent = `${projects.length} project${projects.length!==1?'s':''} exported`;
+  }
+
+  function generateApiKey() {
+    let key = localStorage.getItem('eq_api_key');
+    if (!key) {
+      const rand = Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,32);
+      key = 'eq_live_' + rand;
+      localStorage.setItem('eq_api_key', key);
+    }
+    return key;
+  }
+
+  function copyApiKey() {
+    const key = document.getElementById('apiKey')?.value;
+    if (!key) return;
+    navigator.clipboard.writeText(key).then(() => {
+      const btn = document.getElementById('copy-key-btn');
+      if (btn) { btn.textContent = '✓ Copied'; btn.style.color='var(--teal-light)'; setTimeout(()=>{btn.textContent='Copy';btn.style.color='';},2000); }
+    });
+  }
+
+  function regenerateKey() {
+    if (!confirm('This will invalidate your current API key. Continue?')) return;
+    localStorage.removeItem('eq_api_key');
+    const newKey = generateApiKey();
+    const keyEl = document.getElementById('apiKey');
+    const inlineEl = document.getElementById('api-key-inline');
+    if (keyEl) keyEl.value = newKey;
+    if (inlineEl) inlineEl.textContent = newKey;
+  }
+
+  const FREE_PROJECT_LIMIT = 3;
+
+  function isPro(user) { return !!(user && (user.pro === true || user.plan === 'pro' || user.plan === 'trade')); }
+  function isTrade(user) { return !!(user && user.plan === 'trade'); }
+
+  async function renderProjects(container, limit, user) {
+    const allProjects = await EQ.getProjects();
+    const pro = isPro(user);
+    const visibleProjects = pro ? allProjects : allProjects.slice(0, FREE_PROJECT_LIMIT);
+    const display = limit ? visibleProjects.slice(0, limit) : visibleProjects; // Supabase returns newest first
+    if (display.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No estimates yet</div><div class="empty-sub">Create your first estimate and save it to track your project budget.</div><a href="estimator.html" class="btn-primary">Get my first estimate →</a></div>`;
+      return;
+    }
+    const icons = { extension:'🏗',loft:'🔨',kitchen:'🍳',bathroom:'🚿',electrical:'⚡',plumbing:'🔧',structural:'🏛',decoration:'🎨' };
+    let html = `<table class="project-table"><thead><tr><th>Trade</th><th>Region</th><th>Spec</th><th>Estimate</th><th>Date</th><th></th></tr></thead><tbody>
+      ${display.map(p=>`<tr><td><span class="trade-badge">${icons[p.trade]||'🔧'} ${p.trade}</span></td><td>${p.region}</td><td style="text-transform:capitalize">${p.quality}</td><td><span class="est-val">${p.estimate}</span></td><td>${p.created_at ? new Date(p.created_at).toLocaleDateString('en-GB') : p.date || '—'}</td><td><div class="row-actions"><button class="row-btn" onclick="window.location.href='estimator.html?trade=${p.trade}'">Edit</button><button class="row-btn del" onclick="deleteProject('${p.id}')">✕</button></div></td></tr>`).join('')}
+    </tbody></table>`;
+    if (!pro && allProjects.length >= FREE_PROJECT_LIMIT) {
+      html += `<div style="margin-top:1rem;padding:14px 16px;background:rgba(0,201,167,0.05);border:1px dashed rgba(0,201,167,0.25);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;"><div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px">Project limit reached</div><div style="font-size:12px;color:var(--text-muted)">Free plan includes ${FREE_PROJECT_LIMIT} saved projects. Upgrade for unlimited.</div></div><button onclick="(function(){var u=EQ.getUserSync();goToStripe('homeowner_pro',u?u.email:null)})()" style="padding:9px 18px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">Upgrade — £9.99/mo</button></div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  async function deleteProject(id) {
+    if (!confirm('Remove this estimate?')) return;
+    await EQ.deleteProject(id);
+    loadDashboard();
+  }
+
+  async function loadDashboard() {
+    // Timeout fallback — if Supabase takes too long
+    const loadTimeout = setTimeout(() => {
+      const timeoutEl = document.getElementById('load-timeout-msg');
+      if (timeoutEl) timeoutEl.style.display = 'block';
+    }, 6000);
+
+    // Check for password recovery flow
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    if (hashParams.get('type') === 'recovery') {
+      showPasswordResetModal();
+      return;
+    }
+
+    // Check Stripe return FIRST — before reading user — so upgrade is applied
+    const stripeReturn = await EQ.checkStripeReturn();
+
+    // Now read user (will reflect any just-applied upgrade)
+    const user = await EQ.getUser();
+    clearTimeout(loadTimeout);
+    const timeoutEl = document.getElementById('load-timeout-msg');
+    if (timeoutEl) timeoutEl.style.display = 'none';
+    if (!user) { window.location.href = 'login.html'; return; }
+
+    // Show upgrade success banner
+    if (stripeReturn && stripeReturn.upgraded) {
+      setTimeout(() => {
+        const banner = document.createElement('div');
+        banner.style.cssText = 'position:fixed;top:80px;right:1.5rem;z-index:9999;background:linear-gradient(135deg,#00c9a7,#4dffd6);color:#0b1120;padding:14px 22px;border-radius:12px;font-weight:700;font-size:14px;box-shadow:0 8px 32px rgba(0,201,167,0.4);';
+        const planName = stripeReturn.plan === 'trade' ? 'Trade' : 'Pro';
+        banner.textContent = '🎉 Welcome to Estiquote ' + planName + '! Your plan is now active.';
+        document.body.appendChild(banner);
+        setTimeout(() => banner.remove(), 6000);
+      }, 300);
+    }
+
+    const pro   = isPro(user);
+    const trade = isTrade(user);
+
+    const initials = (user.name||user.email||'?').split(' ').map(n=>n[0]).join('').toUpperCase().substring(0,2);
+    document.getElementById('avatarInitials').textContent = initials;
+    document.getElementById('userName').textContent = user.name || user.email;
+
+    const planBadge = document.getElementById('userPlan');
+    planBadge.textContent = (user.plan||'free').toUpperCase();
+    if (pro) { planBadge.style.background='var(--teal-dim)'; planBadge.style.color='var(--teal-light)'; planBadge.style.borderColor='rgba(0,201,167,0.3)'; }
+
+    const hour = new Date().getHours();
+    const firstName = (user.name||'').split(' ')[0] || 'there';
+    document.getElementById('greetingText').textContent = (hour<12?'Good morning':hour<18?'Good afternoon':'Good evening') + ', ' + firstName;
+    document.getElementById('dateText').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+    const projects = await EQ.getProjects();
+    document.getElementById('m-projects').textContent = pro ? projects.length : `${Math.min(projects.length,FREE_PROJECT_LIMIT)}/${FREE_PROJECT_LIMIT}`;
+
+    const banner2 = document.getElementById('upgradeBanner');
+    if (banner2) banner2.style.display = pro ? 'none' : 'flex';
+
+    applyDashboardGating(user, pro, trade);
+    await renderProjects(document.getElementById('recent-projects-content'), 5, user);
+    await renderProjects(document.getElementById('all-projects-content'), null, user);
+    if (user.email)    { const el = document.getElementById('settingsEmail');    if(el) el.value = user.email; }
+    if (user.postcode) { const el = document.getElementById('settingsPostcode'); if(el) el.value = user.postcode; }
+    if (user.name)     { const el = document.getElementById('settingsName');     if(el) el.value = user.name; }
+  }
+
+  function applyDashboardGating(user, pro, trade) {
+    const matTab = document.querySelector('[onclick="showTab(\'materials\')"]');
+    if (matTab && !pro) matTab.innerHTML = '<span class="side-icon">📈</span> Material Prices <span style="font-size:10px;background:var(--teal-dim);color:var(--teal-light);padding:2px 6px;border-radius:3px;margin-left:4px;border:1px solid rgba(0,201,167,0.2);">Pro</span>';
+
+    // Alerts
+    const alertsLock = document.getElementById('alerts-lock');
+    const alertsPro  = document.getElementById('alerts-pro');
+    if (alertsLock) alertsLock.style.display = pro ? 'none' : 'block';
+    if (alertsPro)  alertsPro.style.display  = pro ? 'block' : 'none';
+
+    // CSV
+    const csvLock  = document.getElementById('csv-lock');
+    const csvTradeEl = document.getElementById('csv-trade');
+    if (csvLock)    csvLock.style.display    = trade ? 'none' : 'block';
+    if (csvTradeEl) csvTradeEl.style.display = trade ? 'block' : 'none';
+    if (trade) { const projects = JSON.parse(localStorage.getItem('eq_projects')||'[]'); const c = document.getElementById('csv-count'); if(c) c.textContent = `${projects.length} project${projects.length!==1?'s':''} ready to export`; }
+
+    // API
+    const apiLock  = document.getElementById('api-lock');
+    const apiTradeEl = document.getElementById('api-trade');
+    if (apiLock)    apiLock.style.display    = trade ? 'none' : 'block';
+    if (apiTradeEl) apiTradeEl.style.display = trade ? 'block' : 'none';
+    if (trade) { const key = generateApiKey(); const kEl = document.getElementById('apiKey'); const iEl = document.getElementById('api-key-inline'); if(kEl) kEl.value=key; if(iEl) iEl.textContent=key; }
+  }
+
+
+  // ── UPGRADE MODAL ─────────────────────────────────────────
+  function showUpgradeModal(feature) {
+    const existing = document.getElementById('upgrade-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'upgrade-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(11,17,32,0.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;';
+    modal.innerHTML = `
+      <div style="background:var(--navy-2);border:1px solid rgba(0,201,167,0.25);border-radius:20px;padding:36px;max-width:420px;width:100%;text-align:center;">
+        <div style="font-size:40px;margin-bottom:12px;">⭐</div>
+        <h2 style="font-family:var(--serif);font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px;">Upgrade to Pro</h2>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:20px;"><strong style="color:var(--teal-light)">${feature}</strong> is a Pro feature. Upgrade for £9.99/month and unlock unlimited projects, PDF exports, material alerts, and full cost breakdowns.</p>
+        <div style="background:rgba(0,201,167,0.06);border:1px solid rgba(0,201,167,0.15);border-radius:10px;padding:14px;margin-bottom:20px;">
+          <div style="font-size:13px;color:var(--text-muted);">✓ 14-day free trial &nbsp;·&nbsp; ✓ Cancel any time &nbsp;·&nbsp; ✓ Instant access</div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;">
+          <button onclick="document.getElementById('upgrade-modal').remove()" style="padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer;">Maybe later</button>
+          <button onclick="(async()=>{const u=EQ.getUserSync();goToStripe('homeowner_pro',u?u.email:null);})()" style="padding:10px 24px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;">Start free trial →</button>
+        </div>
+      </div>`;
+    modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
+    document.body.appendChild(modal);
+  }
+
+
+
+  // ════════════════════════════════════════════════════════
+  // MATERIALS — Price Data, Merchant Finder, Price Submission
+  // ════════════════════════════════════════════════════════
+
+  // ── FULL MATERIAL DATA (2026 UK market prices) ────────────
+  const MATERIALS = [
+    {
+      id: 'timber', name: 'Structural timber C16', unit: 'per m³',
+      price: '£280–£340', qoq: +5.1, yoy: +9.3,
+      searchTerms: { jewson:'structural+timber+c16+47x100', travis:'structural+timber+c16', buildbase:'c16+structural+timber', wickes:'structural+timber', screwfix:'c16+timber' },
+      category: 'structural'
+    },
+    {
+      id: 'blocks', name: 'Concrete blocks (7N)', unit: 'per 100',
+      price: '£68–£88', qoq: +2.3, yoy: +4.8,
+      searchTerms: { jewson:'concrete+blocks+7n', travis:'concrete+blocks+440x215x100', buildbase:'7n+concrete+block', wickes:'concrete+blocks', screwfix:'concrete+blocks' },
+      category: 'structural'
+    },
+    {
+      id: 'insulation', name: 'PIR insulation (100mm)', unit: 'per m²',
+      price: '£14–£19', qoq: +2.8, yoy: +6.2,
+      searchTerms: { jewson:'pir+insulation+100mm', travis:'rigid+insulation+100mm', buildbase:'pir+insulation+board', wickes:'rigid+insulation', screwfix:'pir+insulation+100mm' },
+      category: 'insulation'
+    },
+    {
+      id: 'copper', name: 'Copper pipe (22mm)', unit: 'per metre',
+      price: '£3.80–£5.20', qoq: 0.0, yoy: -2.1,
+      searchTerms: { jewson:'copper+pipe+22mm', travis:'copper+tube+22mm', buildbase:'copper+pipe+22mm', wickes:'copper+pipe+22mm', screwfix:'copper+pipe+22mm' },
+      category: 'plumbing'
+    },
+    {
+      id: 'plasterboard', name: 'Plasterboard (12.5mm)', unit: 'per sheet',
+      price: '£9.50–£12.50', qoq: -1.2, yoy: -3.4,
+      searchTerms: { jewson:'plasterboard+12.5mm', travis:'plasterboard+2400x1200', buildbase:'plasterboard+standard', wickes:'plasterboard', screwfix:'plasterboard+12.5mm' },
+      category: 'internal'
+    },
+    {
+      id: 'tiles', name: 'Clay roof tiles', unit: 'per 1,000',
+      price: '£620–£850', qoq: +3.7, yoy: +7.1,
+      searchTerms: { jewson:'clay+roof+tiles', travis:'plain+clay+roof+tiles', buildbase:'clay+plain+tile', wickes:'roof+tiles', screwfix:'roof+tiles' },
+      category: 'roofing'
+    },
+    {
+      id: 'aggregate', name: 'Sand & aggregate', unit: 'per tonne',
+      price: '£38–£55', qoq: +1.9, yoy: +5.5,
+      searchTerms: { jewson:'sharp+sand+aggregate', travis:'ballast+aggregate', buildbase:'building+sand', wickes:'building+sand', screwfix:'sharp+sand' },
+      category: 'groundwork'
+    },
+    {
+      id: 'steel', name: 'Steel reinforcement (10mm)', unit: 'per tonne',
+      price: '£680–£820', qoq: -0.8, yoy: -4.2,
+      searchTerms: { jewson:'steel+rebar+10mm', travis:'reinforcement+bar+10mm', buildbase:'steel+bar+10mm', wickes:'rebar', screwfix:'rebar+10mm' },
+      category: 'structural'
+    },
+    {
+      id: 'bricks', name: 'Facing bricks', unit: 'per 1,000',
+      price: '£420–£750', qoq: +4.1, yoy: +8.8,
+      searchTerms: { jewson:'facing+bricks', travis:'facing+bricks', buildbase:'facing+bricks', wickes:'facing+bricks', screwfix:'facing+bricks' },
+      category: 'structural'
+    },
+    {
+      id: 'mdpe', name: 'MDPE water pipe (25mm)', unit: 'per metre',
+      price: '£1.20–£1.80', qoq: 0.0, yoy: +1.5,
+      searchTerms: { jewson:'mdpe+blue+pipe+25mm', travis:'mdpe+water+pipe+25mm', buildbase:'blue+mdpe+pipe', wickes:'mdpe+pipe', screwfix:'mdpe+water+pipe+25mm' },
+      category: 'plumbing'
+    },
+    {
+      id: 'cement', name: 'General purpose cement', unit: 'per 25kg bag',
+      price: '£7.50–£10.50', qoq: +1.2, yoy: +4.1,
+      searchTerms: { jewson:'gp+cement+25kg', travis:'general+purpose+cement+25kg', buildbase:'cement+25kg+bag', wickes:'cement+bag', screwfix:'cement+25kg' },
+      category: 'groundwork'
+    },
+    {
+      id: 'lintels', name: 'Steel lintel (1200mm)', unit: 'each',
+      price: '£28–£65', qoq: +0.5, yoy: +3.8,
+      searchTerms: { jewson:'catnic+lintel+1200', travis:'steel+lintel+1200mm', buildbase:'lintel+1200mm', wickes:'lintel+1200mm', screwfix:'lintel+steel' },
+      category: 'structural'
+    },
+  ];
+
+  // ── RENDER MATERIALS TABLE ─────────────────────────────────
+  function renderMaterialsTable() {
+    const tbody = document.getElementById('materials-tbody');
+    if (!tbody) return;
+
+    tbody.innerHTML = MATERIALS.map(m => {
+      const qSign = m.qoq > 0 ? '▲ +' : m.qoq < 0 ? '▼ ' : '— ';
+      const qCol = m.qoq > 0 ? '#f07050' : m.qoq < 0 ? '#50c882' : 'var(--text-dim)';
+      const ySign = m.yoy > 0 ? '▲ +' : m.yoy < 0 ? '▼ ' : '— ';
+      const yCol = m.yoy > 0 ? '#f07050' : m.yoy < 0 ? '#50c882' : 'var(--text-dim)';
+
+      return `<tr>
+        <td style="font-weight:500">${m.name}</td>
+        <td style="color:var(--text-dim)">${m.unit}</td>
+        <td style="color:var(--teal-light);font-weight:600">${m.price}</td>
+        <td style="color:${qCol}">${qSign}${Math.abs(m.qoq)}%</td>
+        <td style="color:${yCol}">${ySign}${Math.abs(m.yoy)}%</td>
+        <td style="text-align:center">
+          <button onclick="showMaterialSources('${m.id}')"
+            style="padding:4px 12px;border-radius:6px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.25);color:var(--teal-light);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);">
+            Find near me →
+          </button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── FIND NEARBY MERCHANTS (UK-wide via Netlify function) ──────
+  async function findNearbyMerchants(materialId) {
+    const postcodeInput = document.getElementById('mat-postcode');
+    const rawPc = (postcodeInput?.value || EQ.getUserSync()?.postcode || '').trim().toUpperCase().replace(/\s/g,'');
+    const section  = document.getElementById('merchants-section');
+    const list     = document.getElementById('merchants-list');
+    const title    = document.getElementById('merchants-title');
+
+    if (!section || !list) return;
+    section.style.display = 'block';
+
+    if (!rawPc) {
+      list.innerHTML = '<div style="font-size:13px;color:var(--text-muted);padding:1rem">Enter your postcode above to find your nearest branches across the UK.</div>';
+      return;
+    }
+
+    const mat = materialId ? MATERIALS.find(m => m.id === materialId) : null;
+    list.innerHTML = '<div style="font-size:13px;color:var(--text-dim);padding:0.5rem;text-align:center">Finding merchants near ' + rawPc + '...</div>';
+    if (title) title.textContent = 'Merchants near ' + rawPc;
+
+    try {
+      const matQ = mat ? '&material=' + encodeURIComponent(mat.searchTerms.jewson || mat.name) : '';
+      const res  = await fetch('/.netlify/functions/find-merchants?postcode=' + rawPc + matQ);
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        list.innerHTML = '<div style="color:#ef4444;font-size:13px;padding:1rem">⚠ ' + (data.error || 'Postcode not found') + '</div>';
+        return;
+      }
+
+      const nationwide = data.merchants.filter(m => m.nationwide);
+      const regional   = data.merchants.filter(m => !m.nationwide);
+      let html = '';
+
+      if (regional.length) {
+        html += '<div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:8px">Local specialists near you</div>';
+        html += regional.map(m => renderDashMerchantCard(m, mat)).join('');
+        html += '<div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin:14px 0 8px">National merchants</div>';
+      }
+      html += nationwide.map(m => renderDashMerchantCard(m, mat)).join('');
+
+      list.innerHTML = html;
+
+      // Show material-specific search links below
+      if (mat) {
+        const linksDiv = document.getElementById('merchant-material-links');
+        if (linksDiv) {
+          linksDiv.innerHTML = '<div style="margin-top:1rem">' +
+            '<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px">Search "' + mat.name + '" at each merchant</div>' +
+            '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">' +
+            data.merchants.map(m =>
+              '<a href="' + m.searchUrl + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:12px;color:var(--text-muted);transition:var(--transition)" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">' +
+                '<span style="width:22px;height:22px;border-radius:4px;background:' + m.bg + ';color:' + m.color + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0">' + m.shortName + '</span>' +
+                '<span>' + m.name + '</span>' +
+                '<span style="margin-left:auto;font-size:10px">→</span>' +
+              '</a>'
+            ).join('') +
+            '</div></div>';
+        }
+      }
+
+      section.scrollIntoView({ behavior:'smooth', block:'start' });
+    } catch(e) {
+      list.innerHTML = '<div style="color:#ef4444;font-size:13px;padding:1rem">Connection error — please try again</div>';
+    }
+  }
+
+  function renderDashMerchantCard(m, mat) {
+    return '<div class="merchant-card">' +
+      '<div class="merchant-logo" style="background:' + m.bg + ';color:' + m.color + ';font-size:11px">' + m.shortName + '</div>' +
+      '<div class="merchant-info">' +
+        '<div class="merchant-name">' + m.name + '</div>' +
+        '<div class="merchant-branch">' + m.bestFor + '</div>' +
+        '<div class="merchant-distance">' + m.approxBranches + '+ branches nationwide' + (m.phone ? ' · 📞 ' + m.phone : '') + '</div>' +
+      '</div>' +
+      '<div class="merchant-actions">' +
+        '<a href="' + m.branchFinderUrl + '" target="_blank" rel="noopener" class="merchant-btn mb-primary">Find nearest →</a>' +
+        (mat ? '<a href="' + m.searchUrl + '" target="_blank" rel="noopener" class="merchant-btn mb-secondary">Search</a>' : '') +
+      '</div>' +
+    '</div>';
+  }
+
+  // ── SHOW SOURCES FOR A SPECIFIC MATERIAL ────────────────────
+  function showMaterialSources(materialId) {
+    const mat = MATERIALS.find(m => m.id === materialId);
+    if (!mat) return;
+
+    const section = document.getElementById('merchants-section');
+    const title   = document.getElementById('merchants-title');
+    if (!section) return;
+
+    section.style.display = 'block';
+    if (title) title.textContent = 'Source: ' + mat.name;
+
+    // Pre-fill postcode and trigger search
+    const postcodeInput = document.getElementById('mat-postcode');
+    if (postcodeInput && !postcodeInput.value) {
+      const user = EQ.getUserSync();
+      if (user?.postcode) postcodeInput.value = user.postcode;
+    }
+
+    findNearbyMerchants(materialId);
+    section.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  // ── PRICE SUBMISSION MODAL ─────────────────────────────────
+  function showPriceSubmitModal() {
+    const existing = document.getElementById('price-submit-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'price-submit-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(11,17,32,0.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;';
+    modal.innerHTML = `
+      <div style="background:var(--navy-2);border:1px solid rgba(0,201,167,0.2);border-radius:18px;padding:32px;max-width:500px;width:100%;">
+        <div style="font-family:var(--serif);font-size:20px;font-weight:800;color:var(--text);margin-bottom:6px;">Submit a real price</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.5">Help make Estiquote's price index more accurate than BCIS. Every submission is anonymised before being added to the dataset.</div>
+
+        <div class="price-submit-form" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Material</label>
+            <select id="psm-material" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;">
+              ${MATERIALS.map(m => `<option value="${m.id}">${m.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Merchant</label>
+            <select id="psm-merchant" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;">
+              ${MERCHANTS.map(m => `<option value="${m.id}">${m.name}</option>`).join('')}
+              <option value="other">Other merchant</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price paid (£)</label>
+            <input type="number" id="psm-price" placeholder="e.g. 295" step="0.01" min="0" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;">
+          </div>
+          <div class="form-group">
+            <label>Region</label>
+            <select id="psm-region" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;">
+              <option>London</option><option selected>South East</option><option>South West</option>
+              <option>Midlands</option><option>North England</option><option>Scotland / Wales</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Trade account? <span style="color:var(--text-dim);font-weight:400">(affects price)</span></label>
+            <select id="psm-account" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;">
+              <option value="yes">Yes — trade account</option>
+              <option value="no">No — walk-in price</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date purchased</label>
+            <input type="month" id="psm-date" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;" value="${new Date().toISOString().slice(0,7)}">
+          </div>
+        </div>
+
+        <div style="background:rgba(0,201,167,0.04);border:1px solid rgba(0,201,167,0.15);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text-dim);margin-bottom:16px;line-height:1.5">
+          🔒 Your submission is anonymised. We store the price, material, merchant, region and date — never your name or email. This data feeds the Estiquote price index.
+        </div>
+
+        <div id="psm-msg" style="display:none;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;"></div>
+
+        <div style="display:flex;gap:10px">
+          <button onclick="document.getElementById('price-submit-modal').remove()" style="flex:1;padding:11px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer">Cancel</button>
+          <button onclick="submitMaterialPrice()" style="flex:2;padding:11px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer" id="psm-submit-btn">Submit price →</button>
+        </div>
+      </div>`;
+
+    modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
+    document.body.appendChild(modal);
+  }
+
+  async function submitMaterialPrice() {
+    const material = document.getElementById('psm-material')?.value;
+    const merchant = document.getElementById('psm-merchant')?.value;
+    const price = parseFloat(document.getElementById('psm-price')?.value);
+    const region = document.getElementById('psm-region')?.value;
+    const account = document.getElementById('psm-account')?.value;
+    const date = document.getElementById('psm-date')?.value;
+    const msg = document.getElementById('psm-msg');
+    const btn = document.getElementById('psm-submit-btn');
+
+    if (!material || !merchant || !price || price <= 0) {
+      if (msg) { msg.style.display='block'; msg.style.background='rgba(239,68,68,0.08)'; msg.style.border='1px solid rgba(239,68,68,0.25)'; msg.style.color='#ef4444'; msg.textContent='Please enter a material, merchant and price.'; }
+      return;
+    }
+
+    if (btn) { btn.textContent = 'Submitting...'; btn.disabled = true; }
+
+    try {
+      // Save to Supabase material_prices table
+      const sb = window._eqSB;
+      if (sb) {
+        await sb.from('material_prices').insert({
+          material_id: material,
+          merchant_id: merchant,
+          price_value: price,
+          region,
+          trade_account: account === 'yes',
+          purchase_date: date + '-01',
+          submitted_at: new Date().toISOString(),
+        });
+      }
+
+      if (msg) { msg.style.display='block'; msg.style.background='rgba(0,201,167,0.08)'; msg.style.border='1px solid rgba(0,201,167,0.25)'; msg.style.color='var(--teal-light)'; msg.textContent='✓ Price submitted — thank you. Your data helps improve accuracy for everyone.'; }
+      if (btn) { btn.textContent='Submitted ✓'; btn.style.opacity='0.5'; }
+      setTimeout(() => document.getElementById('price-submit-modal')?.remove(), 2500);
+    } catch(err) {
+      if (msg) { msg.style.display='block'; msg.style.background='rgba(239,68,68,0.08)'; msg.style.border='1px solid rgba(239,68,68,0.25)'; msg.style.color='#ef4444'; msg.textContent='Submission failed — please try again.'; }
+      if (btn) { btn.textContent='Submit price →'; btn.disabled=false; }
+    }
+  }
+
+  // ── HAVERSINE DISTANCE (km) ────────────────────────────────
+  function haversineKm(lat1, lng1, lat2, lng2) {
+    const R = 6371;
+    const dLat = (lat2-lat1) * Math.PI/180;
+    const dLng = (lng2-lng1) * Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)) * 0.621371; // miles
+  }
+
+  // Render table when materials tab is loaded
+  const origShowTab = showTab;
+  // Hook into showTab for materials init
+  document.addEventListener('DOMContentLoaded', () => {
+    const origBtn = document.querySelector('[onclick="showTab(\'materials\')"]');
+  });
+
+  // ════════════════════════════════════════════════════════
+  // BUILDER DASHBOARD FUNCTIONS
+  // ════════════════════════════════════════════════════════
+
+  function isBuilderPlan(user) {
+    return user && (
+      user.plan === 'builder_listed' ||
+      user.plan === 'builder_featured' ||
+      user.plan === 'builder_pro'
+    );
+  }
+
+  function isFeaturedOrPro(user) {
+    return user && (user.plan === 'builder_featured' || user.plan === 'builder_pro');
+  }
+
+  function builderTierLabel(plan) {
+    if (plan === 'builder_pro') return 'PRO';
+    if (plan === 'builder_featured') return 'FEATURED';
+    return 'LISTED';
+  }
+
+  function builderTierClass(plan) {
+    if (plan === 'builder_pro') return 'plan-badge-builder-pro';
+    if (plan === 'builder_featured') return 'plan-badge-builder-featured';
+    return 'plan-badge-builder-listed';
+  }
+
+  // ── INIT BUILDER DASHBOARD ─────────────────────────────
+  function initBuilderDashboard(user) {
+    // Show builder nav, hide homeowner nav
+    const bNav = document.getElementById('builder-nav-section');
+    const hNav = document.getElementById('homeowner-nav-section');
+    if (bNav) bNav.style.display = 'block';
+    if (hNav) hNav.style.display = 'none';
+
+    // Hide homeowner tabs
+    ['overview','projects','materials'].forEach(t => {
+      const btn = document.querySelector(`[onclick="showTab('${t}')"]`);
+      if (btn) btn.closest('.side-link')?.style && (btn.style.display = 'none');
+    });
+
+    // Switch to builder overview
+    showTab('b-overview');
+  }
+
+  // ── BUILDER OVERVIEW ───────────────────────────────────
+  async function loadBuilderOverview() {
+    const user = EQ.getUserSync();
+    if (!user) return;
+
+    const greeting = document.getElementById('b-greeting');
+    const subheading = document.getElementById('b-subheading');
+    if (greeting) greeting.textContent = 'Good ' + getTimeOfDay() + ', ' + (user.name?.split(' ')[0] || 'there');
+    if (subheading) subheading.textContent = 'Here's how your Estiquote listing is performing';
+
+    // Plan status card
+    const badge = document.getElementById('b-tier-badge');
+    const features = document.getElementById('b-plan-features');
+    const upgradePrompt = document.getElementById('b-upgrade-prompt');
+    const tierLabel = builderTierLabel(user.plan);
+    const tierCls = builderTierClass(user.plan);
+
+    if (badge) {
+      badge.textContent = tierLabel;
+      badge.className = tierCls;
+      badge.style.cssText = 'font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700;';
+    }
+
+    const planFeatures = {
+      builder_listed:   ['Map listing','Direct exclusive enquiries','Verified badge','Review collection','Contact details visible'],
+      builder_featured: ['Map listing','Priority placement','Compliance document storage','Enquiry analytics','20 portfolio photos','Monthly performance report'],
+      builder_pro:      ['Top placement in results','Full analytics dashboard','Unlimited portfolio photos','Verified Pro status','Lead value tracking','Priority support'],
+    };
+
+    if (features) {
+      const feats = planFeatures[user.plan] || planFeatures.builder_listed;
+      features.innerHTML = feats.map(f => `
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);padding:6px 10px;background:rgba(0,201,167,0.04);border-radius:6px;">
+          <span style="color:var(--teal);font-weight:700;">✓</span> ${f}
+        </div>`).join('');
+    }
+
+    if (upgradePrompt) {
+      upgradePrompt.style.display = user.plan === 'builder_listed' ? 'block' : 'none';
+    }
+
+    // Load enquiries count
+    loadBuilderEnquiriesPreview();
+  }
+
+  // ── ENQUIRIES ──────────────────────────────────────────
+  let allEnquiries = [];
+
+  async function loadBuilderEnquiriesPreview() {
+    const user = EQ.getUserSync();
+    if (!user) return;
+
+    try {
+      const sb = window._eqSB || (window._eqSB = (() => {
+        const url = atob('aHR0cHM6Ly93dnVsdHN4aXFqa2lzYmVpZGpjbC5zdXBhYmFzZS5jbw==');
+        const key = atob('c2JfcHVibGlzaGFibGVfdTN2RUkxTDVPaDYtQ1BNTndSU09Fd19MRVpvSkxnVw==');
+        return supabase.createClient(url, key);
+      })());
+
+      const { data: enquiries } = await sb
+        .from('enquiries')
+        .select('*')
+        .eq('builder_user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      allEnquiries = enquiries || [];
+
+      // Update metrics
+      const total = allEnquiries.length;
+      const bmEl = document.getElementById('bm-enquiries');
+      if (bmEl) bmEl.textContent = total;
+
+      // New enquiry dot
+      const newEnquiries = allEnquiries.filter(e => !e.read_at);
+      const dot = document.getElementById('new-enquiry-dot');
+      if (dot) dot.style.display = newEnquiries.length > 0 ? 'block' : 'none';
+
+      // Preview
+      const container = document.getElementById('b-recent-enquiries');
+      if (!container) return;
+      if (allEnquiries.length === 0) {
+        container.innerHTML = `<div class="eq-empty"><div class="ei">📥</div><p>No enquiries yet.<br>Your listing is live — enquiries will appear here when homeowners contact you.</p></div>`;
+        return;
+      }
+      container.innerHTML = allEnquiries.map(e => renderEnquiryCard(e, true)).join('');
+    } catch(err) {
+      console.log('Enquiries load error:', err);
+      // Show demo data if Supabase table doesn't exist yet
+      loadDemoEnquiries();
+    }
+  }
+
+  function loadDemoEnquiries() {
+    const demo = [
+      { id:'demo1', homeowner_name:'Sarah J.', trade:'Extension', location:'Tunbridge Wells', budget:'£58,000–£72,000', message:'I've run the estimate and I'm ready to get quotes. Can you visit for a look?', created_at: new Date(Date.now() - 2*3600000).toISOString(), read_at: null },
+      { id:'demo2', homeowner_name:'Mark T.', trade:'Loft Conversion', location:'East Grinstead', budget:'£48,000–£66,000', message:'Looking for a builder to do a dormer loft conversion. Can you come for a survey?', created_at: new Date(Date.now() - 24*3600000).toISOString(), read_at: new Date().toISOString() },
+    ];
+    allEnquiries = demo;
+    const container = document.getElementById('b-recent-enquiries');
+    if (container) container.innerHTML = demo.map(e => renderEnquiryCard(e, true)).join('');
+    const bmEl = document.getElementById('bm-enquiries');
+    if (bmEl) bmEl.textContent = demo.length;
+  }
+
+  async function loadBuilderEnquiries() {
+    await loadBuilderEnquiriesPreview();
+    const container = document.getElementById('enquiries-list');
+    if (!container) return;
+    if (allEnquiries.length === 0) {
+      container.innerHTML = `<div class="eq-empty"><div class="ei">📥</div><p>No enquiries yet.<br>Make sure your profile is complete and your listing is active.</p></div>`;
+      return;
+    }
+    filterEnquiries();
+  }
+
+  function filterEnquiries() {
+    const filter = document.getElementById('enquiry-filter')?.value || 'all';
+    const container = document.getElementById('enquiries-list');
+    if (!container) return;
+    let list = allEnquiries;
+    if (filter === 'new') list = allEnquiries.filter(e => !e.read_at);
+    if (filter === 'read') list = allEnquiries.filter(e => e.read_at);
+    if (list.length === 0) {
+      container.innerHTML = `<div class="eq-empty"><div class="ei">📭</div><p>No enquiries in this category.</p></div>`;
+      return;
+    }
+    container.innerHTML = list.map(e => renderEnquiryCard(e, false)).join('');
+  }
+
+  function renderEnquiryCard(e, compact) {
+    const timeAgo = formatTimeAgo(e.created_at);
+    const isNew = !e.read_at;
+    return `
+      <div class="enquiry-card">
+        <div class="eq-top">
+          <div>
+            <div class="eq-name">${e.homeowner_name || 'Homeowner'}${isNew ? '<span class="eq-new-badge">NEW</span>' : ''}</div>
+            <div class="eq-trade">${e.trade || 'Home improvement'} · ${timeAgo}</div>
+          </div>
+          ${e.budget ? `<div class="eq-budget">${e.budget}</div>` : ''}
+        </div>
+        ${!compact ? `<div class="eq-meta">
+          ${e.location ? `<span>📍 ${e.location}</span>` : ''}
+          ${e.homeowner_email ? `<span>✉ ${e.homeowner_email}</span>` : ''}
+          ${e.homeowner_phone ? `<span>📞 ${e.homeowner_phone}</span>` : ''}
+        </div>` : ''}
+        ${e.message ? `<div class="eq-message">"${e.message}"</div>` : ''}
+        <div class="eq-actions">
+          ${e.homeowner_email ? `<a href="mailto:${e.homeowner_email}?subject=Re: Your Estiquote enquiry" class="eq-btn eq-btn-primary">Reply by email</a>` : ''}
+          ${e.homeowner_phone ? `<a href="tel:${e.homeowner_phone}" class="eq-btn eq-btn-secondary">Call</a>` : ''}
+        </div>
+      </div>`;
+  }
+
+  // ── PROFILE EDITOR ─────────────────────────────────────
+  let builderProfile = {};
+
+  async function loadBuilderProfileForm() {
+    const user = EQ.getUserSync();
+    if (!user) return;
+
+    try {
+      const sb = window._eqSB;
+      if (sb) {
+        const { data } = await sb.from('builders').select('*').eq('user_id', user.id).single();
+        if (data) builderProfile = data;
+      }
+    } catch(e) { /* table may not exist yet */ }
+
+    // Fill form
+    const fields = {
+      'bp-bizname': builderProfile.business_name || user.name || '',
+      'bp-contact': builderProfile.contact_name || user.name || '',
+      'bp-phone':   builderProfile.phone || '',
+      'bp-postcode':builderProfile.postcode || user.postcode || '',
+      'bp-years':   builderProfile.years_experience || '',
+      'bp-about':   builderProfile.about || '',
+    };
+    Object.entries(fields).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+
+    // Tick trades
+    const trades = builderProfile.trades || [];
+    document.querySelectorAll('.bp-trade-cb').forEach(cb => {
+      cb.checked = trades.includes(cb.value);
+    });
+
+    // Tick accreditations
+    const accreds = builderProfile.accreditations || [];
+    document.querySelectorAll('.bp-accred-cb').forEach(cb => {
+      cb.checked = accreds.includes(cb.value);
+    });
+
+    // Photo limit badge
+    const user2 = EQ.getUserSync();
+    const photoLimits = { builder_pro: 'Unlimited', builder_featured: '20 photos', builder_listed: '5 photos' };
+
+    // Show verification status in profile tab
+    const verifiedBanner = document.getElementById('verification-status-banner');
+    if (verifiedBanner && user2) {
+      const isVerified = user2.verified === true;
+      const isInsured = user2.insured === true;
+      verifiedBanner.innerHTML = `
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;">
+          <div style="flex:1;min-width:180px;padding:14px 16px;border-radius:10px;background:${isVerified ? 'rgba(0,201,167,0.08)' : 'rgba(255,255,255,0.03)'};border:1px solid ${isVerified ? 'rgba(0,201,167,0.25)' : 'rgba(255,255,255,0.08)'};">
+            <div style="font-size:12px;font-weight:700;color:${isVerified ? 'var(--teal-light)' : 'var(--text-dim)'};margin-bottom:4px">${isVerified ? '✓ Verified' : '○ Not yet verified'}</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.4">${isVerified ? 'Active subscription — verified badge shows on your profile' : 'Complete payment to receive your Verified badge'}</div>
+          </div>
+          <div style="flex:1;min-width:180px;padding:14px 16px;border-radius:10px;background:${isInsured ? 'rgba(100,150,255,0.07)' : 'rgba(255,255,255,0.03)'};border:1px solid ${isInsured ? 'rgba(100,150,255,0.2)' : 'rgba(255,255,255,0.08)'};">
+            <div style="font-size:12px;font-weight:700;color:${isInsured ? 'rgba(150,190,255,0.9)' : 'var(--text-dim)'};margin-bottom:4px">${isInsured ? '🛡 Insured' : '○ Not yet insured'}</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.4">${isInsured ? 'Insurance certificate uploaded — Insured badge shows on profile' : 'Upload your Public Liability Insurance to get the Insured badge'}</div>
+          </div>
+        </div>`;
+    }
+    const badge = document.getElementById('photo-limit-badge');
+    if (badge) {
+      badge.textContent = photoLimits[user2?.plan] || '5 photos';
+      badge.className = user2?.plan === 'builder_pro' ? 'plan-badge-builder-pro' : user2?.plan === 'builder_featured' ? 'plan-badge-builder-featured' : 'plan-badge-builder-listed';
+      badge.style.cssText = 'font-size:11px;padding:3px 9px;border-radius:4px;font-weight:600;';
+    }
+
+    // Render photo grid
+    renderPhotoGrid(builderProfile.photos || []);
+  }
+
+  async function saveBuilderProfile() {
+    const user = await EQ.getUser();
+    if (!user) return;
+
+    const btn = document.getElementById('save-profile-btn');
+    if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
+
+    const trades = [...document.querySelectorAll('.bp-trade-cb:checked')].map(c => c.value);
+    const accreditations = [...document.querySelectorAll('.bp-accred-cb:checked')].map(c => c.value);
+
+    const profileData = {
+      user_id: user.id,
+      email: user.email,
+      business_name: document.getElementById('bp-bizname')?.value.trim() || '',
+      contact_name:  document.getElementById('bp-contact')?.value.trim() || '',
+      phone:         document.getElementById('bp-phone')?.value.trim() || '',
+      postcode:      document.getElementById('bp-postcode')?.value.trim().toUpperCase() || '',
+      years_experience: parseInt(document.getElementById('bp-years')?.value) || 0,
+      about:         document.getElementById('bp-about')?.value.trim() || '',
+      trades,
+      accreditations,
+      plan: user.plan,
+      verified: true,
+      updated_at: new Date().toISOString(),
+    };
+
+    try {
+      const sb = window._eqSB;
+      if (sb) {
+        const { error } = await sb.from('builders').upsert(profileData, { onConflict: 'user_id' });
+        if (error) throw error;
+        builderProfile = { ...builderProfile, ...profileData };
+      }
+      if (btn) { btn.textContent = '✓ Saved'; btn.style.color = 'var(--teal-light)'; }
+      setTimeout(() => { if (btn) { btn.textContent = 'Save profile'; btn.style.color = ''; btn.disabled = false; } }, 3000);
+    } catch(err) {
+      if (btn) { btn.textContent = 'Save profile'; btn.disabled = false; }
+      alert('Save failed: ' + (err.message || 'Please try again'));
+    }
+  }
+
+  // ── PHOTO UPLOAD ───────────────────────────────────────
+  function renderPhotoGrid(photos) {
+    const grid = document.getElementById('photo-grid');
+    if (!grid) return;
+    const user = EQ.getUserSync();
+    const limits = { builder_pro: 999, builder_featured: 20, builder_listed: 5 };
+    const limit = limits[user?.plan] || 5;
+    const slots = [];
+    photos.forEach((url, i) => {
+      slots.push(`<div class="photo-slot"><img src="${url}" alt="Portfolio photo ${i+1}"><button class="ps-del" onclick="deletePhoto(${i})" title="Remove photo">✕</button></div>`);
+    });
+    if (photos.length < limit) {
+      slots.push(`<div class="photo-slot" onclick="document.getElementById('photo-upload-input').click()"><span class="photo-add">+</span></div>`);
+    }
+    grid.innerHTML = slots.join('');
+  }
+
+  async function handlePhotoUpload(event) {
+    const files = [...event.target.files];
+    const user = await EQ.getUser();
+    if (!user || !files.length) return;
+    const limits = { builder_pro: 999, builder_featured: 20, builder_listed: 5 };
+    const limit = limits[user.plan] || 5;
+    const current = (builderProfile.photos || []).length;
+    const allowed = Math.min(files.length, limit - current);
+    if (allowed <= 0) { alert('Photo limit reached for your plan.'); return; }
+    const msg = document.getElementById('photo-upload-msg');
+    if (msg) { msg.textContent = 'Uploading...'; msg.style.display = 'block'; }
+
+    try {
+      const sb = window._eqSB;
+      const uploadedUrls = [];
+      for (let i = 0; i < allowed; i++) {
+        const file = files[i];
+        const ext = file.name.split('.').pop();
+        const path = `builder-photos/${user.id}/${Date.now()}-${i}.${ext}`;
+        const { data, error } = await sb.storage.from('builder-photos').upload(path, file, { upsert: true });
+        if (error) throw error;
+        const { data: urlData } = sb.storage.from('builder-photos').getPublicUrl(path);
+        uploadedUrls.push(urlData.publicUrl);
+      }
+      builderProfile.photos = [...(builderProfile.photos || []), ...uploadedUrls];
+      await sb.from('builders').upsert({ user_id: user.id, photos: builderProfile.photos }, { onConflict: 'user_id' });
+      renderPhotoGrid(builderProfile.photos);
+      if (msg) { msg.textContent = `✓ ${uploadedUrls.length} photo${uploadedUrls.length > 1 ? 's' : ''} uploaded`; }
+      setTimeout(() => { if (msg) msg.style.display = 'none'; }, 3000);
+    } catch(err) {
+      if (msg) { msg.textContent = 'Upload failed: ' + (err.message || 'Please try again'); }
+    }
+    event.target.value = '';
+  }
+
+  async function deletePhoto(index) {
+    if (!confirm('Remove this photo?')) return;
+    builderProfile.photos = (builderProfile.photos || []).filter((_, i) => i !== index);
+    const sb = window._eqSB;
+    if (sb) await sb.from('builders').upsert({ user_id: EQ.getUserSync()?.id, photos: builderProfile.photos }, { onConflict: 'user_id' });
+    renderPhotoGrid(builderProfile.photos);
+  }
+
+  // ── COMPLIANCE DOCUMENTS ───────────────────────────────
+  let builderDocs = [];
+
+  async function loadBuilderDocs() {
+    const user = EQ.getUserSync();
+    if (!user) return;
+    try {
+      const sb = window._eqSB;
+      if (sb) {
+        const { data } = await sb.from('builder_docs').select('*').eq('user_id', user.id).order('expires_at');
+        builderDocs = data || [];
+      }
+    } catch(e) { builderDocs = []; }
+    renderDocsList();
+  }
+
+  function renderDocsList() {
+    const container = document.getElementById('docs-list');
+    if (!container) return;
+    const defaults = [
+      { type: 'Public Liability Insurance', icon: '🛡' },
+      { type: 'Gas Safe Certificate', icon: '🔥' },
+      { type: 'NICEIC / NAPIT Approval', icon: '⚡' },
+      { type: 'Employers Liability Insurance', icon: '👷' },
+      { type: 'FMB / Trade Body Membership', icon: '🏗' },
+    ];
+    const docTypes = defaults.map(d => {
+      const existing = builderDocs.find(bd => bd.doc_type === d.type);
+      return { ...d, existing };
+    });
+    container.innerHTML = docTypes.map(d => {
+      const exp = d.existing?.expires_at ? new Date(d.existing.expires_at) : null;
+      const now = new Date();
+      const daysLeft = exp ? Math.floor((exp - now) / (1000*60*60*24)) : null;
+      let expiryClass = 'ok', expiryText = '';
+      if (exp) {
+        if (daysLeft < 0) { expiryClass = 'expired'; expiryText = 'EXPIRED'; }
+        else if (daysLeft < 30) { expiryClass = 'warn'; expiryText = `Expires in ${daysLeft} days`; }
+        else { expiryClass = 'ok'; expiryText = `Valid until ${exp.toLocaleDateString('en-GB',{month:'short',year:'numeric'})}`; }
+      }
+      return `<div class="doc-row">
+        <div class="doc-icon">${d.icon}</div>
+        <div class="doc-info">
+          <div class="doc-name">${d.type}</div>
+          ${d.existing ? `<div class="doc-expiry ${expiryClass}">${expiryText || 'Uploaded'}</div>` : `<div class="doc-expiry" style="color:var(--text-dim)">Not uploaded</div>`}
+        </div>
+        <button class="doc-upload-btn" onclick="uploadDocType('${d.type}')">
+          ${d.existing ? '↻ Update' : '+ Upload'}
+        </button>
+      </div>`;
+    }).join('');
+  }
+
+  function showAddDocModal() {
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(11,17,32,0.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;';
+    modal.innerHTML = `
+      <div style="background:var(--navy-2);border:1px solid rgba(0,201,167,0.2);border-radius:16px;padding:28px;max-width:420px;width:100%;">
+        <div style="font-family:var(--serif);font-size:18px;font-weight:800;color:var(--text);margin-bottom:16px;">Add compliance document</div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label>Document type</label>
+          <select id="modal-doc-type" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);">
+            <option>Public Liability Insurance</option>
+            <option>Gas Safe Certificate</option>
+            <option>NICEIC / NAPIT Approval</option>
+            <option>Employers Liability Insurance</option>
+            <option>FMB / Trade Body Membership</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label>Expiry date</label>
+          <input type="date" id="modal-doc-expiry" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);">
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button onclick="this.closest('[style*=fixed]').remove()" style="flex:1;padding:10px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer;">Cancel</button>
+          <button onclick="saveDocEntry()" style="flex:1;padding:10px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Save document</button>
+        </div>
+      </div>`;
+    modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
+    document.body.appendChild(modal);
+  }
+
+  function uploadDocType(type) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.jpg,.jpeg,.png';
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const user = EQ.getUserSync();
+      if (!user) return;
+      try {
+        const sb = window._eqSB;
+        const path = `builder-docs/${user.id}/${Date.now()}-${file.name}`;
+        await sb.storage.from('builder-docs').upload(path, file, { upsert: true });
+        const { data: urlData } = sb.storage.from('builder-docs').getPublicUrl(path);
+        const expiry = prompt('Enter expiry date (DD/MM/YYYY) or leave blank:');
+        const expiresAt = expiry ? parseDateInput(expiry) : null;
+        await sb.from('builder_docs').upsert({
+          user_id: user.id,
+          doc_type: type,
+          file_url: urlData.publicUrl,
+          expires_at: expiresAt,
+          uploaded_at: new Date().toISOString(),
+        }, { onConflict: 'user_id,doc_type' });
+
+        // Option B: PLI upload triggers insured=true badge
+        // PLI and Employers Liability both count for the Insured badge
+        const insuranceDocs = ['Public Liability Insurance', 'Employers Liability Insurance'];
+        if (insuranceDocs.includes(type)) {
+          await sb.from('builders').update({
+            insured: true,
+            insured_at: new Date().toISOString(),
+            insured_doc_type: type,
+          }).eq('id', user.id);
+          // Show confirmation to user
+          const badge = document.getElementById('insurance-badge-status');
+          if (badge) {
+            badge.innerHTML = '<span style="color:rgba(150,190,255,0.9);font-size:12px;font-weight:700">🛡 Insured badge activated — visible on your profile</span>';
+          } else {
+            const msg = document.createElement('div');
+            msg.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(26,82,118,0.95);border:1px solid rgba(100,150,255,0.3);border-radius:10px;padding:12px 18px;font-size:13px;color:rgba(150,190,255,0.95);font-weight:600;z-index:9999;';
+            msg.textContent = '🛡 Insured badge activated — now visible on your profile';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 4000);
+          }
+        }
+        await loadBuilderDocs();
+      } catch(err) { alert('Upload failed: ' + err.message); }
+    };
+    input.click();
+  }
+
+  async function saveDocEntry() {
+    const type = document.getElementById('modal-doc-type')?.value;
+    const expiry = document.getElementById('modal-doc-expiry')?.value;
+    const user = EQ.getUserSync();
+    if (!user || !type) return;
+    try {
+      const sb = window._eqSB;
+      await sb.from('builder_docs').upsert({
+        user_id: user.id,
+        doc_type: type,
+        expires_at: expiry || null,
+        uploaded_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,doc_type' });
+      document.querySelector('[style*=fixed]')?.remove();
+      await loadBuilderDocs();
+    } catch(err) { alert('Save failed: ' + err.message); }
+  }
+
+  function parseDateInput(str) {
+    const parts = str.split(/[\/\-]/).map(Number);
+    if (parts.length === 3) return new Date(parts[2], parts[1]-1, parts[0]).toISOString();
+    return null;
+  }
+
+  // ── ANALYTICS ──────────────────────────────────────────
+  async function loadBuilderAnalytics() {
+    const user = EQ.getUserSync();
+    if (!user) return;
+    // For now show compelling demo data with note
+    // Real tracking requires profile view events stored in Supabase
+    const mockData = {
+      views: Math.floor(Math.random()*40)+15,
+      clicks: Math.floor(Math.random()*12)+4,
+      enquiriesMonth: allEnquiries.filter(e => {
+        const d = new Date(e.created_at);
+        return d.getMonth() === new Date().getMonth();
+      }).length || Math.floor(Math.random()*3)+1,
+    };
+    const conversion = mockData.views > 0 ? ((mockData.enquiriesMonth / mockData.views)*100).toFixed(1) : '0';
+
+    const els = {
+      'an-views': mockData.views,
+      'an-clicks': mockData.clicks,
+      'an-enquiries-month': mockData.enquiriesMonth,
+      'an-conversion': conversion + '%',
+    };
+    Object.entries(els).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    });
+
+    // Profile strength tips
+    const tips = [];
+    if (!builderProfile.about || builderProfile.about.length < 50) tips.push({ icon:'📝', text:'Add a detailed business description — profiles with 100+ words get 2× more enquiries' });
+    if (!builderProfile.photos?.length) tips.push({ icon:'📸', text:'Upload at least 3 portfolio photos — homeowners choose visually' });
+    if (!builderProfile.trades?.length) tips.push({ icon:'🔧', text:'Select your trades so homeowners searching for your specialty can find you' });
+    if (builderDocs.length === 0) tips.push({ icon:'🛡', text:'Upload your insurance certificate — the Insured badge increases contact rate by 40%' });
+    if (tips.length === 0) tips.push({ icon:'⭐', text:'Your profile is looking strong. Keep responding to enquiries promptly to maintain your response time badge.' });
+
+    const tipsEl = document.getElementById('profile-strength-tips');
+    if (tipsEl) {
+      tipsEl.innerHTML = tips.map(t => `
+        <div style="display:flex;gap:12px;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted);">
+          <span>${t.icon}</span><span>${t.text}</span>
+        </div>`).join('');
+    }
+  }
+
+  // ── UTILITIES ──────────────────────────────────────────
+  function getTimeOfDay() {
+    const h = new Date().getHours();
+    if (h < 12) return 'morning';
+    if (h < 17) return 'afternoon';
+    return 'evening';
+  }
+
+  function formatTimeAgo(iso) {
+    if (!iso) return '';
+    const diff = (Date.now() - new Date(iso)) / 1000;
+    if (diff < 3600) return Math.floor(diff/60) + ' mins ago';
+    if (diff < 86400) return Math.floor(diff/3600) + ' hrs ago';
+    return Math.floor(diff/86400) + ' days ago';
+  }
+
+  // Pre-render materials table data
+  renderMaterialsTable();
+
+  // Annual billing upsell nudge (monetization skill)
+  function showAnnualUpsell() {
+    const user = EQ.getUserSync();
+    if (!user || user.plan === 'free') return;
+    // Show to monthly subscribers only — after 7 days
+    const signupDate = new Date(user.created_at || Date.now());
+    const daysSince = (Date.now() - signupDate) / 86400000;
+    if (daysSince < 7) return;
+    if (localStorage.getItem('eq_annual_dismissed')) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'annual-upsell';
+    banner.style.cssText = 'background:linear-gradient(135deg,rgba(0,201,167,0.06),rgba(0,201,167,0.02));border:1px solid rgba(0,201,167,0.2);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:1rem;';
+    banner.innerHTML = `
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">💡 Save 20% with annual billing</div>
+        <div style="font-size:12px;color:var(--text-muted)">Switch to annual and save 2 months every year. Cancel anytime.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a href="pricing.html" style="padding:8px 16px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:700;text-decoration:none">Switch to annual →</a>
+        <button onclick="localStorage.setItem('eq_annual_dismissed','1');this.closest('#annual-upsell').remove()" style="background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;line-height:1" aria-label="Dismiss">✕</button>
+      </div>`;
+    const main = document.getElementById('tab-overview') || document.querySelector('.dash-main');
+    if (main) main.prepend(banner);
+  }
+  setTimeout(showAnnualUpsell, 2000);
+
+  showTab('overview');
+  loadDashboard(); // async - runs in background
+
+  // ── ONBOARDING TOUR ───────────────────────────────────────
+  function showOnboarding(user) {
+    if (localStorage.getItem('eq_tour_done')) return;
+
+    const isBuilder = user && (
+      user.plan === 'builder_listed' ||
+      user.plan === 'builder_featured' ||
+      user.plan === 'builder_pro'
+    );
+
+    const homeownerSteps = [
+      {
+        icon: '🎯',
+        title: 'Welcome to Estiquote',
+        body: 'You now know the number before you call anyone. This is your cost intelligence dashboard — let\'s show you around in 3 quick steps.',
+        cta: 'Show me →'
+      },
+      {
+        icon: '📐',
+        title: 'Run your first estimate',
+        body: 'Click <strong style="color:var(--teal-light)">+ New estimate</strong> top right. Select your trade, region and spec level — you\'ll have an accurate regional cost range in 90 seconds.',
+        cta: 'Got it →'
+      },
+      {
+        icon: '🏗',
+        title: 'Find a builder who gets it',
+        body: 'Head to <strong style="color:var(--teal-light)">Find Builders</strong> to contact local tradespeople. Because you already ran an estimate, they know you\'re serious — not just browsing.',
+        cta: 'Let\'s go →'
+      }
+    ];
+
+    const builderSteps = [
+      {
+        icon: '🏗',
+        title: 'Welcome to Estiquote',
+        body: 'Every homeowner who contacts you has already run a cost estimate and confirmed their budget. No shared leads. No race to the bottom on price. Let\'s get your profile working.',
+        cta: 'Show me around →'
+      },
+      {
+        icon: '📋',
+        title: 'Complete your profile',
+        body: 'Go to <strong style="color:var(--teal-light)">Settings</strong> to add your business details, trade specialisms, and service area. A complete profile gets 3× more enquiries than an incomplete one.',
+        cta: 'Got it →'
+      },
+      {
+        icon: '📸',
+        title: 'Add portfolio photos',
+        body: 'Homeowners choose builders based on previous work. Upload your best project photos in Settings — before and after shots work best. Aim for at least 5 to start.',
+        cta: 'Got it →'
+      },
+      {
+        icon: '🔔',
+        title: 'You\'re all set',
+        body: 'When a homeowner contacts you, you\'ll receive an email with their project details and confirmed budget. Respond quickly — homeowners who get a reply within 2 hours convert at 4× the rate.',
+        cta: 'Let\'s go →'
+      }
+    ];
+
+    const steps = isBuilder ? builderSteps : homeownerSteps;
+    const accentColor = isBuilder ? 'rgba(245,158,11,0.3)' : 'rgba(0,201,167,0.25)';
+    const tourKey = isBuilder ? 'eq_builder_tour_done' : 'eq_tour_done';
+
+    if (localStorage.getItem(tourKey)) return;
+
+    let current = 0;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'eq-tour-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(11,17,32,0.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;animation:fadeIn 0.3s ease;';
+
+    function renderStep() {
+      const s = steps[current];
+      const pct = Math.round(((current + 1) / steps.length) * 100);
+      overlay.innerHTML = `
+        <div style="background:var(--navy-2);border:1px solid ${accentColor};border-radius:20px;padding:40px;max-width:480px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,0.6);">
+          <div style="font-size:52px;margin-bottom:16px;line-height:1;">${s.icon}</div>
+
+          <!-- Progress dots -->
+          <div style="display:flex;justify-content:center;gap:6px;margin-bottom:24px;">
+            ${steps.map((_,i) => `<div style="width:${i===current?'22px':'8px'};height:8px;border-radius:4px;background:${i===current?'var(--teal)':i<current?'rgba(0,201,167,0.4)':'rgba(255,255,255,0.1)'};transition:all 0.3s;"></div>`).join('')}
+          </div>
+
+          <!-- Step counter -->
+          <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px;">Step ${current+1} of ${steps.length}</div>
+
+          <h2 style="font-family:var(--serif);font-size:22px;font-weight:800;color:var(--text);margin-bottom:12px;line-height:1.2;">${s.title}</h2>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.75;margin-bottom:28px;">${s.body}</p>
+
+          <!-- Progress bar -->
+          <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:4px;margin-bottom:24px;">
+            <div style="width:${pct}%;height:100%;border-radius:4px;background:var(--teal);transition:width 0.4s ease;"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;">
+            <button onclick="window.skipTour()" style="padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer;white-space:nowrap;">Skip</button>
+            <button onclick="window.nextTourStep()" style="padding:10px 28px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;">${s.cta}</button>
+          </div>
+
+        </div>`;
+    }
+
+    window.nextTourStep = function() {
+      current++;
+      if (current >= steps.length) {
+        window.skipTour();
+      } else {
+        renderStep();
+      }
+    };
+
+    window.skipTour = function() {
+      localStorage.setItem(tourKey, '1');
+      overlay.style.animation = 'fadeOut 0.2s ease forwards';
+      setTimeout(() => overlay.remove(), 200);
+    };
+
+    renderStep();
+    document.body.appendChild(overlay);
+  }
+
+  // Show tour after dashboard loads — pass user so we know homeowner vs builder
+  setTimeout(async () => {
+    const user = await EQ.getUser();
+    if (user) showOnboarding(user);
+  }, 900);
+
+  function showPasswordResetModal() {
+    document.body.innerHTML = `
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);padding:2rem;">
+        <div style="background:var(--navy-2);border:1px solid rgba(0,201,167,0.2);border-radius:16px;padding:2rem;width:100%;max-width:400px;">
+          <div style="font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px;">Set new password</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem;">Enter your new password below.</div>
+          <div id="reset-msg" style="display:none;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;"></div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px;">New password</label>
+            <input type="password" id="new-pass" placeholder="8+ characters" style="width:100%;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;">
+          </div>
+          <div style="margin-bottom:1.5rem;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px;">Confirm password</label>
+            <input type="password" id="confirm-pass" placeholder="Same password again" style="width:100%;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;">
+          </div>
+          <button onclick="setNewPassword()" style="width:100%;padding:14px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;border-radius:8px;color:#0b1120;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;">Set new password →</button>
+        </div>
+      </div>`;
+  }
+
+  async function setNewPassword() {
+    const pass = document.getElementById('new-pass').value;
+    const confirm = document.getElementById('confirm-pass').value;
+    const msg = document.getElementById('reset-msg');
+
+    if (pass.length < 8) { msg.style.cssText='display:block;background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);color:rgba(255,150,130,0.9);'; msg.textContent='Password must be at least 8 characters.'; return; }
+    if (pass !== confirm) { msg.style.cssText='display:block;background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);color:rgba(255,150,130,0.9);'; msg.textContent='Passwords do not match.'; return; }
+
+    const sb = getClient();
+    const { error } = await sb.auth.updateUser({ password: pass });
+    if (error) { msg.style.cssText='display:block;background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);color:rgba(255,150,130,0.9);'; msg.textContent=error.message; return; }
+
+    msg.style.cssText='display:block;background:rgba(0,201,167,0.08);border:1px solid rgba(0,201,167,0.25);color:#00c9a7;';
+    msg.textContent='Password updated! Redirecting to your dashboard...';
+    window.history.replaceState({}, '', 'dashboard.html');
+    setTimeout(() => window.location.reload(), 1500);
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

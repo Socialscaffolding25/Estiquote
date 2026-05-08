@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b1120"/>
+  <rect x="0" y="0" width="5" height="630" fill="#00c9a7"/>
+  <text x="100" y="280" font-family="Georgia,serif" font-size="96" font-weight="900" fill="#ffffff">Esti<tspan fill="#00c9a7">quote</tspan></text>
+  <text x="100" y="350" font-family="Arial,sans-serif" font-size="32" fill="rgba(255,255,255,0.6)">UK Home Improvement Cost Intelligence</text>
+  <text x="100" y="410" font-family="Arial,sans-serif" font-size="28" fill="rgba(255,255,255,0.4)">Know the number before you call anyone.</text>
+  <rect x="100" y="460" width="220" height="60" rx="8" fill="#00c9a7"/>
+  <text x="150" y="498" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#0b1120">Get started free →</text>
+</svg>

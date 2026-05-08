@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Local Builders — Estiquote</title>
+<meta name="description" content="Find verified local builders, contractors and tradespeople near you. Search by trade, read reviews, and contact directly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+/* NAV */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(11,17,32,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1.5rem;
+}
+
+.top-logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--teal-light);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.top-logo span { color: var(--text); opacity: 0.4; }
+
+.search-bar {
+  flex: 1;
+  max-width: 520px;
+  display: flex;
+  gap: 8px;
+}
+
+.search-bar input {
+  flex: 1;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.search-bar input:focus { border-color: var(--teal); background: rgba(0,201,167,0.04); }
+.search-bar input::placeholder { color: var(--text-dim); }
+
+.search-btn {
+  height: 40px;
+  padding: 0 16px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.search-btn:hover { opacity: 0.88; }
+
+.trade-filters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+
+.trade-filters::-webkit-scrollbar { display: none; }
+
+.filter-pill {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.filter-pill:hover { border-color: var(--border-hover); color: var(--teal-light); }
+.filter-pill.active { border-color: var(--teal); background: var(--teal-dim); color: var(--teal-light); font-weight: 500; }
+
+.top-nav-links { display: flex; gap: 1rem; margin-left: auto; flex-shrink: 0; }
+.top-nav-link { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: var(--transition); white-space: nowrap; }
+.top-nav-link:hover { color: var(--text); }
+.top-nav-link.cta { color: var(--teal-light); font-weight: 600; }
+
+/* MAIN LAYOUT */
+.map-layout {
+  display: flex;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 380px;
+  flex-shrink: 0;
+  background: var(--navy-2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sidebar-count {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.sidebar-count strong { color: var(--teal-light); }
+
+.sort-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.sort-label { font-size: 12px; color: var(--text-dim); }
+
+.sort-select {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+  font-family: var(--sans);
+  outline: none;
+  cursor: pointer;
+}
+
+.builder-list {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.builder-card {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.builder-card:hover { background: rgba(0,201,167,0.04); }
+.builder-card.active { background: rgba(0,201,167,0.07); border-left: 3px solid var(--teal); padding-left: calc(1.25rem - 3px); }
+
+.bc-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.bc-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--navy-4);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.bc-verified {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: var(--teal);
+  border-radius: 50%;
+  border: 2px solid var(--navy-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: var(--navy);
+}
+
+.bc-info { flex: 1; min-width: 0; }
+
+.bc-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bc-trade { font-size: 12px; color: var(--text-muted); }
+
+.bc-tier {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.bc-tier.featured { background: rgba(0,201,167,0.12); color: var(--teal-light); border: 1px solid rgba(0,201,167,0.25); }
+.bc-tier.pro { background: rgba(255,200,50,0.1); color: rgba(255,220,80,0.9); border: 1px solid rgba(255,200,50,0.25); }
+.bc-tier.listed { background: rgba(255,255,255,0.05); color: var(--text-dim); border: 1px solid var(--border); }
+
+.bc-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bc-stars { color: var(--teal); font-size: 11px; letter-spacing: 1px; }
+.bc-rating { font-size: 12px; color: var(--text-muted); }
+.bc-dist { font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 3px; }
+
+.bc-trades {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.bc-trade-tag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+/* MAP */
+.map-container {
+  flex: 1;
+  position: relative;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  background: var(--navy-3);
+}
+
+/* Leaflet dark theme overrides */
+.leaflet-container { background: #0f1a2e; font-family: var(--sans); }
+.leaflet-tile { filter: brightness(0.85) saturate(0.7) hue-rotate(180deg); }
+.leaflet-control-zoom { border: 1px solid var(--border) !important; border-radius: var(--radius-sm) !important; overflow: hidden; }
+.leaflet-control-zoom a { background: var(--navy-2) !important; color: var(--text-muted) !important; border-bottom: 1px solid var(--border) !important; width: 30px !important; height: 30px !important; line-height: 30px !important; }
+.leaflet-control-zoom a:hover { background: var(--navy-3) !important; color: var(--teal-light) !important; }
+.leaflet-control-attribution { background: rgba(11,17,32,0.8) !important; color: var(--text-dim) !important; font-size: 10px !important; }
+.leaflet-control-attribution a { color: var(--text-dim) !important; }
+
+/* MAP OVERLAY CONTROLS */
+.map-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-btn {
+  padding: 8px 14px;
+  background: rgba(11,17,32,0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.map-btn:hover { border-color: var(--border-hover); color: var(--teal-light); }
+.map-btn.primary { background: linear-gradient(135deg, var(--teal), var(--teal-light)); color: var(--navy); border-color: transparent; font-weight: 600; }
+.map-btn.primary:hover { opacity: 0.88; color: var(--navy); }
+
+/* BUILDER DETAIL PANEL */
+.detail-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--navy-2);
+  border-top: 1px solid rgba(0,201,167,0.2);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 1.5rem;
+  z-index: 500;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  max-height: 65%;
+  overflow-y: auto;
+}
+
+.detail-panel.open { transform: translateY(0); }
+
+.dp-handle {
+  width: 36px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 1.25rem;
+}
+
+.dp-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 1.25rem;
+}
+
+.dp-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--navy-4);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.dp-name { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.dp-trade { font-size: 14px; color: var(--text-muted); margin-bottom: 6px; }
+
+.dp-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.dp-badge {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.dp-badge.verified { background: rgba(0,201,167,0.1); color: var(--teal-light); border: 1px solid rgba(0,201,167,0.25); }
+.dp-badge.insured { background: rgba(100,150,255,0.08); color: rgba(150,190,255,0.9); border: 1px solid rgba(100,150,255,0.2); }
+.dp-badge.years { background: rgba(255,255,255,0.05); color: var(--text-dim); border: 1px solid var(--border); }
+
+.dp-stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.dp-stat {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  text-align: center;
+}
+
+.dp-stat-val { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--text); display: block; }
+.dp-stat-label { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+.dp-about { font-size: 13px; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem; }
+
+.dp-trades-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.dp-trade-tag {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--teal-dim);
+  border: 1px solid rgba(0,201,167,0.2);
+  color: var(--teal-light);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dp-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.dp-btn-primary {
+  padding: 12px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border: none;
+  border-radius: var(--radius);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.dp-btn-primary:hover { opacity: 0.88; }
+
+.dp-btn-secondary {
+  padding: 12px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.dp-btn-secondary:hover { border-color: var(--border-hover); color: var(--teal-light); }
+
+.dp-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.dp-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+/* CUSTOM MARKER STYLES */
+.custom-marker {
+  background: var(--navy-3);
+  border: 2px solid var(--teal);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 0 0 3px rgba(0,201,167,0.2), 0 4px 12px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.custom-marker.featured {
+  border-color: #ffd700;
+  box-shadow: 0 0 0 3px rgba(255,215,0,0.2), 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.custom-marker.pro {
+  border-color: #ffd700;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+}
+
+.custom-marker:hover { transform: scale(1.15); }
+
+/* RADIUS CIRCLE */
+.radius-control {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 500;
+  background: rgba(11,17,32,0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  min-width: 180px;
+}
+
+.rc-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600; }
+.rc-val { font-size: 16px; font-weight: 600; color: var(--teal-light); font-family: var(--serif); margin-bottom: 8px; }
+
+/* EMPTY STATE */
+.empty-builders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-builders .ei { font-size: 32px; margin-bottom: 10px; opacity: 0.4; }
+.empty-builders p { font-size: 13px; line-height: 1.6; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .trade-filters { display: none; }
+  .top-nav-links { display: none; }
+  .search-bar { max-width: 100%; }
+  .detail-panel { left: 0; right: 0; }
+}
+
+  /* ── MOBILE LAYOUT FOR FIND BUILDERS ── */
+  @media (max-width: 640px) {
+    .map-layout {
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto 1fr !important;
+      height: auto !important;
+    }
+    .builders-sidebar {
+      order: 1;
+      max-height: none !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    #map {
+      order: 2;
+      height: 280px !important;
+      border-radius: 12px !important;
+      margin: 0 16px 16px !important;
+    }
+    .map-wrapper {
+      order: 2;
+      height: 280px !important;
+    }
+    .search-bar { margin: 12px 16px !important; }
+    .trade-filters { margin: 0 16px 12px !important; }
+    .builder-card { margin: 0 16px 8px !important; }
+    .detail-panel { 
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 1000 !important;
+      border-radius: 0 !important;
+      overflow-y: auto !important;
+    }
+    .sidebar-header { padding: 12px 16px !important; }
+    .sidebar-count { font-size: 13px !important; }
+  }
+
+  /* ── MAP TOGGLE BUTTON (mobile only) ── */
+  .map-toggle-btn {
+    display: none;
+    width: calc(100% - 32px);
+    margin: 0 16px 12px;
+    padding: 10px;
+    background: rgba(0,201,167,0.08);
+    border: 1px solid rgba(0,201,167,0.25);
+    border-radius: 8px;
+    color: var(--teal-light);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+  @media (max-width: 640px) {
+    .map-toggle-btn { display: block; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/stripe-links.js"></script>
+  <meta name="theme-color" content="#00c9a7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Estiquote">
+  <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://estiquote.co.uk/find-builders.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estiquote.co.uk/find-builders.html">
+  <meta property="og:title" content="Find Local Builders — Estiquote">
+  <meta property="og:description" content="Find verified local builders, contractors and tradespeople near you. Every builder knows you already have a cost estimate.">
+  <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
+  <meta property="og:site_name" content="Estiquote">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Find Local Builders — Estiquote">
+  <meta name="twitter:description" content="Find verified local builders, contractors and tradespeople near you. Every builder knows you already have a cost estimate.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Find Local Builders — Estiquote",
+  "description": "Find verified local builders and tradespeople near you. All homeowners have confirmed their budget before contacting you.",
+  "url": "https://estiquote.co.uk/find-builders.html",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://estiquote.co.uk"},
+      {"@type": "ListItem", "position": 2, "name": "Find Builders", "item": "https://estiquote.co.uk/find-builders.html"}
+    ]
+  }
+}
+</script>
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">Find Vetted Local Builders Near You — Extensions, Kitchens, Lofts, Bathrooms</h1>
+
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="index.html" class="top-logo">Esti<span>quote</span></a>
+
+  <div class="search-bar">
+    <input type="text" id="postcodeSearch" placeholder="Enter postcode to search — e.g. TN1 1AA" value="TN1">
+    <button class="search-btn" onclick="searchArea()">Search →</button>
+  </div>
+
+  <div class="trade-filters" id="tradeFilters">
+    <button class="filter-pill active" onclick="filterTrade('all',this)">All trades</button>
+    <button class="filter-pill" onclick="filterTrade('extension',this)">🏗 Extensions</button>
+    <button class="filter-pill" onclick="filterTrade('kitchen',this)">🍳 Kitchen</button>
+    <button class="filter-pill" onclick="filterTrade('bathroom',this)">🚿 Bathroom</button>
+    <button class="filter-pill" onclick="filterTrade('electrical',this)">⚡ Electrical</button>
+    <button class="filter-pill" onclick="filterTrade('plumbing',this)">🔧 Plumbing</button>
+    <button class="filter-pill" onclick="filterTrade('structural',this)">🏛 Structural</button>
+    <button class="filter-pill" onclick="filterTrade('decoration',this)">🎨 Decoration</button>
+  </div>
+
+  <div class="top-nav-links">
+    <a href="estimator.html" class="top-nav-link">Estimator</a>
+    <button id="logout-btn" onclick="EQ.signOut()" style="display:none;padding:7px 14px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:13px;cursor:pointer;">Sign out</button>
+    <a href="builder-signup.html" class="top-nav-link cta">List your business →</a>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="map-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-count" id="builderCount">Finding builders near <strong>Tunbridge Wells</strong>...</div>
+      <div class="sort-row">
+        <span class="sort-label">Sort by</span>
+        <select class="sort-select" onchange="sortBuilders(this.value)">
+          <option value="distance">Nearest first</option>
+          <option value="rating">Highest rated</option>
+          <option value="tier">Featured first</option>
+        </select>
+      </div>
+    </div>
+    <div class="builder-list" id="builderList">
+      <div class="empty-builders">
+        <div class="ei">📍</div>
+        <p>Loading builders in your area...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-container">
+    <button class="map-toggle-btn" onclick="toggleMap()" id="map-toggle-btn">🗺 Show map</button>
+    <div id="map" style="display:none"></div>
+
+    <!-- MAP OVERLAY -->
+    <div class="map-overlay">
+      <button class="map-btn primary" onclick="window.location.href='builder-signup.html'">
+        🏗 List your business
+      </button>
+      <button class="map-btn" onclick="locateMe()">
+        📍 Use my location
+      </button>
+      <button class="map-btn" id="radiusToggle" onclick="toggleRadius()">
+        ⭕ Show 10 mile radius
+      </button>
+    </div>
+
+    <!-- RADIUS CONTROL -->
+    <div class="radius-control">
+      <div class="rc-label">Search radius</div>
+      <div class="rc-val" id="radiusVal">10 miles</div>
+      <input type="range" id="radiusSlider" min="2" max="50" value="10" step="1" oninput="updateRadius(this.value)">
+    </div>
+
+    <!-- BUILDER DETAIL PANEL -->
+    <div class="detail-panel" id="detailPanel">
+      <div class="dp-handle"></div>
+      <button class="dp-close" onclick="closeDetail()">✕</button>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+// ============================================================
+// DEMO BUILDER DATA — shown only when real DB returns 0 results
+// ============================================================
+const DEMO_BUILDERS = [
+  {
+    id: 1, name: 'Hartwood Construction', emoji: '🏗',
+    trades: ['Extensions','Structural','Loft Conversions','Renovations'],
+    primaryTrade: 'extension',
+    lat: 51.132, lng: 0.263,
+    rating: 4.9, reviews: 47, distance: 0.8,
+    tier: 'pro', verified: true, insured: true, years: 12,
+    about: 'Award-winning design and build contractor covering SE England. Specialists in extensions, barn conversions and structural works. RICS-affiliated, fully insured.',
+    phone: '01892 555 0100',
+    area: 'Tunbridge Wells, Kent',
+    responseTime: '< 2 hrs',
+    completedJobs: 184
+  },
+  {
+    id: 2, name: 'Apex Kitchen Installations', emoji: '🍳',
+    trades: ['Kitchen Renovation','Bathroom Fit-Out','Tiling'],
+    primaryTrade: 'kitchen',
+    lat: 51.118, lng: 0.271,
+    rating: 4.8, reviews: 31, distance: 1.4,
+    tier: 'featured', verified: true, insured: true, years: 8,
+    about: 'Premium kitchen and bathroom specialists. Handmade kitchen units, quartz worktops, full project management from design to completion.',
+    phone: '01892 555 0201',
+    area: 'Tonbridge, Kent',
+    responseTime: '< 4 hrs',
+    completedJobs: 96
+  },
+  {
+    id: 3, name: 'SureSpark Electrical', emoji: '⚡',
+    trades: ['Electrical','EV Chargers','Consumer Units'],
+    primaryTrade: 'electrical',
+    lat: 51.141, lng: 0.252,
+    rating: 4.9, reviews: 68, distance: 1.9,
+    tier: 'featured', verified: true, insured: true, years: 15,
+    about: 'NICEIC registered electricians. Full rewires, consumer unit upgrades, EV charger installation. All work certified and Building Regs compliant.',
+    phone: '01892 555 0312',
+    area: 'Tunbridge Wells, Kent',
+    responseTime: '< 1 hr',
+    completedJobs: 312
+  },
+  {
+    id: 4, name: 'FlowRight Plumbing', emoji: '🔧',
+    trades: ['Plumbing','Central Heating','Boilers','Underfloor Heating'],
+    primaryTrade: 'plumbing',
+    lat: 51.126, lng: 0.281,
+    rating: 4.7, reviews: 24, distance: 2.3,
+    tier: 'listed', verified: true, insured: true, years: 6,
+    about: 'Gas Safe registered plumbers and heating engineers. Boiler installation and servicing, full central heating systems, underfloor heating.',
+    phone: '01892 555 0423',
+    area: 'Pembury, Kent',
+    responseTime: '< 6 hrs',
+    completedJobs: 143
+  },
+  {
+    id: 5, name: 'Crest Loft Conversions', emoji: '🔨',
+    trades: ['Loft Conversions','Extensions','Carpentry'],
+    primaryTrade: 'extension',
+    lat: 51.148, lng: 0.244,
+    rating: 4.6, reviews: 19, distance: 3.1,
+    tier: 'listed', verified: true, insured: false, years: 4,
+    about: 'Specialist loft conversion company. Dormer, hip-to-gable, Velux and mansard conversions. Free survey and planning drawings included.',
+    phone: '01892 555 0534',
+    area: 'Southborough, Kent',
+    responseTime: '< 24 hrs',
+    completedJobs: 67
+  },
+  {
+    id: 6, name: 'Premier Decorators SW', emoji: '🎨',
+    trades: ['Decoration','Plastering','Rendering'],
+    primaryTrade: 'decoration',
+    lat: 51.112, lng: 0.255,
+    rating: 4.8, reviews: 52, distance: 3.8,
+    tier: 'featured', verified: true, insured: true, years: 11,
+    about: 'Interior and exterior decorating specialists. Period properties a speciality. Limewash, microcement, traditional cornice work. Fully insured.',
+    phone: '01892 555 0645',
+    area: 'Crowborough, East Sussex',
+    responseTime: '< 4 hrs',
+    completedJobs: 228
+  },
+  {
+    id: 7, name: 'Solid Ground Structural', emoji: '🏛',
+    trades: ['Structural Works','Underpinning','Steel Beams'],
+    primaryTrade: 'structural',
+    lat: 51.155, lng: 0.275,
+    rating: 4.7, reviews: 14, distance: 4.2,
+    tier: 'listed', verified: true, insured: true, years: 9,
+    about: 'Structural specialists for residential and commercial properties. RSJ beams, load bearing wall removal, underpinning, party wall works.',
+    phone: '01892 555 0756',
+    area: 'Tonbridge, Kent',
+    responseTime: '< 8 hrs',
+    completedJobs: 89
+  },
+  {
+    id: 8, name: 'Clean Slate Bathrooms', emoji: '🚿',
+    trades: ['Bathroom Fit-Out','Wet Rooms','Tiling'],
+    primaryTrade: 'bathroom',
+    lat: 51.108, lng: 0.268,
+    rating: 4.5, reviews: 28, distance: 5.1,
+    tier: 'listed', verified: false, insured: true, years: 3,
+    about: 'Bathroom renovation specialists. Full strip out and refit, wet room conversions, accessible bathroom adaptations. Free quote within 48 hours.',
+    phone: '01892 555 0867',
+    area: 'East Grinstead, West Sussex',
+    responseTime: '< 12 hrs',
+    completedJobs: 54
+  }
+];
+
+let map, radiusCircle, activeMarkerId = null;
+let currentFilter = 'all';
+let currentSort = 'distance';
+let radiusVisible = false;
+let markers = {};
+
+// Centre on Tunbridge Wells
+const CENTRE = [51.132, 0.263];
+
+// ============================================================
+// INIT MAP
+// ============================================================
+function initMap() {
+  map = L.map('map', {
+    center: CENTRE,
+    zoom: 13,
+    zoomControl: true,
+    attributionControl: true
+  });
+
+  // Primary tile layer with crossOrigin and error handling
+  const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+    crossOrigin: true,
+    keepBuffer: 4,
+  });
+
+  // Fallback tile provider (CartoDB dark — matches site theme)
+  const fallbackLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO',
+    maxZoom: 19,
+    subdomains: 'abcd',
+    crossOrigin: true,
+  });
+
+  let usingFallback = false;
+  tileLayer.on('tileerror', function() {
+    if (!usingFallback) {
+      usingFallback = true;
+      console.warn('OSM tiles failed, switching to fallback');
+      map.removeLayer(tileLayer);
+      fallbackLayer.addTo(map);
+    }
+  });
+
+  tileLayer.addTo(map);
+
+  // Force map to recalculate size after render (fixes grey tiles on first load)
+  setTimeout(() => {
+    map.invalidateSize();
+    if (typeof renderMarkers === 'function') renderMarkers();
+  }, 150);
+  setTimeout(() => map.invalidateSize(), 500);
+
+  // Load real builders from Supabase, fall back to demo if empty
+  loadRealBuilders();
+}
+
+// Revalidate map size on window events (fixes grey tiles)
+window.addEventListener('resize', () => { if (map) map.invalidateSize(); });
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && map) setTimeout(() => map.invalidateSize(), 200);
+});
+
+// ============================================================
+// MARKERS
+// ============================================================
+// Active builder dataset — starts as demo, replaced by real DB data
+let builders = [];
+let usingDemoData = true;
+
+async function loadRealBuilders() {
+  try {
+    const url = atob('aHR0cHM6Ly93dnVsdHN4aXFqa2lzYmVpZGpjbC5zdXBhYmFzZS5jbw==');
+    const key = atob('c2JfcHVibGlzaGFibGVfdTN2RUkxTDVPaDYtQ1BNTndSU09Fd19MRVpvSkxnVw==');
+    const sb = window.supabase?.createClient(url, key);
+    if (!sb) { builders = DEMO_BUILDERS; return; }
+
+    const { data, error } = await sb
+      .from('builders')
+      .select('*')
+      .eq('subscription_status', 'active')
+      .order('plan', { ascending: false }); // pro first, then featured, then listed
+
+    if (error || !data || data.length === 0) {
+      // No real builders yet — use demo data with a banner
+      builders = DEMO_BUILDERS;
+      usingDemoData = true;
+      showDemoBanner();
+    } else {
+      // Map DB fields to the shape the UI expects
+      builders = data.map(b => ({
+        id: b.id,
+        userId: b.id,
+        name: b.business_name || b.name,
+        emoji: tradeEmoji(b.primary_trade),
+        trades: Array.isArray(b.trades) ? b.trades : (b.primary_trade ? [b.primary_trade] : ['General Builder']),
+        primaryTrade: b.primary_trade || 'general',
+        lat: b.lat || 51.132,
+        lng: b.lng || 0.263,
+        rating: b.avg_rating || 5.0,
+        reviews: b.review_count || 0,
+        distance: 0,
+        tier: b.plan?.replace('builder_','') || 'listed',
+        verified: b.verified === true,
+        insured: b.insured === true,
+        years: b.years_trading || null,
+        about: b.description || '',
+        phone: b.phone || '',
+        area: b.town ? `${b.town}, ${b.county || ''}`.trim().replace(/,$/, '') : b.postcode || 'UK',
+        responseTime: b.response_time || null,
+        completedJobs: b.completed_jobs || null,
+        website: b.website || null,
+        photos: b.photos || [],
+      }));
+      usingDemoData = false;
+      const banner = document.getElementById('demo-data-banner');
+      if (banner) banner.remove();
+    }
+  } catch(e) {
+    console.log('Builder load error:', e);
+    builders = DEMO_BUILDERS;
+    usingDemoData = true;
+    showDemoBanner();
+  }
+  renderMarkers();
+  renderList();
+  updateCount();
+}
+
+function tradeEmoji(trade) {
+  const map = { extension:'🏗', loft:'🏠', kitchen:'🍳', bathroom:'🚿', electrical:'⚡', plumbing:'🔧', structural:'🏛', decoration:'🎨', general:'🔨' };
+  return map[(trade||'').toLowerCase()] || '🔨';
+}
+
+function showDemoBanner() {
+  if (document.getElementById('demo-data-banner')) return;
+  const bar = document.createElement('div');
+  bar.id = 'demo-data-banner';
+  bar.style.cssText = 'background:rgba(255,180,0,0.08);border-bottom:1px solid rgba(255,180,0,0.2);padding:8px 20px;font-size:12px;color:rgba(255,200,80,0.8);text-align:center;';
+  bar.textContent = '👷 Showing example builders — real builders coming soon. Are you a builder? List your business free.';
+  const nav = document.querySelector('.top-nav') || document.querySelector('nav') || document.body.firstElementChild;
+  if (nav) nav.insertAdjacentElement('afterend', bar);
+}
+
+function renderMarkers() {
+  Object.values(markers).forEach(m => map.removeLayer(m));
+  markers = {};
+
+  getFilteredBuilders().forEach(b => {
+    const el = document.createElement('div');
+    el.className = `custom-marker ${b.tier}`;
+    el.innerHTML = b.emoji;
+    el.title = b.name;
+
+    const icon = L.divIcon({
+      html: el.outerHTML,
+      className: '',
+      iconSize: b.tier === 'pro' ? [38,38] : [32,32],
+      iconAnchor: b.tier === 'pro' ? [19,19] : [16,16]
+    });
+
+    const marker = L.marker([b.lat, b.lng], { icon })
+      .addTo(map)
+      .on('click', () => showDetail(b));
+
+    markers[b.id] = marker;
+  });
+}
+
+// ============================================================
+// BUILDER LIST
+// ============================================================
+function getFilteredBuilders() {
+  let list = [...builders];
+  if (currentFilter !== 'all') {
+    list = list.filter(b => b.primaryTrade === currentFilter);
+  }
+  list.sort((a, b) => {
+    if (currentSort === 'distance') return a.distance - b.distance;
+    if (currentSort === 'rating') return b.rating - a.rating;
+    if (currentSort === 'tier') {
+      const o = { pro: 0, featured: 1, listed: 2 };
+      return o[a.tier] - o[b.tier];
+    }
+  });
+  return list;
+}
+
+function renderList() {
+  const list = getFilteredBuilders();
+  const container = document.getElementById('builderList');
+
+  if (list.length === 0) {
+    container.innerHTML = `<div class="empty-builders"><div class="ei">🔍</div><p>No builders found for this trade in your area.<br>Try a different filter or expand your radius.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = list.map(b => `
+    <div class="builder-card ${activeMarkerId === b.id ? 'active' : ''}" onclick="showDetail(builders.find(x=>x.id===${b.id}))" id="card-${b.id}">
+      <div class="bc-top">
+        <div class="bc-avatar">
+          ${b.emoji}
+          ${b.verified ? '<div class="bc-verified">✓</div>' : ''}
+        </div>
+        <div class="bc-info">
+          <div class="bc-name">${b.name}</div>
+          <div class="bc-trade">${b.area}</div>
+        </div>
+        <span class="bc-tier ${b.tier}">${b.tier.toUpperCase()}</span>
+      </div>
+      <div class="bc-meta">
+        <span class="bc-stars">${'★'.repeat(Math.floor(b.rating))}${b.rating % 1 >= 0.5 ? '½' : ''}</span>
+        <span class="bc-rating">${b.rating} (${b.reviews})</span>
+        <span class="bc-dist">📍 ${b.distance} mi</span>
+      </div>
+      <div class="bc-trades">
+        ${b.trades.slice(0,3).map(t => `<span class="bc-trade-tag">${t}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateCount() {
+  const list = getFilteredBuilders();
+  document.getElementById('builderCount').innerHTML =
+    `<strong>${list.length} builders</strong> near Tunbridge Wells`;
+}
+
+// ============================================================
+// DETAIL PANEL
+// ============================================================
+function showDetail(b) {
+  activeMarkerId = b.id;
+
+  // Highlight card
+  document.querySelectorAll('.builder-card').forEach(c => c.classList.remove('active'));
+  const card = document.getElementById('card-' + b.id);
+  if (card) { card.classList.add('active'); card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+
+  // Fly map to builder
+  map.flyTo([b.lat, b.lng], 14, { duration: 0.8 });
+
+  const stars = '★'.repeat(Math.floor(b.rating)) + (b.rating % 1 >= 0.5 ? '½' : '');
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="dp-header">
+      <div class="dp-avatar">${b.emoji}</div>
+      <div>
+        <div class="dp-name">${b.name}</div>
+        <div class="dp-trade">${b.area} · ${b.distance} miles away</div>
+        <div class="dp-badges">
+          ${b.verified ? '<span class="dp-badge verified">✓ Verified</span>' : ''}
+          ${b.insured ? '<span class="dp-badge insured">🛡 Insured</span>' : ''}
+          <span class="dp-badge years">${b.years} yrs experience</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dp-stats">
+      <div class="dp-stat">
+        <span class="dp-stat-val">${stars}</span>
+        <div class="dp-stat-label">${b.rating} · ${b.reviews} reviews</div>
+      </div>
+      <div class="dp-stat">
+        <span class="dp-stat-val">${b.completedJobs}</span>
+        <div class="dp-stat-label">Jobs completed</div>
+      </div>
+      <div class="dp-stat">
+        <span class="dp-stat-val">${b.responseTime}</span>
+        <div class="dp-stat-label">Avg response</div>
+      </div>
+    </div>
+
+    <p class="dp-about">${b.about}</p>
+
+    <div class="dp-trades-row">
+      ${b.trades.map(t => `<span class="dp-trade-tag">${t}</span>`).join('')}
+    </div>
+
+    <div class="dp-actions">
+      <button class="dp-btn-primary" onclick="contactBuilder(${b.id})">📞 Get a quote</button>
+      <button class="dp-btn-secondary" onclick="viewProfile(${b.id})">View full profile →</button>
+    </div>
+  `;
+
+  document.getElementById('detailPanel').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+  activeMarkerId = null;
+  document.querySelectorAll('.builder-card').forEach(c => c.classList.remove('active'));
+}
+
+function contactBuilder(id) {
+  const b = builders.find(x => x.id === id);
+
+  // Inject enquiry modal
+  const existing = document.getElementById('enquiry-modal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'enquiry-modal';
+  modal.style.cssText = `
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(11,17,32,0.88); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+  `;
+
+  modal.innerHTML = `
+    <div style="background:var(--navy-2);border:1px solid rgba(0,201,167,0.2);border-radius:16px;padding:2rem;width:100%;max-width:460px;position:relative;">
+      <button onclick="document.getElementById('enquiry-modal').remove()"
+        style="position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;cursor:pointer;color:var(--text-muted);font-size:14px;display:flex;align-items:center;justify-content:center;">✕</button>
+
+      <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:6px">Enquiry</div>
+      <div style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px">${b.name}</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem">${b.area} · ${b.trades[0]}</div>
+
+      <div id="enquiry-error" style="display:none;background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:rgba(255,150,130,0.9);margin-bottom:1rem;"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div>
+          <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">Your name</label>
+          <input id="eq-name" type="text" placeholder="Sarah Jones" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;">
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">Phone</label>
+          <input id="eq-phone" type="tel" placeholder="07700 900 123" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;">
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">Your email</label>
+        <input id="eq-email" type="email" placeholder="you@example.com" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;">
+      </div>
+      <div style="margin-bottom:10px">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">Postcode</label>
+        <input id="eq-postcode" type="text" placeholder="TN1 1AA" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;text-transform:uppercase;letter-spacing:1px;">
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">Brief description of your project</label>
+        <textarea id="eq-project" rows="3" placeholder="e.g. Single storey rear extension, approx 25m², mid-range spec. Looking for quotes in the next 2–3 weeks." style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;resize:none;"></textarea>
+      </div>
+
+      <button id="eq-submit" onclick="submitEnquiry(${b.id})"
+        style="width:100%;padding:13px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:10px;color:var(--navy);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s;">
+        Send enquiry to ${b.name} →
+      </button>
+      <div style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;line-height:1.6">
+        Your details are sent directly to the builder.<br>Estiquote does not share your data with third parties.
+      </div>
+    </div>`;
+
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+
+  // Pre-fill user details if logged in
+  const cachedUser = EQ.getUserSync();
+  if (cachedUser) {
+    const nameEl = document.getElementById('eq-name');
+    const emailEl = document.getElementById('eq-email');
+    const pcEl = document.getElementById('eq-postcode');
+    if (nameEl && cachedUser.name) nameEl.value = cachedUser.name;
+    if (emailEl && cachedUser.email) emailEl.value = cachedUser.email;
+    if (pcEl && cachedUser.postcode) pcEl.value = cachedUser.postcode;
+  }
+}
+
+async function submitEnquiry(builderId) {
+  const b = builders.find(x => x.id === builderId);
+
+  // Deduplication — prevent same homeowner contacting same builder within 24hrs
+  const dedupKey = `eq_sent_${builderId}_${document.getElementById('eq-email')?.value?.trim()?.toLowerCase()?.split('@')[0] || 'anon'}`;
+  const lastSent = localStorage.getItem(dedupKey);
+  if (lastSent && (Date.now() - parseInt(lastSent)) < 86400000) {
+    const errEl = document.getElementById('enquiry-error');
+    if (errEl) {
+      errEl.textContent = 'You've already sent an enquiry to this builder today. They will be in touch soon.';
+      errEl.style.display = 'block';
+    }
+    return;
+  }
+
+  const name  = document.getElementById('eq-name').value.trim();
+  const email = document.getElementById('eq-email').value.trim();
+  const phone = document.getElementById('eq-phone').value.trim();
+  const postcode = document.getElementById('eq-postcode').value.trim().toUpperCase();
+  const project = document.getElementById('eq-project').value.trim();
+
+  const errEl = document.getElementById('enquiry-error');
+
+  if (!name || !email || !project) {
+    errEl.textContent = 'Please fill in your name, email and project description.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('eq-submit');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    // Save to Supabase if available
+    try {
+      if (typeof supabase !== 'undefined' && b.userId) {
+        const url = atob('aHR0cHM6Ly93dnVsdHN4aXFqa2lzYmVpZGpjbC5zdXBhYmFzZS5jbw==');
+        const key = atob('c2JfcHVibGlzaGFibGVfdTN2RUkxTDVPaDYtQ1BNTndSU09Fd19MRVpvSkxnVw==');
+        const sb = supabase.createClient(url, key);
+        await sb.from('enquiries').insert({
+          builder_user_id: b.userId,
+          homeowner_name: name, homeowner_email: email,
+          homeowner_phone: phone || null, homeowner_postcode: postcode || null,
+          trade: b.primaryTrade, location: b.area,
+          budget: 'See estimate', message: project
+        });
+      }
+    } catch(sbErr) { console.log('Supabase enquiry save:', sbErr); }
+
+    const res = await fetch('https://formspree.io/f/xwvadzvz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `[Estiquote] New enquiry for ${b.name} — ${name}`,
+        form_type: 'Builder Enquiry',
+        builder_name: b.name,
+        builder_id: b.id,
+        builder_plan: b.tier.toUpperCase(),
+        homeowner_name: name,
+        homeowner_email: email,
+        homeowner_phone: phone || 'Not provided',
+        homeowner_postcode: postcode || 'Not provided',
+        project_description: project,
+        builder_trades: b.trades.join(', '),
+        builder_area: b.area,
+        submitted_at: new Date().toLocaleString('en-GB')
+      })
+    });
+
+    if (res.ok) {
+      const modal = document.getElementById('enquiry-modal');
+      modal.querySelector('div').innerHTML = `
+        <div style="text-align:center;padding:1.5rem 1rem">
+          <div style="font-size:44px;margin-bottom:1rem">✓</div>
+          <div style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">Enquiry sent</div>
+          <div style="font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:1.25rem">
+            Your enquiry has been sent to <strong style="color:var(--teal-light)">${b.name}</strong>.<br>
+            They typically respond ${b.responseTime}. We've also sent a confirmation to <strong>${email}</strong>.
+          </div>
+          <div style="font-size:12px;color:var(--text-dim);background:var(--navy-3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;line-height:1.8">
+            Builder: <strong style="color:var(--text)">${b.name}</strong><br>
+            Phone: <strong style="color:var(--teal-light)">${b.phone}</strong>
+          </div>
+          <button onclick="document.getElementById('enquiry-modal').remove()"
+            style="margin-top:1.25rem;padding:10px 24px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-family:var(--sans);font-size:13px;cursor:pointer;">
+            Close
+          </button>
+        </div>`;
+    } else {
+      throw new Error('Failed');
+    }
+  } catch (err) {
+    btn.textContent = `Send enquiry to ${b.name} →`;
+    btn.disabled = false;
+    const errEl = document.getElementById('enquiry-error');
+    errEl.textContent = `Something went wrong. Contact the builder directly: ${b.phone}`;
+    errEl.style.display = 'block';
+  }
+}
+
+function viewProfile(id) {
+  const b = builders.find(x => x.id === id);
+  contactBuilder(id); // Open enquiry as profile action for now
+}
+
+// ============================================================
+// FILTERS & SORT
+// ============================================================
+function filterTrade(trade, btn) {
+  currentFilter = trade;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  renderMarkers();
+  renderList();
+  updateCount();
+  closeDetail();
+}
+
+function sortBuilders(val) {
+  currentSort = val;
+  renderList();
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+function searchArea() {
+  const pc = document.getElementById('postcodeSearch').value.trim();
+  if (!pc) return;
+
+  const postcodeMap = {
+    // South East
+    'TN1':[51.132,0.263],'TN2':[51.118,0.280],'TN3':[51.108,0.255],'TN4':[51.145,0.271],
+    'RH19':[51.125,-0.012],'RH1':[51.236,-0.167],'BN1':[50.827,-0.137],'BN3':[50.831,-0.170],
+    'ME1':[51.389,0.504],'ME14':[51.272,0.521],'CT1':[51.279,1.080],'GU1':[51.236,-0.570],
+    'KT1':[51.411,-0.304],'CR0':[51.373,-0.098],'RG1':[51.455,-0.973],'OX1':[51.752,-1.257],
+    // London
+    'SW1':[51.497,-0.135],'SW3':[51.490,-0.170],'SW6':[51.479,-0.195],'SW10':[51.481,-0.181],
+    'SE1':[51.504,-0.095],'SE10':[51.483,0.008],'E1':[51.516,-0.071],'E14':[51.507,-0.017],
+    'EC1':[51.523,-0.103],'WC1':[51.521,-0.121],'W1':[51.514,-0.145],'NW1':[51.530,-0.144],
+    'N1':[51.537,-0.099],'N10':[51.590,-0.143],
+    // South West
+    'BS1':[51.454,-2.591],'BA1':[51.381,-2.359],'EX1':[50.724,-3.527],'PL1':[50.370,-4.142],
+    // Midlands
+    'B1':[52.479,-1.895],'CV1':[52.408,-1.511],'LE1':[52.637,-1.131],'NG1':[52.954,-1.150],
+    // North
+    'M1':[53.479,-2.244],'LS1':[53.797,-1.549],'S1':[53.383,-1.466],'NE1':[54.975,-1.617],
+    // Scotland
+    'EH1':[55.950,-3.188],'G1':[55.861,-4.250],
+  };
+
+  const clean  = pc.toUpperCase().replace(/\s/g,'');
+  const coords = postcodeMap[clean.substring(0,4)] ||
+                 postcodeMap[clean.substring(0,3)] ||
+                 postcodeMap[clean.substring(0,2)] ||
+                 CENTRE;
+
+  map.flyTo(coords, 13, { duration: 1 });
+  document.getElementById('builderCount').innerHTML =
+    `<strong>${getFilteredBuilders().length} builders</strong> near ${pc.toUpperCase()}`;
+}
+
+// ============================================================
+// LOCATION
+// ============================================================
+function locateMe() {
+  if (!navigator.geolocation) { alert('Geolocation not supported in your browser.'); return; }
+  navigator.geolocation.getCurrentPosition(pos => {
+    map.flyTo([pos.coords.latitude, pos.coords.longitude], 13, { duration: 1 });
+  }, () => {
+    alert('Could not get your location. Please enter your postcode instead.');
+  });
+}
+
+// ============================================================
+// RADIUS
+// ============================================================
+function toggleRadius() {
+  radiusVisible = !radiusVisible;
+  const btn = document.getElementById('radiusToggle');
+  const miles = parseInt(document.getElementById('radiusSlider').value);
+  if (radiusVisible) {
+    const metres = miles * 1609.34;
+    if (radiusCircle) map.removeLayer(radiusCircle);
+    radiusCircle = L.circle(map.getCenter(), {
+      radius: metres,
+      color: 'rgba(0,201,167,0.6)',
+      fillColor: 'rgba(0,201,167,0.06)',
+      fillOpacity: 1,
+      weight: 1.5,
+      dashArray: '6 4'
+    }).addTo(map);
+    btn.style.borderColor = 'rgba(0,201,167,0.4)';
+    btn.style.color = 'var(--teal-light)';
+  } else {
+    if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
+    btn.style.borderColor = '';
+    btn.style.color = '';
+  }
+}
+
+function updateRadius(val) {
+  document.getElementById('radiusVal').textContent = val + ' miles';
+  if (radiusVisible && radiusCircle) {
+    map.removeLayer(radiusCircle);
+    const metres = val * 1609.34;
+    radiusCircle = L.circle(map.getCenter(), {
+      radius: metres,
+      color: 'rgba(0,201,167,0.6)',
+      fillColor: 'rgba(0,201,167,0.06)',
+      fillOpacity: 1,
+      weight: 1.5,
+      dashArray: '6 4'
+    }).addTo(map);
+  }
+}
+
+// Close detail on map click
+document.getElementById('map').addEventListener('click', function(e) {
+  if (e.target === this || e.target.closest('.leaflet-tile-container')) closeDetail();
+});
+
+// Init
+initMap();
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+
+  let mapVisible = false;
+  function toggleMap() {
+    mapVisible = !mapVisible;
+    const mapEl = document.getElementById('map');
+    const btn = document.getElementById('map-toggle-btn');
+    if (mapEl) {
+      mapEl.style.display = mapVisible ? 'block' : 'none';
+      if (mapVisible && typeof map !== 'undefined') map.invalidateSize();
+    }
+    if (btn) btn.textContent = mapVisible ? '✕ Hide map' : '🗺 Show map';
+  }
+  // On desktop always show map
+  if (window.innerWidth > 640) {
+    const mapEl = document.getElementById('map');
+    if (mapEl) mapEl.style.display = 'block';
+  }
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener"
+   aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 28px rgba(37,211,102,0.5)'"
+   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 20px rgba(37,211,102,0.4)'"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 600));
+  const user = EQ.getUserSync();
+  if (user) {
+    const lb = document.getElementById('logout-btn');
+    if (lb) lb.style.display = 'inline-flex';
+  }
+})();
+</script>
+</body>
+</html>

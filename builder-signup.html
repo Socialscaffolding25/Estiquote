@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List Your Business — Estiquote for Builders</title>
+<meta name="description" content="Get found by homeowners actively planning projects in your area. List your trade business on Estiquote from £29/month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 110px; }
+
+  /* HERO */
+  .builder-hero {
+    background: linear-gradient(160deg, var(--navy-3) 0%, var(--navy) 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .builder-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(0,201,167,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .builder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    background: rgba(0,201,167,0.08);
+    border: 1px solid rgba(0,201,167,0.2);
+    color: rgba(77,255,214,0.9);
+    border-radius: 4px;
+    padding: 5px 12px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .builder-h1 {
+    font-family: var(--serif);
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.06;
+    letter-spacing: -1.5px;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+
+  .builder-h1 em { font-style: normal; color: var(--teal-light); }
+
+  .builder-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 480px;
+    margin-bottom: 2rem;
+  }
+
+  .builder-proof {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .proof-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
+  .proof-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+
+  /* SIGNUP CARD */
+  .signup-card {
+    background: var(--navy-2);
+    border: 1px solid rgba(0,201,167,0.2);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 80px rgba(0,201,167,0.05);
+  }
+
+  .sc-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .sc-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+  /* PLAN SELECTOR */
+  .plan-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-opt {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .plan-opt:hover { border-color: var(--border-hover); }
+  .plan-opt.selected { border-color: var(--teal); background: var(--teal-dim); }
+
+  .po-left { display: flex; align-items: center; gap: 10px; }
+  .po-radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+  }
+
+  .plan-opt.selected .po-radio { border-color: var(--teal); background: var(--teal); }
+  .plan-opt.selected .po-radio::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--navy); }
+
+  .po-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .po-desc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .po-price { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--teal-light); white-space: nowrap; }
+  .po-period { font-size: 10px; color: var(--text-dim); text-align: right; }
+
+  .po-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: var(--navy);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-group { margin-bottom: 10px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    border: none;
+    color: var(--navy);
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 4px;
+  }
+
+  .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .small-print { font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 10px; line-height: 1.6; }
+  .small-print a { color: var(--text-dim); }
+
+  /* WHY SECTION */
+  .why-section { padding: 6rem 0; background: var(--navy-2); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .why-card {
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+  }
+
+  .why-icon { font-size: 32px; margin-bottom: 1rem; }
+  .why-title { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .why-body { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  /* TIERS COMPARISON */
+  .tiers-section { padding: 6rem 0; }
+
+  .tiers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+
+  .tiers-table th {
+    padding: 1rem;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tiers-table th:first-child { text-align: left; color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .tiers-table th.featured-col { color: var(--teal-light); }
+
+  .tiers-table td {
+    padding: 12px 1rem;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .tiers-table td:first-child { text-align: left; color: var(--text); }
+  .tiers-table tr:last-child td { border-bottom: none; }
+  .tiers-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .tick { color: var(--teal); font-size: 16px; }
+  .cross { color: var(--text-dim); font-size: 14px; }
+
+  .tier-price-row th {
+    padding-bottom: 0.5rem;
+    border-bottom: none;
+  }
+
+  .tier-big-price { font-family: var(--serif); font-size: 28px; font-weight: 800; color: var(--text); display: block; letter-spacing: -0.5px; }
+  .tier-period { font-size: 11px; color: var(--text-dim); }
+
+  .tier-cta-row td { padding-top: 1.5rem; border-bottom: none; }
+
+  .tier-btn {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+  }
+
+  .tier-btn.primary {
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: var(--navy);
+    border: none;
+  }
+
+  .tier-btn.outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .tier-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* HOW IT WORKS - BUILDER */
+  .builder-steps { padding: 6rem 0; background: var(--navy-2); }
+
+  .bsteps-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+
+  .bsteps-grid::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--teal), transparent);
+    opacity: 0.3;
+  }
+
+  .bstep {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .bstep-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--teal-dim);
+    border: 1px solid rgba(0,201,167,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--teal-light);
+    margin: 0 auto 1rem;
+  }
+
+  .bstep-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .bstep-body { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  /* TESTIMONIAL */
+  .builder-testimonial { padding: 5rem 0; }
+
+  .bt-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--navy-2);
+    border: 1px solid rgba(0,201,167,0.15);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .bt-quote {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .bt-author { font-size: 13px; color: var(--text-muted); }
+  .bt-author strong { color: var(--teal-light); }
+
+  /* FAQ */
+  .builder-faq { padding: 5rem 0; background: var(--navy-2); }
+  .faq-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-top: 2.5rem; }
+
+  .faq-item {
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .faq-q { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .faq-a { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .why-grid, .bsteps-grid { grid-template-columns: 1fr 1fr; }
+    .bsteps-grid::before { display: none; }
+    .faq-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .why-grid, .bsteps-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .tiers-table { font-size: 12px; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
+  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
+</div>
+<script>
+(function(){
+  function checkStripeMode(){
+    if(typeof STRIPE_LINKS !== 'undefined'){
+      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
+        var b = document.getElementById('test-mode-banner');
+        if(b) b.style.display = 'block';
+      }
+    } else {
+      setTimeout(checkStripeMode, 300);
+    }
+  }
+  checkStripeMode();
+})();
+</script>
+<!-- TEST MODE BANNER — remove when Stripe goes live -->
+
+
+<nav class="nav nav-scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="find-builders.html" class="nav-link">Find builders</a>
+      <a href="estimator.html" class="nav-link">Estimator</a>
+      <a href="pricing.html" class="nav-link">Homeowner pricing</a>
+      <a href="login.html" class="nav-link">Sign in</a>
+    </div>
+    <button class="nav-burger" onclick="document.getElementById('navMobile').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="find-builders.html">Find builders</a>
+    <a href="estimator.html">Estimator</a>
+    <a href="login.html">Sign in</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="builder-hero">
+  <div class="hero-inner">
+    <div>
+      <div class="builder-tag">For builders & contractors</div>
+      <h1 class="builder-h1">Leads that already<br><em>know their budget.</em></h1>
+      <p class="builder-sub">Every homeowner who finds you on Estiquote has just priced up their project. They know what fair costs look like. They're ready to call. These are the best leads in construction.</p>
+      <div class="builder-proof">
+        <div class="proof-item"><div class="proof-dot"></div>Verified business profile</div>
+        <div class="proof-item"><div class="proof-dot"></div>Live map listing</div>
+        <div class="proof-item"><div class="proof-dot"></div>Direct enquiries to your phone</div>
+        <div class="proof-item"><div class="proof-dot"></div>No per-lead fees</div>
+        <div class="proof-item"><div class="proof-dot"></div>Cancel any time</div>
+      </div>
+    </div>
+
+    <!-- SIGNUP CARD -->
+    <div class="signup-card">
+      <div class="sc-title">Get listed today</div>
+      <div class="sc-sub">Start appearing in searches immediately on approval</div>
+
+      <div class="plan-selector">
+        <div class="plan-opt" onclick="selectPlan(this,'listed')" id="plan-listed">
+          <div class="po-left">
+            <div class="po-radio"></div>
+            <div>
+              <div class="po-name">Listed</div>
+              <div class="po-desc">Map pin + basic profile</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="po-price">£29</div>
+            <div class="po-period">per month</div>
+          </div>
+        </div>
+        <div class="plan-opt selected" onclick="selectPlan(this,'featured')" id="plan-featured">
+          <div class="po-left">
+            <div class="po-radio"></div>
+            <div>
+              <div class="po-name">Featured <span class="po-badge">POPULAR</span></div>
+              <div class="po-desc">Priority placement + photos + reviews</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="po-price">£59</div>
+            <div class="po-period">per month</div>
+          </div>
+        </div>
+        <div class="plan-opt" onclick="selectPlan(this,'pro')" id="plan-pro">
+          <div class="po-left">
+            <div class="po-radio"></div>
+            <div>
+              <div class="po-name">Pro</div>
+              <div class="po-desc">Top results + analytics + direct message</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="po-price">£99</div>
+            <div class="po-period">per month</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Business name</label>
+          <input type="text" placeholder="Hartwood Construction Ltd" id="bizName">
+        </div>
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" placeholder="Josh Smith" id="contactName">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@yourbusiness.com" id="bizEmail">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="01892 555 0100" id="bizPhone">
+        </div>
+        <div class="form-group">
+          <label>Postcode (base location)</label>
+          <input type="text" placeholder="TN1 1AA" id="bizPostcode" style="text-transform:uppercase;letter-spacing:1px">
+        </div>
+        <div class="form-group">
+          <label>Primary trade</label>
+          <select id="bizTrade">
+            <option>Extensions & Builds</option>
+            <option>Loft Conversions</option>
+            <option>Kitchen Renovation</option>
+            <option>Bathroom Fit-Out</option>
+            <option>Electrical Works</option>
+            <option>Plumbing & Heating</option>
+            <option>Structural Works</option>
+            <option>Decoration</option>
+            <option>General Builder</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Brief description of your business</label>
+          <textarea placeholder="Tell homeowners what you specialise in, your experience and area covered..." rows="3" id="bizDesc" style="resize:none"></textarea>
+        </div>
+      </div>
+
+      <button class="submit-btn" onclick="handleBuilderSignup()">
+        Get listed on Estiquote →
+      </button>
+      <p class="small-print">14-day free trial · No setup fee · Cancel any time<br>By signing up you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- WHY ESTIQUOTE -->
+<section class="why-section">
+  <div class="container">
+    <div class="section-label">Why Estiquote</div>
+    <h2 class="section-h2">Better leads. No per-lead fees.</h2>
+    <p class="section-sub">Unlike Checkatrade or MyBuilder, you pay a flat monthly fee. No auction for leads, no race to the bottom.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🎯</div>
+        <div class="why-title">Intent-qualified leads</div>
+        <div class="why-body">Every homeowner on Estiquote has priced up their project. When they contact you, they've already validated their budget. No time wasters.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📍</div>
+        <div class="why-title">Local map presence</div>
+        <div class="why-body">You appear on the live map when homeowners search your area. Radius-based search means only relevant, nearby enquiries reach you.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💷</div>
+        <div class="why-title">Flat monthly fee</div>
+        <div class="why-body">Pay once a month. Receive unlimited enquiries. No per-lead charges, no credit top-ups, no surprises. From £29/month.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✓</div>
+        <div class="why-title">Verified listings</div>
+        <div class="why-body">We verify every business before listing. Your Estiquote badge tells homeowners you're a legitimate, insured professional.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⭐</div>
+        <div class="why-title">Reviews that stick</div>
+        <div class="why-body">Collect reviews directly from your Estiquote jobs. Verified project reviews build trust faster than word-of-mouth alone.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📊</div>
+        <div class="why-title">Pro analytics</div>
+        <div class="why-body">Pro tier shows you how many homeowners viewed your profile, clicked your number, and how you compare to local competitors.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="builder-steps">
+  <div class="container">
+    <div class="section-label">Simple process</div>
+    <h2 class="section-h2">Live on the map in 24 hours</h2>
+    <div class="bsteps-grid">
+      <div class="bstep">
+        <div class="bstep-num">1</div>
+        <div class="bstep-title">Sign up & choose plan</div>
+        <div class="bstep-body">Fill in your business details, pick your tier, and start your 14-day free trial.</div>
+      </div>
+      <div class="bstep">
+        <div class="bstep-num">2</div>
+        <div class="bstep-title">We verify your business</div>
+        <div class="bstep-body">Our team checks your details, insurance, and certifications within 24 hours.</div>
+      </div>
+      <div class="bstep">
+        <div class="bstep-num">3</div>
+        <div class="bstep-title">Go live on the map</div>
+        <div class="bstep-body">Your pin appears immediately. Homeowners searching your area start finding you.</div>
+      </div>
+      <div class="bstep">
+        <div class="bstep-num">4</div>
+        <div class="bstep-title">Receive direct enquiries</div>
+        <div class="bstep-body">Homeowners contact you directly. No middleman, no lead auction, no markup.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS COMPARISON -->
+<section class="tiers-section">
+  <div class="container">
+    <div class="section-label">Compare tiers</div>
+    <h2 class="section-h2">What's included</h2>
+
+    <table class="tiers-table">
+      <thead>
+        <tr class="tier-price-row">
+          <th></th>
+          <th>
+            <span style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Listed</span>
+            <span class="tier-big-price">£29</span>
+            <span class="tier-period">/ month</span>
+          </th>
+          <th class="featured-col">
+            <span style="display:block;font-size:12px;color:var(--teal);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Featured</span>
+            <span class="tier-big-price" style="color:var(--teal-light)">£59</span>
+            <span class="tier-period">/ month</span>
+          </th>
+          <th>
+            <span style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Pro</span>
+            <span class="tier-big-price">£99</span>
+            <span class="tier-period">/ month</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Live map listing</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Business profile page</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Direct enquiry button</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Verified business badge</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Priority map placement</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Project photo gallery</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Verified customer reviews</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Response time badge</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Top of search results</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Direct message inbox</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Profile view analytics</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
+        <tr><td>Competitor benchmarking</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
+        <tr class="tier-cta-row">
+          <td></td>
+          <td><a href="#" class="tier-btn outline" onclick="selectPlanAndScroll('listed')">Get started</a></td>
+          <td><a href="#" class="tier-btn primary" onclick="selectPlanAndScroll('featured')">Get started</a></td>
+          <td><a href="#" class="tier-btn outline" onclick="selectPlanAndScroll('pro')">Get started</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="builder-testimonial">
+  <div class="container">
+    <div class="bt-card">
+      <div class="bt-quote">"Within two weeks of listing on Estiquote, we had 11 enquiries. Every single one had already priced their project. These people know what they want and what it should cost — closing rate is far higher than any other lead source we use."</div>
+      <div class="bt-author"><strong>Marcus T.</strong> — Director, Apex Build Ltd, Surrey</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="builder-faq">
+  <div class="container">
+    <div class="section-label">Questions</div>
+    <h2 class="section-h2">Builder FAQ</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">How quickly will I appear on the map?</div>
+        <div class="faq-a">We verify all businesses within 24 hours of signup. Once verified, your pin goes live immediately and you start appearing in searches.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there a contract or minimum term?</div>
+        <div class="faq-a">No contract, no minimum term. Monthly rolling subscription. Cancel any time from your dashboard — you keep access until the end of the billing period.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What area do I appear in?</div>
+        <div class="faq-a">You appear in searches centred on your postcode, within the homeowner's chosen radius. You can set a coverage area of up to 50 miles from your base.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you check our insurance and qualifications?</div>
+        <div class="faq-a">Yes. We verify public liability insurance and relevant trade qualifications (Gas Safe, NICEIC, etc.) before awarding the Verified badge. This protects both you and homeowners.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I list multiple trades?</div>
+        <div class="faq-a">Yes — your profile can show all the trades you cover. You appear in searches for every trade you list, not just your primary one.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do homeowners contact me?</div>
+        <div class="faq-a">Via a direct enquiry form that sends to your email and phone. Pro tier also gets a direct message inbox. We never sell or share your contact details with third parties.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--navy-2);border-top:1px solid var(--border);padding:2rem 0;text-align:center">
+  <div class="container">
+    <div style="font-size:20px;font-family:var(--serif);font-weight:800;color:var(--teal-light);margin-bottom:0.5rem">Esti<span style="opacity:0.4">quote</span></div>
+    <div style="font-size:12px;color:var(--text-dim)">© 2026 Estiquote Ltd · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+  let selectedPlan = 'featured';
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('.nav').classList.toggle('nav-scrolled', window.scrollY > 40);
+  });
+
+  function selectPlan(el, plan) {
+    document.querySelectorAll('.plan-opt').forEach(p => p.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPlan = plan;
+  }
+
+  function selectPlanAndScroll(plan) {
+    selectPlan(document.getElementById('plan-' + plan), plan);
+    document.querySelector('.signup-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  async function handleBuilderSignup() {
+    const name  = document.getElementById('bizName').value.trim();
+    const email = document.getElementById('bizEmail').value.trim();
+    const phone = document.getElementById('bizPhone').value.trim();
+
+    if (!name || !email || !phone) {
+      showFormError('Please fill in your business name, email and phone number to continue.');
+      return;
+    }
+
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const planPrice = selectedPlan === 'listed' ? '£29/mo' : selectedPlan === 'featured' ? '£59/mo' : '£99/mo';
+    // Map selected plan to valid stripe-links.js key
+    const stripeKeyMap = {
+      listed:   'builder_listed',
+      featured: 'builder_featured',
+      pro:      'builder_pro'
+    };
+    const stripeKey = stripeKeyMap[selectedPlan] || 'builder_listed';
+
+    // 1. Send application details to Formspree
+    try {
+      await fetch('https://formspree.io/f/xwvadzvz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `[Estiquote] New builder listing application — ${name}`,
+          form_type: 'Builder Listing Application',
+          business_name: name,
+          contact_name: document.getElementById('contactName').value,
+          email, phone,
+          postcode: document.getElementById('bizPostcode').value.toUpperCase(),
+          primary_trade: document.getElementById('bizTrade').value,
+          plan: `${selectedPlan.toUpperCase()} — ${planPrice}`,
+          description: document.getElementById('bizDesc').value,
+          submitted_at: new Date().toLocaleString('en-GB')
+        })
+      });
+    } catch (e) {}
+
+    // 2. Go to Stripe — with fallback if link not configured yet
+    btn.textContent = 'Redirecting to payment...';
+    setTimeout(() => goToStripe(stripeKey, email), 600);
+  }
+
+  function showFormError(msg) {
+    let el = document.getElementById('form-error');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'form-error';
+      el.style.cssText = 'background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:rgba(255,150,130,0.9);margin-bottom:1rem;';
+      document.querySelector('.submit-btn').before(el);
+    }
+    el.textContent = msg;
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

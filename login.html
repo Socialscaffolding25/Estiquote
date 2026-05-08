@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — Estiquote</title>
+<meta name="description" content="Sign in to your Estiquote account to access your saved estimates and dashboard.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem; }
+  .shell { width:100%;max-width:420px; }
+  .logo { font-family:var(--serif);font-size:28px;font-weight:800;color:var(--teal-light);text-align:center;margin-bottom:0.5rem;display:block;text-decoration:none; }
+  .logo span { opacity:0.4; }
+  .tag { text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:2rem; }
+  .card { background:var(--navy-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem; }
+  .card-title { font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);margin-bottom:0.4rem; }
+  .card-sub { font-size:13px;color:var(--text-muted);margin-bottom:1.75rem; }
+  .form-group { margin-bottom:1rem; }
+  .input-wrap { position:relative; }
+  .input-wrap input { padding-right:44px; }
+  .eye-btn { position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:14px;padding:0; }
+  .forgot { display:block;text-align:right;font-size:12px;color:var(--text-dim);text-decoration:none;margin-top:-4px;margin-bottom:1rem; }
+  .forgot:hover { color:var(--teal-light); }
+  .submit { width:100%;padding:14px;border-radius:var(--radius);background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:var(--transition);margin-top:0.5rem; }
+  .submit:hover { opacity:0.88; }
+  .submit:disabled { opacity:0.5;cursor:not-allowed; }
+  .divider { display:flex;align-items:center;gap:12px;margin:1.25rem 0;color:var(--text-dim);font-size:12px; }
+  .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--border); }
+  .social { width:100%;padding:12px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text);font-family:var(--sans);font-size:14px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px; }
+  .social:hover { border-color:var(--border-hover); }
+  .switch { text-align:center;font-size:13px;color:var(--text-muted);margin-top:1.5rem; }
+  .switch a { color:var(--teal-light);text-decoration:none; }
+  .msg { border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none;line-height:1.6; }
+  .err { background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);color:rgba(255,150,130,0.9); }
+  .info { background:rgba(0,201,167,0.06);border:1px solid rgba(0,201,167,0.2);color:var(--teal-light); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<div class="shell">
+  <a href="index.html" class="logo">Esti<span>quote</span></a>
+  <div class="tag">Welcome back</div>
+  <div class="card">
+    <div class="card-title">Sign in</div>
+    <div class="card-sub">Access your saved estimates and dashboard</div>
+    <div class="msg err" id="err" role="alert" aria-live="polite"></div>
+    <div class="msg info" id="info" role="status" aria-live="polite"></div>
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="Your password" aria-label="Password" aria-required="true" autocomplete="current-password">
+        <button class="eye-btn" type="button" onclick="togglePass()">👁</button>
+      </div>
+    </div>
+    <a href="#" class="forgot" onclick="forgotPass();return false;">Forgot your password?</a>
+    <button class="submit" id="btn" aria-label="Sign in to your account" onclick="doLogin()">Sign in →</button>
+    <div class="divider">or</div>
+    <button class="social" onclick="googleLogin()">
+      <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Continue with Google
+    </button>
+  </div>
+  <div class="switch">Don't have an account? <a href="signup.html">Sign up free</a></div>
+</div>
+<script>
+  // Redirect if already logged in
+  (async () => {
+    await EQ.init();
+    const user = await EQ.getUser();
+    if (user) window.location.href = 'dashboard.html';
+  })();
+
+  document.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+  function togglePass() {
+    const i = document.getElementById('password');
+    i.type = i.type === 'password' ? 'text' : 'password';
+  }
+
+  function showErr(msg) {
+    const el = document.getElementById('err');
+    el.innerHTML = msg; el.style.display = 'block';
+    document.getElementById('info').style.display = 'none';
+  }
+
+  function showInfo(msg) {
+    const el = document.getElementById('info');
+    el.innerHTML = msg; el.style.display = 'block';
+    document.getElementById('err').style.display = 'none';
+  }
+
+  async function doLogin() {
+    const email = document.getElementById('email').value.trim();
+    const pass  = document.getElementById('password').value;
+    const btn   = document.getElementById('btn');
+
+    document.getElementById('err').style.display = 'none';
+    document.getElementById('info').style.display = 'none';
+
+    if (!email) { showErr('Please enter your email address.'); return; }
+    if (!pass)  { showErr('Please enter your password.'); return; }
+
+    btn.textContent = 'Signing in...'; btn.disabled = true;
+
+    const result = await EQ.signIn(email, pass);
+
+    if (result.success) {
+      btn.textContent = '✓ Signed in!';
+      setTimeout(() => window.location.href = 'dashboard.html', 500);
+    } else {
+      btn.textContent = 'Sign in →'; btn.disabled = false;
+      if (result.error === 'no_account' || result.error === 'wrong_email') {
+        showInfo('No account found for that email. <a href="signup.html">Create a free account →</a>');
+      } else if (result.error === 'wrong_password') {
+        showErr('Incorrect password. Try again or reset your password.');
+      } else {
+        showErr(result.error || 'Something went wrong. Please try again.');
+      }
+    }
+  }
+
+  async function forgotPass() {
+    const email = document.getElementById('email').value.trim();
+    if (!email) { showErr('Enter your email above first, then click Forgot password.'); return; }
+    const result = await EQ.resetPassword(email);
+    if (result.success) {
+      showInfo('Password reset email sent to <strong>' + email + '</strong>. Check your inbox.');
+    } else {
+      showErr('Could not send reset email. Please contact estiquoteofficial@gmail.com');
+    }
+  }
+
+  async function googleLogin() {
+    const sb = getClient();
+    if (!sb) return;
+    await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: 'https://estiquote.co.uk/dashboard.html' }
+    });
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cost Estimate — Estiquote</title>
+<meta name="description" content="Your home improvement cost estimate from Estiquote.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 1.5rem 4rem;
+    background: var(--navy);
+  }
+
+  .eq-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eq-logo { font-family: var(--serif); font-size: 22px; font-weight: 800; color: var(--teal-light); text-decoration: none; }
+  .eq-logo span { opacity: 0.4; }
+
+  .shared-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(0,201,167,0.08);
+    border: 1px solid rgba(0,201,167,0.2);
+    color: var(--teal-light);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .estimate-card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--navy-2);
+    border: 1px solid rgba(0,201,167,0.2);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 60px rgba(0,201,167,0.06), 0 24px 48px rgba(0,0,0,0.4);
+  }
+
+  .est-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 8px; }
+  .est-range { font-family: var(--serif); font-size: 48px; font-weight: 800; color: var(--teal-light); letter-spacing: -1.5px; line-height: 1; margin-bottom: 6px; }
+  .est-context { font-size: 14px; color: var(--text-muted); margin-bottom: 2rem; }
+
+  .breakdown-row {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .bk-item { text-align: center; }
+  .bk-val { font-size: 18px; font-weight: 600; color: var(--text); display: block; font-family: var(--serif); }
+  .bk-lbl { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
+
+  .info-table { width: 100%; }
+  .info-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+  .info-row:last-child { border-bottom: none; }
+  .info-lbl { color: var(--text-muted); }
+  .info-val { color: var(--text); font-weight: 500; }
+
+  .warning-strip {
+    background: rgba(240,160,50,0.06);
+    border: 1px solid rgba(240,160,50,0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 12px;
+    color: rgba(240,200,120,0.8);
+    line-height: 1.7;
+    margin-top: 1.5rem;
+  }
+
+  .cta-card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .cta-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .cta-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+
+  .ref-num { font-size: 11px; color: var(--text-dim); margin-top: 1.5rem; }
+
+  .not-found { text-align: center; padding: 4rem 2rem; }
+  .nf-icon { font-size: 48px; margin-bottom: 1rem; opacity: 0.4; }
+  .nf-title { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .nf-sub { font-size: 14px; color: var(--text-muted); }
+
+  @media print {
+    .cta-card { display: none; }
+    body { background: white; color: #1a2535; }
+    .estimate-card { border-color: #a7f0e0; box-shadow: none; background: #f0fdf9; }
+    .est-eyebrow, .bk-lbl { color: #00796b; }
+    .est-range { color: #007a65; }
+    .eq-logo { color: #00796b; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+</head>
+<body>
+
+<div class="eq-header">
+  <a href="index.html" class="eq-logo">Esti<span>quote</span></a>
+  <span class="shared-badge">SHARED ESTIMATE</span>
+</div>
+
+<div id="content">
+  <div class="estimate-card">
+    <div class="est-eyebrow">Estimated project cost</div>
+    <div class="est-range" id="v-range">Loading...</div>
+    <div class="est-context" id="v-context"></div>
+
+    <div class="breakdown-row" id="v-breakdown" style="display:none">
+      <div class="bk-item"><span class="bk-val" id="v-labour">—</span><div class="bk-lbl">Labour</div></div>
+      <div class="bk-item"><span class="bk-val" id="v-materials">—</span><div class="bk-lbl">Materials</div></div>
+      <div class="bk-item"><span class="bk-val" id="v-prelims">—</span><div class="bk-lbl">Prelims & fees</div></div>
+    </div>
+
+    <div class="info-table">
+      <div class="info-row"><span class="info-lbl">Cost per m²</span><span class="info-val" id="v-sqm">—</span></div>
+      <div class="info-row"><span class="info-lbl">Recommended contingency (15%)</span><span class="info-val" id="v-cont">—</span></div>
+      <div class="info-row"><span class="info-lbl">Region</span><span class="info-val" id="v-region">—</span></div>
+      <div class="info-row"><span class="info-lbl">Specification</span><span class="info-val" id="v-quality">—</span></div>
+      <div class="info-row"><span class="info-lbl">Trade category</span><span class="info-val" id="v-trade">—</span></div>
+      <div class="info-row"><span class="info-lbl">Generated</span><span class="info-val" id="v-date">—</span></div>
+      <div class="info-row"><span class="info-lbl">Reference</span><span class="info-val" id="v-ref">—</span></div>
+      <div class="info-row"><span class="info-lbl">Data sources</span><span class="info-val">BCIS, BMF, ONS — Updated Jan 2025</span></div>
+    </div>
+
+    <div class="warning-strip">
+      ⚠ This estimate is indicative only and does not constitute a quote or contract. Actual costs may vary significantly based on site conditions, specification, and contractor rates. Always obtain at least 3 written quotes. All figures are exclusive of VAT.
+    </div>
+  </div>
+
+  <div class="cta-card">
+    <div class="cta-title">Want your own cost estimates?</div>
+    <div class="cta-sub">Estiquote gives UK homeowners instant, accurate cost ranges for any home improvement project — extensions, kitchens, bathrooms, electrical, structural and more.</div>
+    <a href="estimator.html" class="btn-primary" style="margin-right:10px">Try it free →</a>
+    <a href="find-builders.html" class="btn-ghost">Find local builders</a>
+    <div class="ref-num" id="v-ref-footer"></div>
+  </div>
+</div>
+
+<div id="not-found" class="not-found" style="display:none">
+  <div class="nf-icon">🔗</div>
+  <div class="nf-title">Estimate not found</div>
+  <div class="nf-sub">This link may have expired or been entered incorrectly.<br>
+    <a href="estimator.html" style="color:var(--teal-light)">Create a new estimate →</a>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const data   = params.get('d');
+
+  if (!data) {
+    document.getElementById('content').style.display = 'none';
+    document.getElementById('not-found').style.display = 'block';
+  } else {
+    try {
+      const d = JSON.parse(atob(data));
+
+      document.getElementById('v-range').textContent    = d.estimate    || '—';
+      document.getElementById('v-context').textContent  = d.context     || '—';
+      document.getElementById('v-sqm').textContent      = d.perSqm      || '—';
+      document.getElementById('v-cont').textContent     = d.contingency ? '£' + d.contingency : '—';
+      document.getElementById('v-region').textContent   = d.region      || '—';
+      document.getElementById('v-quality').textContent  = d.quality     || '—';
+      document.getElementById('v-trade').textContent    = d.trade       || '—';
+      document.getElementById('v-date').textContent     = d.generated   || '—';
+      document.getElementById('v-ref').textContent      = d.ref         || '—';
+      document.getElementById('v-ref-footer').textContent = d.ref ? 'Reference: ' + d.ref : '';
+
+      document.title = `${d.estimate} — ${d.trade} estimate — Estiquote`;
+    } catch(e) {
+      document.getElementById('content').style.display = 'none';
+      document.getElementById('not-found').style.display = 'block';
+    }
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

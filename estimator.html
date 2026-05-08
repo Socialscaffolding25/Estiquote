@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="description" content="Get an instant cost estimate for your home improvement project. 8 trade categories, 6 UK regions, real pricing data updated monthly.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estimate costs — Estiquote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 110px; }
+
+  .estimator-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem 4rem;
+    align-items: start;
+  }
+
+  .est-left { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  /* PANEL */
+  .panel {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+  }
+
+  .panel-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .panel-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .panel-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  /* REGION */
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .region-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .region-btn:hover { background: var(--teal-dim); border-color: var(--border-hover); color: var(--teal-light); }
+  .region-btn.active { background: var(--teal-dim); border-color: var(--teal); color: var(--teal-light); font-weight: 500; }
+  .region-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+  /* POSTCODE */
+  .postcode-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+  .postcode-row input { flex: 1; text-transform: uppercase; letter-spacing: 2px; }
+  .postcode-row button {
+    padding: 12px 18px;
+    background: var(--teal);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #0b1120;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+  }
+
+  .postcode-row button:hover { background: var(--teal-light); }
+
+  /* TRADE SELECTOR */
+  .trade-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .trade-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .trade-card:hover { background: var(--teal-dim); border-color: var(--border-hover); }
+  .trade-card.active { background: var(--teal-dim); border-color: var(--teal); }
+
+  .trade-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: rgba(0,201,167,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .trade-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .trade-range { font-size: 11px; color: var(--text-muted); }
+
+  /* SLIDERS */
+  .slider-block {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .slider-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .slider-label { font-size: 13px; color: var(--text-muted); }
+  .slider-val { font-size: 15px; font-weight: 600; color: var(--teal-light); font-family: var(--sans); }
+
+  /* QUALITY */
+  .quality-row { display: flex; gap: 8px; margin-top: 12px; }
+
+  .qual-btn {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 12px;
+    transition: var(--transition);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .qual-btn.active { border-color: var(--teal); background: var(--teal-dim); color: var(--teal-light); font-weight: 500; }
+
+  /* EXTRAS */
+  .extra-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .extra-row:last-child { border-bottom: none; }
+  .extra-row:hover .extra-label { color: var(--text); }
+
+  .cb-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: transparent;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #0b1120;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .cb-box.checked { background: var(--teal); border-color: var(--teal); }
+  .extra-label { font-size: 13px; color: var(--text-muted); flex: 1; }
+  .extra-cost { font-size: 12px; color: var(--teal-light); font-weight: 500; }
+
+  /* STICKY RESULTS PANEL */
+  .results-panel {
+    position: sticky;
+    top: 90px;
+  }
+
+  .estimate-card {
+    background: linear-gradient(160deg, rgba(0,201,167,0.08), rgba(77,255,214,0.03));
+    border: 1px solid rgba(0,201,167,0.3);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .est-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .est-range {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--teal-light);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .est-context {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  .bk-item { text-align: center; }
+  .bk-num { font-size: 16px; font-weight: 600; color: var(--text); display: block; }
+  .bk-desc { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  .contingency-strip {
+    background: rgba(232,100,32,0.06);
+    border: 1px solid rgba(232,100,32,0.2);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: rgba(232,180,100,0.8);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .per-sqm {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .per-sqm strong { color: var(--text); }
+
+  .market-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-dim);
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .up { color: var(--teal); font-size: 10px; }
+
+  .actions-stack { display: flex; flex-direction: column; gap: 8px; }
+
+  .btn-save {
+    width: 100%;
+    padding: 14px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    border: none;
+    color: #0b1120;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+  }
+
+  .btn-save:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .btn-pdf {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-pdf:hover { border-color: var(--border-hover); color: var(--teal-light); }
+
+  .pro-lock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    justify-content: center;
+  }
+
+  .lock-icon { font-size: 12px; }
+
+  /* INFO TIP */
+  .info-tip {
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* MATERIALS TRACKER */
+  .materials-panel {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .mat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mat-row:last-child { border-bottom: none; }
+  .mat-name { font-size: 13px; color: var(--text-muted); }
+  .mat-change { font-size: 13px; font-weight: 500; }
+  .mat-change.up { color: #f07050; }
+  .mat-change.down { color: #50c882; }
+  .mat-change.flat { color: var(--text-dim); }
+
+  @media (max-width: 900px) {
+    .estimator-layout { grid-template-columns: 1fr; }
+    .results-panel { position: static; }
+    .region-grid { grid-template-columns: repeat(2, 1fr); }
+    .trade-grid { grid-template-columns: 1fr; }
+  }
+
+
+  #benchmarks-list li {
+    font-size:12px;
+    color:var(--text-muted);
+    padding:5px 10px;
+    background:rgba(0,201,167,0.04);
+    border-left:2px solid var(--teal);
+    border-radius:0 4px 4px 0;
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    nav, .trade-selector, .controls-panel, .footer,
+    .btn-save, .btn-pdf, .lock-overlay, .upgrade-prompt,
+    .quote-compare-section, .nav-burger { display: none !important; }
+    body { background: white !important; color: #000 !important; }
+    .est-panel { background: white !important; border: 1px solid #ddd !important; }
+    .est-range { color: #000 !important; font-size: 36px !important; }
+    .hc-bar-fill { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .container { max-width: 100% !important; padding: 0 !important; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/stripe-links.js"></script>
+  <meta name="theme-color" content="#00c9a7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Estiquote">
+  <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://estiquote.co.uk/estimator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estiquote.co.uk/estimator.html">
+  <meta property="og:title" content="Home Improvement Cost Estimator — Estiquote">
+  <meta property="og:description" content="Get an instant, accurate cost estimate for any UK home improvement project. Regional pricing, real data. Free.">
+  <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
+  <meta property="og:site_name" content="Estiquote">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Home Improvement Cost Estimator — Estiquote">
+  <meta name="twitter:description" content="Get an instant, accurate cost estimate for any UK home improvement project. Regional pricing, real data. Free.">
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">UK Home Improvement Cost Estimator 2026 — Extension, Loft, Kitchen &amp; Bathroom Prices</h1>
+
+<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
+  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
+</div>
+<script>
+(function(){
+  function checkStripeMode(){
+    if(typeof STRIPE_LINKS !== 'undefined'){
+      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
+        var b = document.getElementById('test-mode-banner');
+        if(b) b.style.display = 'block';
+      }
+    } else {
+      setTimeout(checkStripeMode, 300);
+    }
+  }
+  checkStripeMode();
+})();
+</script>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+<!-- TEST MODE BANNER — remove when Stripe goes live -->
+
+
+<nav class="nav nav-scrolled" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="estimator.html" class="nav-link" style="color:var(--teal)">Estimator</a>
+      <a href="find-builders.html" class="nav-link">Find builders</a>
+      <a href="builders.html" class="nav-link">For builders</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="login.html" class="nav-link">Sign in</a>
+      <button onclick="EQ.signOut()" id="logout-btn" style="display:none;padding:8px 16px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer;" aria-label="Sign out">Sign out</button>
+      <a href="signup.html" class="nav-cta">Get started free</a>
+    </div>
+    <button class="nav-burger" id="navBurger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="estimator.html">Estimator</a>
+    <a href="index.html#how-it-works">How it works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="login.html">Sign in</a>
+    <a href="signup.html" class="mobile-cta">Get started free</a>
+  </div>
+</nav>
+
+<div class="estimator-layout">
+  <div class="est-left">
+
+    <!-- STEP 1: LOCATION -->
+    <div class="panel">
+      <div class="panel-label">Step 1</div>
+      <div class="panel-title">Where are you?</div>
+      <div class="panel-sub">Labour rates vary by up to 38% across UK regions</div>
+
+      <div class="postcode-row">
+        <input type="text" id="postcodeIn" placeholder="Enter postcode e.g. TN1 1AA" maxlength="8">
+        <button onclick="applyPostcode()">Locate →</button>
+      </div>
+
+      <div class="region-grid">
+        <button class="region-btn" onclick="selectRegion(this,1.0,'London')" id="r-london">
+          <span class="region-icon">🏙</span>London
+        </button>
+        <button class="region-btn active" onclick="selectRegion(this,0.88,'South East')" id="r-se">
+          <span class="region-icon">🌳</span>South East
+        </button>
+        <button class="region-btn" onclick="selectRegion(this,0.80,'South West')" id="r-sw">
+          <span class="region-icon">🌊</span>South West
+        </button>
+        <button class="region-btn" onclick="selectRegion(this,0.78,'Midlands')" id="r-mids">
+          <span class="region-icon">🏭</span>Midlands
+        </button>
+        <button class="region-btn" onclick="selectRegion(this,0.74,'North England')" id="r-north">
+          <span class="region-icon">⛰</span>North England
+        </button>
+        <button class="region-btn" onclick="selectRegion(this,0.72,'Scotland & Wales')" id="r-scotland">
+          <span class="region-icon">🏔</span>Scotland & Wales
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: TRADE -->
+    <div class="panel">
+      <div class="panel-label">Step 2</div>
+      <div class="panel-title">What work do you need?</div>
+      <div class="panel-sub">Select a trade category</div>
+
+      <div class="trade-grid">
+        <div class="trade-card active" onclick="selectTrade(this,'extension')" id="t-extension">
+          <div class="trade-icon">🏗</div>
+          <div>
+            <div class="trade-name">Extension / Build</div>
+            <div class="trade-range">£1,500–£3,200/m²</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'loft')" id="t-loft">
+          <div class="trade-icon">🔨</div>
+          <div>
+            <div class="trade-name">Loft Conversion</div>
+            <div class="trade-range">£28k–£72k</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'kitchen')" id="t-kitchen">
+          <div class="trade-icon">🍳</div>
+          <div>
+            <div class="trade-name">Kitchen Renovation</div>
+            <div class="trade-range">£8k–£45k</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'bathroom')" id="t-bathroom">
+          <div class="trade-icon">🚿</div>
+          <div>
+            <div class="trade-name">Bathroom Fit-Out</div>
+            <div class="trade-range">£4k–£18k</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'electrical')" id="t-electrical">
+          <div class="trade-icon">⚡</div>
+          <div>
+            <div class="trade-name">Electrical Works</div>
+            <div class="trade-range">£400–£12k</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'plumbing')" id="t-plumbing">
+          <div class="trade-icon">🔧</div>
+          <div>
+            <div class="trade-name">Plumbing & Heating</div>
+            <div class="trade-range">£300–£8.5k</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'structural')" id="t-structural">
+          <div class="trade-icon">🏛</div>
+          <div>
+            <div class="trade-name">Structural Works</div>
+            <div class="trade-range">£2k–£35k</div>
+          </div>
+        </div>
+        <div class="trade-card" onclick="selectTrade(this,'decoration')" id="t-decoration">
+          <div class="trade-icon">🎨</div>
+          <div>
+            <div class="trade-name">Decoration</div>
+            <div class="trade-range">£200–£4.5k</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: CONFIG -->
+    <div class="panel">
+      <div class="panel-label">Step 3</div>
+      <div class="panel-title" id="cfg-title">Extension details</div>
+      <div class="panel-sub">Adjust sliders to match your project scope</div>
+
+      <div class="slider-block">
+        <div class="slider-row">
+          <span class="slider-label" id="s1-label">Floor area (m²)</span>
+          <span class="slider-val" id="s1-val">30m²</span>
+        </div>
+        <input type="range" id="s1" min="10" aria-label="Project area in square metres" aria-valuenow="30" aria-valuemin="10" aria-valuemax="150" max="150" value="30" step="1" oninput="updateEst();document.getElementById('s1-val').textContent=this.value+' m²'">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;"><span style="font-size:11px;color:var(--text-dim)">10 m²</span><span style="font-size:11px;color:var(--text-dim)">150 m²</span></div>
+      </div>
+
+      <div class="slider-block" id="s2-wrap">
+        <div class="slider-row">
+          <span class="slider-label" id="s2-label">Number of storeys</span>
+          <span class="slider-val" id="s2-val">1</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);text-align:center;flex:1">Budget</span><span style="font-size:11px;color:var(--text-dim);text-align:center;flex:1">Mid-range</span><span style="font-size:11px;color:var(--text-dim);text-align:center;flex:1">Premium</span></div>
+        <input type="range" id="s2" min="1" aria-label="Specification level" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" max="3" value="1" step="1" oninput="updateEst();updateSpecLabel(this.value)">
+        <div id="spec-label-live" style="text-align:center;font-size:12px;font-weight:700;color:var(--teal-light);margin-top:6px;">Budget spec selected</div>
+      </div>
+
+      <div style="margin-top:1rem">
+        <label>Specification quality</label>
+        <div class="quality-row">
+          <button class="qual-btn" onclick="setQual('budget',this)">Budget<br><small style="opacity:0.6">Basic materials</small></button>
+          <button class="qual-btn active" onclick="setQual('mid',this)">Mid-Range<br><small style="opacity:0.6">Good quality</small></button>
+          <button class="qual-btn" onclick="setQual('premium',this)">Premium<br><small style="opacity:0.6">High spec</small></button>
+        </div>
+      </div>
+
+      <div id="extras-wrap" style="margin-top:1.5rem">
+        <label>Include professional fees</label>
+        <div class="extra-row" onclick="toggleExtra('planning',3500,this)">
+          <div class="cb-box checked" id="cb-planning">✓</div>
+          <div class="extra-label">Planning application & drawings</div>
+          <div class="extra-cost">+£3,500</div>
+        </div>
+        <div class="extra-row" onclick="toggleExtra('structural',2800,this)">
+          <div class="cb-box" id="cb-structural"></div>
+          <div class="extra-label">Structural engineer calculations</div>
+          <div class="extra-cost">+£2,800</div>
+        </div>
+        <div class="extra-row" onclick="toggleExtra('warranty',1200,this)">
+          <div class="cb-box" id="cb-warranty"></div>
+          <div class="extra-label">10-year structural warranty</div>
+          <div class="extra-cost">+£1,200</div>
+        </div>
+        <div class="extra-row" onclick="toggleExtra('pwall',900,this)">
+          <div class="cb-box" id="cb-pwall"></div>
+          <div class="extra-label">Party wall agreement</div>
+          <div class="extra-cost">+£900</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO TIP -->
+    <div class="info-tip" id="trade-tip">
+      Extensions typically cost between £1,500–£3,200/m² depending on specification. Single storey rear extensions are most affordable. Bi-fold doors, underfloor heating and vaulted ceilings add 15–35% to base costs. Always budget a 15% contingency on top of your estimate.
+    </div>
+
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div class="results-panel">
+
+    <div class="estimate-card">
+      <div class="est-label">Estimated project cost</div>
+      <div class="est-range" id="est-range" role="status" aria-live="polite" aria-label="Estimated cost range">£55,400 – £80,600</div>
+      <div class="est-context" id="est-context">South East · Mid-Range · 30m²</div>
+
+      <!-- LINE-ITEM BREAKDOWN — Pro only -->
+      <div id="breakdown-pro" title="Labour = workers on site. Materials = physical goods. Prelims = site setup, insurance, scaffolding, waste." class="breakdown-grid" style="display:none">
+        <div class="bk-item">
+          <span class="bk-num" id="bk-labour">£36,200</span>
+          <div class="bk-desc">Labour</div>
+        </div>
+        <div class="bk-item">
+          <span class="bk-num" id="bk-materials">£26,300</span>
+          <div class="bk-desc">Materials</div>
+        </div>
+        <div class="bk-item">
+          <span class="bk-num" id="bk-prelims">£8,100</span>
+          <div class="bk-desc">Prelims & fees</div>
+        </div>
+      </div>
+
+      <!-- BREAKDOWN LOCK — free users -->
+      <div id="breakdown-lock" style="padding:12px;margin:12px 0;background:rgba(0,201,167,0.04);border:1px dashed rgba(0,201,167,0.2);border-radius:8px;text-align:center;">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">🔒 Line-item breakdown</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">See exactly how costs split across labour, materials and prelims</div>
+        <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Unlock with Pro →</button>
+      </div>
+
+      <div class="per-sqm">
+        <span>Cost per m²</span>
+        <strong id="per-sqm-val">£2,358/m²</strong>
+      </div>
+
+      <div id="vat-note" style="font-size:12px;color:var(--text-dim);margin-bottom:10px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;line-height:1.5;"></div>
+      <div id="confidence-msg" style="font-size:12px;color:var(--text-dim);margin-bottom:10px;line-height:1.5;"></div>
+      <div class="contingency-strip">
+        ⚠ Add 15% contingency: <strong id="contingency-val">£10,500</strong> — unplanned works, price changes, access issues.
+      </div>
+
+      <!-- POSTCODE PRICING — Pro only -->
+      <div id="postcode-pro" style="display:none;margin-top:10px;padding:10px 12px;background:rgba(0,201,167,0.05);border:1px solid rgba(0,201,167,0.15);border-radius:8px;">
+        <div style="font-size:11px;color:var(--teal);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Postcode-level pricing</div>
+        <div style="font-size:13px;color:var(--text-muted)">Your postcode area: <strong id="postcode-area" style="color:var(--text)">—</strong></div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Local labour index applied to your estimate</div>
+      </div>
+
+      <!-- POSTCODE LOCK — free users -->
+      <div id="postcode-lock" style="margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div style="font-size:12px;color:var(--text-dim)">🔒 Postcode-level pricing</div>
+        <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;white-space:nowrap;">Pro only</button>
+      </div>
+
+      <div class="market-note">
+        <span class="up">▲</span>
+        Timber +5.1% · Insulation +2.8% since Q3 2024
+      </div>
+    </div>
+
+    <div class="actions-stack">
+      <button class="btn-save" onclick="saveProject()">💾 Save this estimate</button>
+      <button class="btn-pdf" onclick="exportPDF()">📄 Export as PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Pro</span></button>
+      <div class="pro-lock" id="pdf-lock">
+        <span class="lock-icon">🔒</span>
+        PDF export available on Pro — <a href="#" onclick="goToStripe('homeowner_pro');return false;" style="color:var(--teal);text-decoration:none">upgrade for £9.99/mo</a>
+      </div>
+
+      <!-- WHITE-LABEL PDF — Trade only -->
+      <button id="btn-wl-pdf" onclick="exportWhiteLabelPDF()" style="display:none;width:100%;padding:12px;border-radius:var(--radius);background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:var(--sans);font-size:14px;cursor:pointer;transition:var(--transition);display:none;align-items:center;justify-content:center;gap:6px;">
+        🏷 Export white-label PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Trade</span>
+      </button>
+
+      <!-- SHARE LINK — Trade only -->
+      <div id="share-link-trade" style="display:none">
+        <button onclick="generateShareLink()" style="width:100%;padding:12px;border-radius:var(--radius);background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:var(--sans);font-size:14px;cursor:pointer;transition:var(--transition);">
+          🔗 Generate client share link <span style="font-size:10px;opacity:0.5;margin-left:4px">Trade</span>
+        </button>
+        <div id="share-link-output" style="display:none;margin-top:8px;padding:10px 12px;background:rgba(0,201,167,0.04);border:1px solid rgba(0,201,167,0.2);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">Share this link with your client</div>
+          <div style="display:flex;gap:6px">
+            <input id="share-url" readonly style="flex:1;font-size:12px;padding:7px 10px;letter-spacing:0;font-family:monospace;background:rgba(255,255,255,0.03);">
+            <button onclick="copyShareLink()" style="padding:7px 12px;border-radius:6px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);font-size:12px;cursor:pointer;font-family:var(--sans);white-space:nowrap;" id="copy-share-btn">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHARE LOCK — free/pro users -->
+      <div id="share-link-lock" style="text-align:center;padding:10px 0">
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">🔒 Client-facing share links — Trade plan</div>
+        <button onclick="goToStripe('homeowner_trade')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Upgrade to Trade →</button>
+      </div>
+    </div>
+
+    <!-- QUOTE COMPARISON — Pro only -->
+    <div id="quote-compare-pro" style="display:none" class="materials-panel">
+      <div class="panel-label" style="margin-bottom:10px">Quote comparison</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;line-height:1.6">Paste contractor quotes below to see how they compare against the Estiquote benchmark for your project.</div>
+      <div id="quotes-list"></div>
+      <button onclick="addQuote()" style="width:100%;padding:10px;border-radius:8px;background:transparent;border:1px dashed rgba(0,201,167,0.3);color:var(--teal-light);font-family:var(--sans);font-size:13px;cursor:pointer;margin-top:8px;">+ Add a contractor quote</button>
+    </div>
+
+    <!-- QUOTE COMPARISON LOCK — free users -->
+    <div id="quote-compare-lock" class="materials-panel" style="text-align:center;padding:1.5rem;">
+      <div style="font-size:24px;margin-bottom:8px;opacity:0.4">📊</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">Contractor quote comparison</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.6">Paste quotes from contractors and instantly see if they're fair, high, or a bargain against your Estiquote estimate.</div>
+      <button onclick="goToStripe('homeowner_pro')" style="padding:10px 22px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Unlock with Pro — £9.99/mo</button>
+    </div>
+
+    <!-- MATERIAL TRACKER -->
+    <div class="materials-panel">
+      <div class="panel-label" style="margin-bottom:10px">Material price tracker</div>
+
+      <!-- Free: show 3 rows only, rest locked -->
+      <div id="mat-free">
+        <div class="mat-row">
+          <div><div class="mat-name">Timber (C16 structural)</div><div style="font-size:11px;color:var(--text-dim)">per m³ · Jan 2025</div></div>
+          <div class="mat-change up">▲ +5.1%</div>
+        </div>
+        <div class="mat-row">
+          <div><div class="mat-name">Concrete blocks</div><div style="font-size:11px;color:var(--text-dim)">per 100 blocks · Jan 2025</div></div>
+          <div class="mat-change up">▲ +2.3%</div>
+        </div>
+        <div class="mat-row">
+          <div><div class="mat-name">Rigid insulation</div><div style="font-size:11px;color:var(--text-dim)">per m² · Jan 2025</div></div>
+          <div class="mat-change up">▲ +2.8%</div>
+        </div>
+        <div style="margin-top:10px;padding:10px;background:rgba(0,201,167,0.03);border:1px dashed rgba(0,201,167,0.2);border-radius:8px;text-align:center;">
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">🔒 +7 more materials tracked on Pro</div>
+          <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Unlock full tracker →</button>
+        </div>
+      </div>
+
+      <!-- Pro: show all rows -->
+      <div id="mat-pro" style="display:none">
+        <div class="mat-row"><div><div class="mat-name">Timber (C16 structural)</div><div style="font-size:11px;color:var(--text-dim)">per m³ · Jan 2025</div></div><div class="mat-change up">▲ +5.1%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Concrete blocks</div><div style="font-size:11px;color:var(--text-dim)">per 100 blocks · Jan 2025</div></div><div class="mat-change up">▲ +2.3%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Rigid insulation</div><div style="font-size:11px;color:var(--text-dim)">per m² · Jan 2025</div></div><div class="mat-change up">▲ +2.8%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Copper pipe (22mm)</div><div style="font-size:11px;color:var(--text-dim)">per metre · Jan 2025</div></div><div class="mat-change flat">— 0.0%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Plasterboard (12.5mm)</div><div style="font-size:11px;color:var(--text-dim)">per sheet · Jan 2025</div></div><div class="mat-change down">▼ -1.2%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Roof tiles (clay)</div><div style="font-size:11px;color:var(--text-dim)">per 1000 · Jan 2025</div></div><div class="mat-change up">▲ +3.7%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Facing bricks</div><div style="font-size:11px;color:var(--text-dim)">per 1000 · Jan 2025</div></div><div class="mat-change up">▲ +4.1%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Sand & aggregate</div><div style="font-size:11px;color:var(--text-dim)">per tonne · Jan 2025</div></div><div class="mat-change up">▲ +1.9%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Steel reinforcement</div><div style="font-size:11px;color:var(--text-dim)">per tonne · Jan 2025</div></div><div class="mat-change down">▼ -0.8%</div></div>
+        <div class="mat-row"><div><div class="mat-name">MDPE pipe (25mm)</div><div style="font-size:11px;color:var(--text-dim)">per metre · Jan 2025</div></div><div class="mat-change flat">— 0.0%</div></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-dim)">
+          ✓ Monthly email alerts enabled · Source: BCIS, BMF, ONS
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const tradeData = {
+    extension: {
+      title:'Extension details', s1l:'Floor area (m²)', s1min:10, s1max:150, s1v:30, s1u:'m²',
+      s2l:'Number of storeys', s2min:1, s2max:3, s2v:1, s2show:true, extrasShow:true,
+      base:{budget:1700,mid:2400,premium:3400}, labour:0.51, mats:0.37, prelims:0.12,
+      warning: null,
+      tip:'Extensions in 2026 cost £1,700–£3,600/m² depending on specification and location. Post-pandemic labour and material inflation has pushed costs up 18–22% since 2021. Single-storey rear extensions remain most affordable. Bi-fold doors add £4k–£8k, underfloor heating £60–£100/m², vaulted ceilings £3k–£6k. Always hold a 15% contingency — unplanned groundworks and drainage diversions are common.',
+      benchmarks: ['30m² mid-spec SE England: £60k–£88k', 'Same in London: £72k–£105k', '50m² premium SE: £145k–£195k']
+    },
+    loft: {
+      title:'Loft conversion details', s1l:'Loft floor area (m²)', s1min:15, s1max:80, s1v:35, s1u:'m²',
+      s2l:'Number of dormers', s2min:0, s2max:4, s2v:1, s2show:true, extrasShow:true,
+      base:{budget:1450,mid:1900,premium:2900}, labour:0.50, mats:0.38, prelims:0.12,
+      warning: null,
+      tip:'Velux-only conversions: £25k–£40k. Dormer conversions: £45k–£70k. Hip-to-gable extension adds £8k–£14k on top. Mansard: £55k–£85k. Party wall agreement required if terraced or semi-detached. Structural engineer report essential — budget £500–£900. Fire door and escape window requirements apply.',
+      benchmarks: ['35m² dormer, 1 dormer, SE: £50k–£73k', 'Velux-only 30m² SE: £27k–£42k', 'Full mansard 45m² London: £72k–£105k']
+    },
+    kitchen: {
+      title:'Kitchen renovation details', s1l:'Kitchen size (m²)', s1min:5, s1max:50, s1v:15, s1u:'m²',
+      s2l:'Number of appliances', s2min:2, s2max:12, s2v:5, s2show:false, extrasShow:false,
+      base:{budget:720,mid:1700,premium:3500}, labour:0.35, mats:0.52, prelims:0.13,
+      warning: null,
+      tip:'Kitchens are materials-driven — units, worktops and appliances typically represent 52% of total cost. Budget units (B&Q/Wickes): £3k–£8k supply. Mid-range (Howdens/Benchmarx): £6k–£14k. Premium (Neff/Siemens/Bulthaup): £15k–£60k+. Quartz worktops: £400–£800/m². Moving the sink position adds £800–£1,800 for plumbing. Always factor in tiling, plastering and electrical circuits.',
+      benchmarks: ['15m² budget SE England: £9k–£14k', '15m² mid-spec SE: £19k–£28k', '20m² premium London: £55k–£90k']
+    },
+    bathroom: {
+      title:'Bathroom fit-out details', s1l:'Bathroom size (m²)', s1min:3, s1max:20, s1v:6, s1u:'m²',
+      s2l:'Number of bathrooms', s2min:1, s2max:5, s2v:1, s2show:false, extrasShow:false,
+      base:{budget:1100,mid:1950,premium:3400}, labour:0.48, mats:0.42, prelims:0.10,
+      warning: null,
+      tip:'A complete bathroom renovation includes full strip-out (£400–£800), waterproof tanking, tiling (budget £35/m², premium £120/m²), sanitaryware supply and fit, and making good. Wet rooms cost 25–35% more due to drainage and waterproofing complexity. En-suite conversions to an existing room add partitioning and plumbing connection costs. Underfloor heating: £150–£300 for a 6m² bathroom. Allow 2–3 weeks minimum.',
+      benchmarks: ['6m² mid-spec SE: £10k–£14k', '4m² en-suite budget: £7k–£11k', '8m² premium wet room London: £22k–£32k']
+    },
+    electrical: {
+      title:'Electrical works details', s1l:'Property size (m²)', s1min:30, s1max:300, s1v:85, s1u:'m²',
+      s2l:'Number of circuits', s2min:5, s2max:30, s2v:12, s2show:false, extrasShow:false,
+      base:{budget:40,mid:72,premium:130}, labour:0.62, mats:0.28, prelims:0.10,
+      warning: null,
+      tip:'Full rewire for a 3-bed (85m²): £5,000–£9,500 in SE England, up to £12,000 for older properties with difficult cable routes. Consumer unit upgrade alone: £600–£1,400. EV charger installation: £900–£1,600 including load management. Solar PV system (6kW): £7,000–£11,000. All notifiable electrical work requires Part P Building Regulations sign-off — ensure your electrician is NICEIC or NAPIT registered.',
+      benchmarks: ['Full rewire 85m² SE: £5k–£9.5k', 'Consumer unit upgrade only: £600–£1,400', 'Full rewire + consumer unit older property: £8k–£14k']
+    },
+    plumbing: {
+      title:'Plumbing & heating details', s1l:'Property size (m²)', s1min:30, s1max:300, s1v:85, s1u:'m²',
+      s2l:'Number of radiators', s2min:4, s2max:20, s2v:8, s2show:false, extrasShow:false,
+      base:{budget:38,mid:65,premium:100}, labour:0.58, mats:0.32, prelims:0.10,
+      warning: null,
+      tip:'New combi boiler supply and fit (Worcester/Vaillant): £2,400–£4,800. Heat pump installation: £8,000–£15,000 (BUS grant of £7,500 available). Full central heating system including boiler, rads and pipework: £6,000–£11,000. Underfloor heating (wet system): £70–£120/m². All gas work must be Gas Safe registered — check the register before instructing anyone. OFTEC registered for oil boilers.',
+      benchmarks: ['Boiler replacement only: £2.4k–£4.8k', 'Full central heating system SE: £6.5k–£11k', 'Heat pump + UFH whole house: £18k–£28k']
+    },
+    structural: {
+      title:'Structural works details', s1l:'Number of openings / beams', s1min:1, s1max:10, s1v:1, s1u:'',
+      s2l:'Beam span (metres)', s2min:2, s2max:12, s2v:4, s2show:true, extrasShow:true,
+      base:{budget:2200,mid:3800,premium:6500}, labour:0.55, mats:0.30, prelims:0.15,
+      warning:'⚠ Structural costs vary enormously depending on job complexity. This estimate covers standard RSJ beam installations only. Underpinning, subsidence repair, basement conversions or complex load-bearing changes will cost significantly more. Always obtain a structural engineer report (£500–£1,200) before proceeding — never start structural work without one.',
+      tip:'Single RSJ installation (standard span, making good both sides): £2,500–£5,500 in SE England. Complex multi-beam steel frames: £8,000–£25,000. Chimney breast removal: £1,500–£3,500. Load-bearing wall removal with temporary support, steel and decoration: £3,500–£8,000. Underpinning: £1,200–£1,800 per linear metre — highly variable based on foundation type and soil conditions.',
+      benchmarks: ['Single RSJ (4m span) SE: £3k–£5.5k', 'Chimney breast removal + RSJ: £3.5k–£7k', 'Complex multi-beam frame: £10k–£30k']
+    },
+    decoration: {
+      title:'Decoration details', s1l:'Area to decorate (m²)', s1min:20, s1max:400, s1v:100, s1u:'m²',
+      s2l:'Number of rooms', s2min:1, s2max:15, s2v:4, s2show:false, extrasShow:false,
+      base:{budget:20,mid:38,premium:65}, labour:0.65, mats:0.25, prelims:0.10,
+      warning: null,
+      tip:'Professional decorators in SE England charge £200–£300/day (2026 rates). Full interior repaint of a 100m² house takes 7–10 working days including preparation. New plaster always requires a mist coat first (diluted emulsion) — skipping this causes peeling. Specialist finishes: limewash £45–£85/m², microcement £80–£150/m², decorative panelling £60–£120/m² installed. Materials (paint, filler, masking) add £8–£18/m² depending on quality.',
+      benchmarks: ['100m² full repaint SE (professional): £3.5k–£6k', 'Same area specialist finishes: £7k–£14k', '4-bed house full redecoration London: £6k–£10k']
+    }
+  };
+
+  // Region multipliers (2026 BCIS regional indices, London=1.00 base)
+  // SE England = 0.88 of London, North = 0.66 of London etc
+  let regionMult = 0.88;
+  let regionName = 'South East';
+  let currentTrade = 'extension';
+  let qualKey = 'mid';
+  let extras = { planning: 3500 };
+
+  function selectRegion(btn, mult, name) {
+    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    regionMult = mult; regionName = name;
+    updateEst();
+  }
+
+  function selectTrade(card, trade) {
+    document.querySelectorAll('.trade-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    currentTrade = trade;
+    const d = tradeData[trade];
+    document.getElementById('cfg-title').textContent = d.title;
+    document.getElementById('s1-label').textContent = d.s1l;
+    document.getElementById('s1').min = d.s1min; document.getElementById('s1').max = d.s1max; document.getElementById('s1').value = d.s1v;
+    document.getElementById('s2-label').textContent = d.s2l;
+    document.getElementById('s2').min = d.s2min; document.getElementById('s2').max = d.s2max; document.getElementById('s2').value = d.s2v;
+    document.getElementById('s2-wrap').style.display = d.s2show ? 'block' : 'none';
+    document.getElementById('extras-wrap').style.display = d.extrasShow ? 'block' : 'none';
+    document.getElementById('trade-tip').textContent = d.tip;
+    // Show structural warning if exists
+    const warnEl = document.getElementById('structural-warning');
+    if (warnEl) {
+      if (d.warning) {
+        warnEl.textContent = d.warning;
+        warnEl.style.display = 'block';
+      } else {
+        warnEl.style.display = 'none';
+      }
+    }
+    // Show benchmarks if exists
+    const bmEl = document.getElementById('benchmarks-list');
+    if (bmEl && d.benchmarks) {
+      bmEl.innerHTML = d.benchmarks.map(b => `<li>${b}</li>`).join('');
+      document.getElementById('benchmarks-wrap').style.display = 'block';
+    } else if (document.getElementById('benchmarks-wrap')) {
+      document.getElementById('benchmarks-wrap').style.display = 'none';
+    }
+    updateEst();
+  }
+
+  function setQual(q, btn) {
+    document.querySelectorAll('.qual-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    qualKey = q;
+    updateEst();
+  }
+
+  function toggleExtra(key, cost, row) {
+    const cb = document.getElementById('cb-' + key);
+    if (extras[key]) { delete extras[key]; cb.textContent = ''; cb.classList.remove('checked'); }
+    else { extras[key] = cost; cb.textContent = '✓'; cb.classList.add('checked'); }
+    updateEst();
+  }
+
+
+  function updateSpecLabel(val) {
+    const labels = {1:'Budget spec selected',2:'Mid-range spec selected',3:'Premium spec selected'};
+    const el = document.getElementById('spec-label-live');
+    if (el) el.textContent = labels[val] || '';
+  }
+
+  function updateEst() {
+    const d = tradeData[currentTrade];
+    const s1 = parseInt(document.getElementById('s1').value);
+    const s2 = parseInt(document.getElementById('s2').value);
+
+    document.getElementById('s1-val').textContent = s1 + (d.s1u ? d.s1u : '');
+    document.getElementById('s2-val').textContent = s2 + (d.s2show && d.s2u ? d.s2u : '');
+
+    const baseRate = d.base[qualKey];
+    // s2factor: for loft, s2=0 means velux-only (0.75x), s2=1 is dormer baseline, s2>1 adds cost
+    // for extension, s2=1 is single storey, s2=2/3 adds storeys
+    // for structural, s2 is beam span which uses separate multiplier
+    let s2factor = 1;
+    if (d.s2show) {
+      if (currentTrade === 'loft') {
+        s2factor = s2 === 0 ? 0.72 : (1 + (s2 - 1) * 0.45);
+      } else if (currentTrade === 'structural') {
+        // Structural: beam span matters more than count — span multiplier
+        s2factor = (1 + (s2 - 2) * 0.18); // span from 2m baseline
+        s2factor = Math.max(0.5, s2factor);
+      } else {
+        s2factor = (1 + (s2 - 1) * 0.55);
+      }
+    }
+    let base = baseRate * s1 * s2factor * regionMult;
+    let extraTotal = Object.values(extras).reduce((a, b) => a + b, 0);
+    let total = base + extraTotal;
+
+    // Apply minimum cost floors — real jobs have fixed costs regardless of size
+    const minimums = {
+      bathroom:   5500,   // smallest bathroom renovation is still ~£5.5k
+      kitchen:    7000,   // smallest kitchen still has plumbing, electrics, units
+      electrical: 3500,   // minimum call-out + consumer unit work
+      plumbing:   2500,   // minimum heating job
+      structural: 3000,   // minimum structural job including temp support + making good
+    };
+    if (minimums[currentTrade] && total < minimums[currentTrade]) {
+      total = minimums[currentTrade];
+    }
+
+    const lo = Math.round(total * 0.85 / 100) * 100;
+    const hi = Math.round(total * 1.25 / 100) * 100;
+    const mid = (lo + hi) / 2;
+
+    document.getElementById('est-range').textContent = '£' + lo.toLocaleString() + ' – £' + hi.toLocaleString();
+    document.getElementById('bk-labour').textContent = '£' + Math.round(mid * d.labour / 100) * 100 > 999 ? '£' + (Math.round(mid * d.labour / 100) * 100).toLocaleString() : '£' + Math.round(mid * d.labour);
+    document.getElementById('bk-materials').textContent = '£' + (Math.round(mid * d.mats / 100) * 100).toLocaleString();
+    document.getElementById('bk-prelims').textContent = '£' + (Math.round(mid * d.prelims / 100) * 100).toLocaleString();
+    document.getElementById('bk-labour').textContent = '£' + (Math.round(mid * d.labour / 100) * 100).toLocaleString();
+
+    const qLabel = qualKey === 'budget' ? 'Budget spec' : qualKey === 'mid' ? 'Mid-Range spec' : 'Premium spec';
+    document.getElementById('est-context').textContent = regionName + ' · ' + qLabel + ' · ' + s1 + (d.s1u || '');
+
+    // Show VAT reminder
+    const vatEl = document.getElementById('vat-note');
+    if (vatEl) {
+      const vatAmt = Math.round(mid * 0.20 / 100) * 100;
+      vatEl.textContent = 'All figures ex-VAT. Add 20% for most residential projects (£' + vatAmt.toLocaleString() + '). New builds and some conversions may qualify for 0% or 5% VAT — confirm with HMRC or your contractor.';
+    }
+
+    // Update accuracy confidence message
+    const confEl = document.getElementById('confidence-msg');
+    if (confEl) {
+      const spread = Math.round(((hi - lo) / mid) * 100);
+      confEl.textContent = 'Estimate accuracy: ±' + Math.round(spread/2) + '%. Real quotes typically fall within this range for standard projects. Complex sites, access issues or unusual specification will move costs outside this band.';
+    }
+
+    const perSqm = Math.round(mid / s1);
+    document.getElementById('per-sqm-val').textContent = '£' + perSqm.toLocaleString() + '/m²';
+
+    const contingency = Math.round(mid * 0.15 / 100) * 100;
+    document.getElementById('contingency-val').textContent = '£' + contingency.toLocaleString();
+  }
+
+  function postcodeToRegion(pc) {
+    const c = pc.replace(/\s/g,'').toUpperCase();
+    const two = c.substring(0,2);
+    const SE  = ['TN','RH','BN','GU','KT','CR','BR','DA','ME','CT','SS','CM','SG','AL','HP','SL','OX','RG','SO','PO'];
+    const SW  = ['EX','TQ','PL','TR','BA','BS','DT','SP','BH','TA'];
+    const LON = ['EC','WC','SW','SE','NW','E1','E2','E3','E4','E5','E6','E7','E8','E9','N1','N2','N3','N4','N5','N6','N7','N8','N9','W1','W2','W3','W4','W5','W6','W7','W8','W9'];
+    const SCW = ['EH','G','AB','DD','KY','PH','FK','ML','KA','PA','IV','HS','ZE','KW','CF','SA','NP','LL','SY','LD','CH','IM'];
+    if (SE.includes(two))  return { name:'South East England', mult:0.88, id:'r-se' };
+    if (SW.includes(two))  return { name:'South West England', mult:0.80, id:'r-sw' };
+    if (LON.includes(two)) return { name:'London',             mult:1.00, id:'r-london' };
+    if (SCW.includes(two)) return { name:'Scotland & Wales',   mult:0.72, id:'r-scotland' };
+    const MID = ['CV','DE','LE','LN','NG','NN','WS','WV','DY','WR','HR','TF','ST','SN','GL'];
+    if (MID.some(p => two === p || c.startsWith(p))) return { name:'Midlands', mult:0.78, id:'r-mids' };
+    return { name:'North of England', mult:0.70, id:'r-north' };
+  }
+
+  function applyPostcode() {
+    const pc = document.getElementById('postcodeIn').value.trim();
+    if (!pc) return;
+    const region = postcodeToRegion(pc);
+    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById(region.id);
+    if (btn) btn.classList.add('active');
+    regionMult = region.mult;
+    regionName = region.name;
+    updateEst();
+  }
+
+  async function saveProject() {
+    const user = await EQ.getUser();
+    if (!user) {
+      // Show signup prompt modal with estimate preview
+      const lo  = document.getElementById('result-lo')?.textContent  || '';
+      const hi  = document.getElementById('result-hi')?.textContent  || '';
+      const ctx = document.getElementById('est-context')?.textContent || 'your project';
+      const overlay = document.createElement('div');
+      overlay.id = 'save-gate-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+      overlay.innerHTML = `
+        <div style="background:var(--navy-2,#111b2e);border:1px solid rgba(0,201,167,0.25);border-radius:16px;padding:2rem;max-width:420px;width:100%;position:relative;">
+          <button onclick="document.getElementById('save-gate-overlay').remove()" style="position:absolute;top:12px;right:16px;background:transparent;border:none;color:#8892a4;font-size:20px;cursor:pointer;">✕</button>
+          <div style="font-size:32px;margin-bottom:12px">💾</div>
+          <h3 style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#e2e8f0;margin:0 0 8px">Save your estimate</h3>
+          ${lo ? `<div style="background:rgba(0,201,167,0.06);border:1px solid rgba(0,201,167,0.15);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+            <div style="font-size:11px;color:#8892a4;margin-bottom:4px">${ctx}</div>
+            <div style="font-size:18px;font-weight:700;color:#e2e8f0">${lo} – ${hi}</div>
+          </div>` : ''}
+          <p style="font-size:13px;color:#8892a4;margin:0 0 16px;line-height:1.5">Create a free account to save this estimate, share it with builders, and track your project.</p>
+          <a href="signup.html" style="display:block;text-align:center;padding:12px;border-radius:10px;background:linear-gradient(135deg,#00c9a7,#4dffd2);color:#0b1120;font-weight:700;font-family:inherit;text-decoration:none;font-size:14px;margin-bottom:10px">Create free account →</a>
+          <a href="login.html" style="display:block;text-align:center;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);color:#8892a4;font-family:inherit;text-decoration:none;font-size:13px">Already have an account? Sign in</a>
+        </div>`;
+      document.body.appendChild(overlay);
+      return;
+    }
+
+    const estimate = document.getElementById('est-range').textContent;
+    const project = {
+      trade: currentTrade,
+      region: regionName,
+      quality: qualKey,
+      estimate,
+      area: currentArea || null,
+      estimate_low: currentLow || null,
+      estimate_high: currentHigh || null,
+      per_sqm: currentPerSqm || null,
+      extras: Object.keys(extras)
+    };
+
+    // Use EQ.saveProject which handles the free limit check
+    const result = await EQ.saveProject(project);
+
+    if (result === 'limit_reached') {
+      if (confirm(`Free plan allows 3 saved projects. Upgrade to Pro for unlimited? (£9.99/mo)`)) {
+        goToStripe('homeowner_pro', user.email);
+      }
+      return;
+    }
+
+    // Notify Estiquote (non-blocking)
+    try {
+      fetch('https://formspree.io/f/xwvadzvz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `[Estiquote] Estimate saved — ${user.name} · ${currentTrade} · ${estimate}`,
+          form_type: 'Saved Estimate',
+          user_name: user.name,
+          user_email: user.email || 'Unknown',
+          user_plan: user.plan || 'free',
+          trade: currentTrade, region: regionName, quality: qualKey,
+          estimate_range: estimate,
+          extras_selected: Object.keys(extras).join(', ') || 'None',
+          saved_at: new Date().toLocaleString('en-GB')
+        })
+      });
+    } catch (e) {}
+
+    // Show inline confirmation
+    const btn = document.querySelector('.btn-save');
+    const original = btn.textContent;
+    const projects = EQ.getProjects();
+    btn.textContent = EQ.isPro()
+      ? '✓ Saved to dashboard'
+      : `✓ Saved (${projects.length}/3 free projects)`;
+    btn.style.background = 'rgba(0,201,167,0.15)';
+    btn.style.color = 'var(--teal-light)';
+    btn.style.border = '1px solid rgba(0,201,167,0.3)';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.border = '';
+      applyPlanGating(); // refresh save button label
+    }, 2500);
+  }
+
+  // ── PLAN GATING ──────────────────────────────────────────
+  const FREE_PROJECT_LIMIT = 3;
+
+  // Use EQ auth system
+  function getUser() { return EQ.getUserSync(); }  // sync version for gating checks
+  function isPro()   { return EQ.isPro(); }
+  function isTrade() { return EQ.isTrade(); }
+
+  function applyPlanGating() {
+    const pro   = EQ.isPro();
+    const trade = EQ.isTrade();
+
+    // Breakdown
+    document.getElementById('breakdown-pro').style.display  = pro ? 'grid' : 'none';
+    document.getElementById('breakdown-lock').style.display = pro ? 'none' : 'block';
+
+    // Postcode pricing
+    document.getElementById('postcode-pro').style.display  = pro ? 'block' : 'none';
+    document.getElementById('postcode-lock').style.display = pro ? 'none' : 'flex';
+
+    // PDF lock
+    const pdfLock = document.getElementById('pdf-lock');
+    if (pdfLock) pdfLock.style.display = pro ? 'none' : 'flex';
+
+    // White-label PDF (Trade)
+    const wlBtn = document.getElementById('btn-wl-pdf');
+    if (wlBtn) wlBtn.style.display = trade ? 'flex' : 'none';
+
+    // Share link (Trade)
+    const shareTrade = document.getElementById('share-link-trade');
+    const shareLock  = document.getElementById('share-link-lock');
+    if (shareTrade) shareTrade.style.display = trade ? 'block' : 'none';
+    if (shareLock)  shareLock.style.display  = trade ? 'none'  : 'block';
+
+    // Quote comparison
+    document.getElementById('quote-compare-pro').style.display  = pro ? 'block' : 'none';
+    document.getElementById('quote-compare-lock').style.display = pro ? 'none' : 'block';
+
+    // Material tracker
+    document.getElementById('mat-free').style.display = pro ? 'none'  : 'block';
+    document.getElementById('mat-pro').style.display  = pro ? 'block' : 'none';
+
+    // Save button label
+    const saveBtn = document.querySelector('.btn-save');
+    if (saveBtn) {
+      if (!getUser()) { saveBtn.textContent = '💾 Sign in to save'; }
+      else if (!pro) {
+        const existing = JSON.parse(localStorage.getItem('eq_projects') || '[]');
+        if (existing.length >= FREE_PROJECT_LIMIT) saveBtn.textContent = `💾 Limit reached (${FREE_PROJECT_LIMIT} free)`;
+      }
+    }
+
+    // Postcode area label
+    if (pro) {
+      const pc = document.getElementById('postcodeIn').value.trim().toUpperCase();
+      const el = document.getElementById('postcode-area');
+      if (el) el.textContent = pc || regionName;
+    }
+  }
+
+  // ── SAVE PROJECT (with free limit) ───────────────────────
+
+  function exportPDF() {
+    const user = getUser();
+    if (!isPro()) {
+      if (confirm('PDF export is a Pro feature (£9.99/mo). Upgrade now?')) {
+        goToStripe('homeowner_pro', user ? user.email : null);
+      }
+    } else {
+      window.print();
+    }
+  }
+
+  // ── QUOTE COMPARISON (Pro) ───────────────────────────────
+  let quotes = [];
+
+  function addQuote() {
+    const id = Date.now();
+    quotes.push({ id, name: '', amount: '' });
+    renderQuotes();
+  }
+
+  function removeQuote(id) {
+    quotes = quotes.filter(q => q.id !== id);
+    renderQuotes();
+  }
+
+  function renderQuotes() {
+    const container = document.getElementById('quotes-list');
+    const estText = document.getElementById('est-range').textContent;
+    const nums = estText.match(/[\d,]+/g);
+    const midEst = nums ? (parseInt(nums[0].replace(/,/g,'')) + parseInt(nums[1].replace(/,/g,''))) / 2 : 0;
+
+    if (quotes.length === 0) {
+      container.innerHTML = '<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:8px 0">No quotes added yet</div>';
+      return;
+    }
+
+    container.innerHTML = quotes.map(q => {
+      const amt = parseFloat(q.amount.replace(/[£,]/g,'')) || 0;
+      let verdict = '', verdictColor = '';
+      if (amt > 0 && midEst > 0) {
+        const diff = ((amt - midEst) / midEst) * 100;
+        if (diff > 20)       { verdict = `▲ ${diff.toFixed(0)}% above estimate — high`;  verdictColor = '#f07050'; }
+        else if (diff > 5)   { verdict = `▲ ${diff.toFixed(0)}% above estimate`;         verdictColor = '#f0a050'; }
+        else if (diff < -20) { verdict = `▼ ${Math.abs(diff).toFixed(0)}% below — check spec carefully`; verdictColor = '#50c882'; }
+        else if (diff < -5)  { verdict = `▼ ${Math.abs(diff).toFixed(0)}% below estimate`; verdictColor = '#50c882'; }
+        else                 { verdict = '✓ Within fair range';                           verdictColor = 'var(--teal-light)'; }
+      }
+      return `
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+          <div style="display:flex;gap:8px;margin-bottom:6px;align-items:center">
+            <input value="${q.name}" placeholder="Contractor name" oninput="quotes.find(x=>x.id===${q.id}).name=this.value"
+              style="flex:1;padding:6px 10px;font-size:13px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--sans);outline:none;">
+            <input value="${q.amount}" placeholder="£ amount" oninput="quotes.find(x=>x.id===${q.id}).amount=this.value;renderQuotes()"
+              style="width:110px;padding:6px 10px;font-size:13px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--sans);outline:none;">
+            <button onclick="removeQuote(${q.id})" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;padding:0 4px;">✕</button>
+          </div>
+          ${verdict ? `<div style="font-size:11px;font-weight:600;color:${verdictColor}">${verdict}</div>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── WHITE-LABEL PDF (Trade) ──────────────────────────────
+  function exportWhiteLabelPDF() {
+    const user  = getUser();
+    const range = document.getElementById('est-range').textContent;
+    const ctx   = document.getElementById('est-context').textContent;
+    const labour    = document.getElementById('bk-labour')?.textContent    || '—';
+    const materials = document.getElementById('bk-materials')?.textContent || '—';
+    const prelims   = document.getElementById('bk-prelims')?.textContent   || '—';
+    const perSqm    = document.getElementById('per-sqm-val')?.textContent  || '—';
+    const cont      = document.getElementById('contingency-val')?.textContent || '—';
+
+    const win = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html><html><head><title>Estiquote Cost Report</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Instrument Sans',Arial,sans-serif;color:#1a2535;padding:40px;max-width:760px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:24px;border-bottom:2px solid #00c9a7;margin-bottom:32px}
+  .brand{font-size:28px;font-weight:800;color:#00c9a7;letter-spacing:-0.5px}
+  .brand span{color:#1a2535;opacity:0.4}
+  .report-title{font-size:13px;color:#6b7a8d;margin-top:4px}
+  .meta{text-align:right;font-size:12px;color:#6b7a8d;line-height:1.8}
+  .estimate-block{background:#f0fdf9;border:1px solid #a7f0e0;border-radius:12px;padding:28px;margin-bottom:28px}
+  .est-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#00c9a7;font-weight:700;margin-bottom:6px}
+  .est-range{font-size:42px;font-weight:800;color:#007a65;letter-spacing:-1px;margin-bottom:4px}
+  .est-ctx{font-size:14px;color:#6b7a8d}
+  .breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid #a7f0e0}
+  .bk{text-align:center}
+  .bk-val{font-size:22px;font-weight:700;color:#1a2535;display:block}
+  .bk-lbl{font-size:11px;color:#6b7a8d;margin-top:2px}
+  .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4f8;font-size:13px}
+  .info-row:last-child{border-bottom:none}
+  .info-lbl{color:#6b7a8d}
+  .info-val{font-weight:600;color:#1a2535}
+  .warning{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:12px;color:#92400e;margin-top:24px;line-height:1.6}
+  .footer{margin-top:32px;padding-top:16px;border-top:1px solid #e5eaf0;font-size:11px;color:#9aabb8;line-height:1.8}
+  @media print{body{padding:20px}}
+</style></head><body>
+<!-- TEST MODE BANNER — remove when Stripe goes live -->
+
+<div class="header">
+  <div>
+    <div class="brand">Esti<span>quote</span></div>
+    <div class="report-title">Home Improvement Cost Report</div>
+  </div>
+  <div class="meta">
+    Generated: ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}<br>
+    Prepared for: ${user?.name || 'Client'}<br>
+    Reference: EQ-${Date.now().toString().slice(-6)}
+  </div>
+</div>
+
+<div class="estimate-block">
+  <div class="est-label">Estimated project cost</div>
+  <div class="est-range">${range}</div>
+  <div class="est-ctx">${ctx}</div>
+  <div class="breakdown">
+    <div class="bk"><span class="bk-val">${labour}</span><div class="bk-lbl">Labour</div></div>
+    <div class="bk"><span class="bk-val">${materials}</span><div class="bk-lbl">Materials</div></div>
+    <div class="bk"><span class="bk-val">${prelims}</span><div class="bk-lbl">Prelims & fees</div></div>
+  </div>
+</div>
+
+<div class="info-row"><span class="info-lbl">Cost per m²</span><span class="info-val">${perSqm}</span></div>
+<div class="info-row"><span class="info-lbl">Recommended contingency (15%)</span><span class="info-val">${cont}</span></div>
+<div class="info-row"><span class="info-lbl">Region</span><span class="info-val">${regionName}</span></div>
+<div class="info-row"><span class="info-lbl">Specification</span><span class="info-val" style="text-transform:capitalize">${qualKey}</span></div>
+<div class="info-row"><span class="info-lbl">Trade category</span><span class="info-val" style="text-transform:capitalize">${currentTrade}</span></div>
+<div class="info-row"><span class="info-lbl">Data sources</span><span class="info-val">BCIS, BMF, ONS — Updated Jan 2025</span></div>
+
+<div class="warning">⚠ This estimate is indicative only and does not constitute a quote or contract. Actual costs may vary based on site conditions, specification changes, and contractor rates. Always obtain at least 3 written quotes from qualified contractors. All figures shown are exclusive of VAT.</div>
+
+<div class="footer">
+  Powered by Estiquote · estiquote.co.uk · A trading brand of SSH Ltd<br>
+  Estimates based on BCIS Building Cost Information Service, BMF, and ONS construction price indices.<br>
+  © ${new Date().getFullYear()} Estiquote Ltd. This report may be shared with clients for informational purposes.
+</div>
+</body></html>`);
+    win.document.close();
+    setTimeout(() => win.print(), 500);
+  }
+
+  // ── CLIENT SHARE LINK (Trade) ─────────────────────────────
+  function generateShareLink() {
+    const range   = document.getElementById('est-range').textContent;
+    const ctx     = document.getElementById('est-context').textContent;
+    const perSqm  = document.getElementById('per-sqm-val')?.textContent || '';
+    const cont    = document.getElementById('contingency-val')?.textContent || '';
+
+    const data = btoa(JSON.stringify({
+      trade: currentTrade,
+      region: regionName,
+      quality: qualKey,
+      estimate: range,
+      context: ctx,
+      perSqm,
+      contingency: cont,
+      generated: new Date().toLocaleDateString('en-GB'),
+      ref: 'EQ-' + Date.now().toString().slice(-6)
+    }));
+
+    const url = `${window.location.origin}/estimate-view.html?d=${data}`;
+    const output = document.getElementById('share-link-output');
+    const urlInput = document.getElementById('share-url');
+    if (output && urlInput) { urlInput.value = url; output.style.display = 'block'; }
+  }
+
+  function copyShareLink() {
+    const url = document.getElementById('share-url')?.value;
+    if (!url) return;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('copy-share-btn');
+      if (btn) { btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 2000); }
+    });
+  }
+
+  function toggleMenu() { document.getElementById('navMobile').classList.toggle('open'); }
+
+  // ── INIT ─────────────────────────────────────────────────
+  const urlParams = new URLSearchParams(window.location.search);
+  const tradePar = urlParams.get('trade');
+  if (tradePar && document.getElementById('t-' + tradePar)) {
+    document.getElementById('t-' + tradePar).click();
+  } else {
+    updateEst();
+  }
+
+  // Apply plan gating on load and whenever plan might change
+  applyPlanGating();
+
+  // Re-apply gating if postcode changes
+  document.getElementById('postcodeIn').addEventListener('change', applyPlanGating);
+
+  function shareEstimate() {
+    const ctx = document.getElementById('est-context')?.textContent || '';
+    const lo  = document.getElementById('result-lo')?.textContent  || '';
+    const hi  = document.getElementById('result-hi')?.textContent  || '';
+    const txt = 'My home improvement estimate from Estiquote: ' + ctx + ' — ' + lo + ' to ' + hi + '. Free at estiquote.co.uk/estimator.html';
+    if (navigator.share) {
+      navigator.share({ title: 'My Estiquote estimate', text: txt, url: 'https://estiquote.co.uk/estimator.html' }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(txt).then(() => {
+        const btn = document.getElementById('share-estimate-btn');
+        if (btn) { btn.textContent = '✓ Copied to clipboard'; setTimeout(() => btn.innerHTML = '📤 Share this estimate', 2500); }
+      });
+    }
+  }
+  // Show share area when estimate renders
+  const origCalc = typeof calcEstimate === 'function' ? calcEstimate : null;
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener"
+   aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 600));
+  const user = EQ.getUserSync();
+  if (user) {
+    const lb = document.getElementById('logout-btn');
+    if (lb) lb.style.display = 'inline-flex';
+  }
+})();
+</script>
+</body>
+</html>

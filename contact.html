@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="description" content="Get in touch with the Estiquote team. We reply within 24 hours.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Estiquote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 70px; }
+
+  .contact-layout {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-left {}
+
+  .contact-h1 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 50px);
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1px;
+    line-height: 1.08;
+    margin-bottom: 1rem;
+  }
+
+  .contact-h1 em { font-style: normal; color: var(--teal-light); }
+
+  .contact-intro {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    max-width: 420px;
+  }
+
+  .contact-options { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 1.25rem;
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: var(--transition);
+  }
+
+  .contact-option:hover { border-color: var(--border-hover); }
+
+  .co-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--teal-dim);
+    border: 1px solid rgba(0,201,167,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .co-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .co-desc { font-size: 13px; color: var(--text-muted); }
+  .co-link { font-size: 13px; color: var(--teal-light); text-decoration: none; font-weight: 500; margin-top: 4px; display: block; }
+  .co-link:hover { text-decoration: underline; }
+
+  /* FORM CARD */
+  .form-card {
+    background: var(--navy-2);
+    border: 1px solid rgba(0,201,167,0.15);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    position: sticky;
+    top: 90px;
+  }
+
+  .fc-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .fc-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group { margin-bottom: 12px; }
+
+  .type-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .type-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--sans);
+  }
+
+  .type-pill.active {
+    border-color: var(--teal);
+    background: var(--teal-dim);
+    color: var(--teal-light);
+    font-weight: 500;
+  }
+
+  .send-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    border: none;
+    color: var(--navy);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 4px;
+  }
+
+  .send-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .success-box {
+    display: none;
+    background: rgba(0,201,167,0.08);
+    border: 1px solid rgba(0,201,167,0.25);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .success-box .sb-icon { font-size: 32px; margin-bottom: 8px; }
+  .success-box .sb-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--teal-light); margin-bottom: 6px; }
+  .success-box .sb-sub { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  .error-box {
+    display: none;
+    background: rgba(200,50,50,0.08);
+    border: 1px solid rgba(200,50,50,0.25);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: rgba(255,140,120,0.9);
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-card { position: static; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+</head>
+<body>
+
+<nav class="nav nav-scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="estimator.html" class="nav-link">Estimator</a>
+      <a href="find-builders.html" class="nav-link">Find builders</a>
+      <a href="builders.html" class="nav-link">For builders</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="login.html" class="nav-link">Sign in</a>
+      <a href="signup.html" class="nav-cta">Get started free</a>
+    </div>
+    <button class="nav-burger" onclick="document.getElementById('nm').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="nm">
+    <a href="estimator.html">Estimator</a>
+    <a href="find-builders.html">Find builders</a>
+    <a href="builders.html">For builders</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="login.html">Sign in</a>
+    <a href="signup.html" class="mobile-cta">Get started free</a>
+  </div>
+</nav>
+
+<div class="contact-layout">
+
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="section-label">Get in touch</div>
+    <h1 class="contact-h1">We're here<br><em>to help.</em></h1>
+    <p class="contact-intro">Whether you're a homeowner with a question about an estimate, a builder wanting to get listed, or a business interested in partnering — drop us a message.</p>
+
+    <div class="contact-options">
+      <div class="contact-option">
+        <div class="co-icon">✉</div>
+        <div>
+          <div class="co-title">Email us directly</div>
+          <div class="co-desc">For anything that needs a longer conversation</div>
+          <a href="mailto:estiquoteofficial@gmail.com" class="co-link">estiquoteofficial@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-option">
+        <div class="co-icon">🏗</div>
+        <div>
+          <div class="co-title">List your trade business</div>
+          <div class="co-desc">Get found by homeowners actively planning projects in your area</div>
+          <a href="builder-signup.html" class="co-link">Start your 14-day free trial →</a>
+        </div>
+      </div>
+
+      <div class="contact-option">
+        <div class="co-icon">🤝</div>
+        <div>
+          <div class="co-title">Partnerships & white label</div>
+          <div class="co-desc">For mortgage brokers, estate agents, surveyors and proptech companies</div>
+          <a href="mailto:estiquoteofficial@gmail.com?subject=Partnership enquiry" class="co-link">Get in touch →</a>
+        </div>
+      </div>
+
+      <div class="contact-option">
+        <div class="co-icon">🔧</div>
+        <div>
+          <div class="co-title">Technical support</div>
+          <div class="co-desc">Issues with your account, billing or the estimator tool</div>
+          <a href="mailto:estiquoteofficial@gmail.com?subject=Support request" class="co-link">Contact support →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div class="fc-label">Send a message</div>
+    <div class="fc-title">We reply within 24 hours</div>
+
+    <div class="type-row" id="typeRow">
+      <button class="type-pill active" onclick="setType(this,'General question')">General</button>
+      <button class="type-pill" onclick="setType(this,'Builder listing enquiry')">Builder listing</button>
+      <button class="type-pill" onclick="setType(this,'Support request')">Support</button>
+      <button class="type-pill" onclick="setType(this,'Partnership enquiry')">Partnership</button>
+    </div>
+
+    <div class="error-box" id="contact-error"></div>
+
+    <div class="form-group">
+      <label>Your name</label>
+      <input type="text" id="c-name" placeholder="Josh Smith">
+    </div>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="c-email" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea id="c-message" rows="5" placeholder="How can we help?" style="resize:vertical;min-height:120px"></textarea>
+    </div>
+
+    <button class="send-btn" id="send-btn" onclick="sendContactForm()">Send message →</button>
+
+    <div class="success-box" id="contact-success">
+      <div class="sb-icon">✓</div>
+      <div class="sb-title">Message sent</div>
+      <div class="sb-sub">Thanks for getting in touch. We'll reply to <span id="reply-email" style="color:var(--teal-light)"></span> within 24 hours.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer style="background:var(--navy-2);border-top:1px solid var(--border);padding:2rem 0;text-align:center">
+  <div class="container">
+    <div style="font-size:20px;font-family:var(--serif);font-weight:800;color:var(--teal-light);margin-bottom:0.5rem">Esti<span style="opacity:0.4">quote</span></div>
+    <div style="font-size:12px;color:var(--text-dim)">© 2026 Estiquote Ltd · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+  let contactType = 'General question';
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('.nav').classList.toggle('nav-scrolled', window.scrollY > 40);
+  });
+
+  function setType(btn, type) {
+    document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    contactType = type;
+  }
+
+  async function sendContactForm() {
+    const name    = document.getElementById('c-name').value.trim();
+    const email   = document.getElementById('c-email').value.trim();
+    const message = document.getElementById('c-message').value.trim();
+    const errEl   = document.getElementById('contact-error');
+
+    if (!name || !email || !message) {
+      errEl.textContent = 'Please fill in your name, email and message.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    errEl.style.display = 'none';
+    const btn = document.getElementById('send-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/xwvadzvz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `[Estiquote] ${contactType} — ${name}`,
+          form_type: contactType,
+          name,
+          email,
+          message,
+          sent_at: new Date().toLocaleString('en-GB')
+        })
+      });
+
+      if (res.ok) {
+        btn.style.display = 'none';
+        document.getElementById('reply-email').textContent = email;
+        document.getElementById('contact-success').style.display = 'block';
+        document.getElementById('c-name').value = '';
+        document.getElementById('c-email').value = '';
+        document.getElementById('c-message').value = '';
+      } else {
+        throw new Error('Failed');
+      }
+    } catch (err) {
+      btn.textContent = 'Send message →';
+      btn.disabled = false;
+      errEl.textContent = 'Something went wrong. Please email us directly at estiquoteofficial@gmail.com';
+      errEl.style.display = 'block';
+    }
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

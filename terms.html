@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Estiquote</title>
+<meta name="description" content="Estiquote Terms of Service. Full terms covering homeowner and builder accounts, subscriptions, data use, and liability.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 70px; }
+
+  .legal-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    max-width: 1060px;
+    margin: 3rem auto;
+    padding: 0 1.5rem 6rem;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* STICKY TOC */
+  .toc {
+    position: sticky;
+    top: 90px;
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+  }
+
+  .toc-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+
+  .toc-item a {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+    transition: var(--transition);
+    line-height: 1.4;
+  }
+
+  .toc-item a:hover { background: var(--teal-dim); color: var(--teal-light); }
+  .toc-item.active a { background: var(--teal-dim); color: var(--teal-light); font-weight: 500; }
+
+  .toc-sep { height: 1px; background: var(--border); margin: 6px 0; }
+
+  /* LEGAL CONTENT */
+  .legal-content {}
+
+  .legal-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+
+  .legal-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .legal-title {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1px;
+    line-height: 1.08;
+    margin-bottom: 1rem;
+  }
+
+  .legal-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .legal-meta-item {
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .legal-meta-item strong { color: var(--text-muted); }
+
+  .legal-intro {
+    background: rgba(0,201,167,0.05);
+    border: 1px solid rgba(0,201,167,0.15);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.25rem 1.5rem;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  /* SECTIONS */
+  .legal-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 90px;
+  }
+
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .section-heading {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legal-p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  .legal-p:last-child { margin-bottom: 0; }
+
+  .legal-p strong { color: var(--text); font-weight: 600; }
+
+  .legal-p a { color: var(--teal-light); text-decoration: none; }
+  .legal-p a:hover { text-decoration: underline; }
+
+  .legal-list {
+    list-style: none;
+    margin: 0.75rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .legal-list li {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .legal-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+  }
+
+  .legal-list li strong { color: var(--text); }
+
+  /* PLAN TABLE */
+  .plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 13px;
+  }
+
+  .plan-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .plan-table td {
+    padding: 11px 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .plan-table tr:last-child td { border-bottom: none; }
+  .plan-table tr:hover td { background: rgba(255,255,255,0.01); }
+  .plan-table td:first-child { color: var(--text); font-weight: 500; }
+  .plan-table td .price { color: var(--teal-light); font-weight: 600; font-family: var(--serif); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(0,201,167,0.04);
+    border: 1px solid rgba(0,201,167,0.15);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .hb-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal-light);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hb-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: rgba(240,112,80,0.05);
+    border: 1px solid rgba(240,112,80,0.2);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .warning-box .hb-title { color: rgba(255,160,130,0.9); }
+
+  /* DEFINITION */
+  .definition {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+
+  .def-term {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+
+  .def-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.01);
+    border: 1px solid var(--border);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    line-height: 1.6;
+  }
+
+  .def-gap { height: 4px; }
+
+  /* SUBHEADING */
+  .subsection-heading {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  /* DIVIDER */
+  .legal-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* SIGNATURE */
+  .legal-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .lf-brand { font-family: var(--serif); font-size: 20px; font-weight: 800; color: var(--teal-light); }
+  .lf-brand span { opacity: 0.4; }
+  .lf-detail { font-size: 12px; color: var(--text-dim); line-height: 1.8; }
+
+  /* PROGRESS */
+  .reading-progress {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border);
+    z-index: 99;
+  }
+
+  .reading-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  @media (max-width: 800px) {
+    .legal-layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+    .definition { grid-template-columns: 1fr; }
+    .def-term { border-right: 1px solid var(--border); border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0; }
+    .def-body { border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+</head>
+<body>
+
+<div class="reading-progress"><div class="reading-progress-bar" id="readingBar"></div></div>
+
+<nav class="nav nav-scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="estimator.html" class="nav-link">Estimator</a>
+      <a href="find-builders.html" class="nav-link">Find builders</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="signup.html" class="nav-cta">Get started free</a>
+    </div>
+    <button class="nav-burger" onclick="document.getElementById('nm').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="nm">
+    <a href="estimator.html">Estimator</a>
+    <a href="find-builders.html">Find builders</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="contact.html">Contact</a>
+    <a href="signup.html" class="mobile-cta">Get started free</a>
+  </div>
+</nav>
+
+<div class="legal-layout">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li class="toc-item"><a href="#definitions">1. Definitions</a></li>
+      <li class="toc-item"><a href="#about">2. About Estiquote</a></li>
+      <li class="toc-item"><a href="#acceptance">3. Acceptance of terms</a></li>
+      <li class="toc-item"><a href="#accounts">4. User accounts</a></li>
+      <div class="toc-sep"></div>
+      <li class="toc-item"><a href="#homeowner-plans">5. Homeowner plans</a></li>
+      <li class="toc-item"><a href="#builder-plans">6. Builder plans</a></li>
+      <li class="toc-item"><a href="#payments">7. Payments & billing</a></li>
+      <li class="toc-item"><a href="#cancellation">8. Cancellation & refunds</a></li>
+      <div class="toc-sep"></div>
+      <li class="toc-item"><a href="#estimates">9. Cost estimates</a></li>
+      <li class="toc-item"><a href="#builder-listings">10. Builder listings</a></li>
+      <li class="toc-item"><a href="#map">11. Map & search</a></li>
+      <li class="toc-item"><a href="#coming-soon">12. Coming soon features</a></li>
+      <div class="toc-sep"></div>
+      <li class="toc-item"><a href="#data">13. Data & privacy</a></li>
+      <li class="toc-item"><a href="#conduct">14. Acceptable use</a></li>
+      <li class="toc-item"><a href="#liability">15. Liability</a></li>
+      <li class="toc-item"><a href="#ip">16. Intellectual property</a></li>
+      <div class="toc-sep"></div>
+      <li class="toc-item"><a href="#changes">17. Changes to terms</a></li>
+      <li class="toc-item"><a href="#law">18. Governing law</a></li>
+      <li class="toc-item"><a href="#contact-us">19. Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="legal-content">
+
+    <div class="legal-header">
+      <div class="legal-eyebrow">Legal</div>
+      <h1 class="legal-title">Terms of Service</h1>
+      <div class="legal-meta">
+        <div class="legal-meta-item">📅 <strong>Effective date:</strong> 1 May 2025</div>
+        <div class="legal-meta-item">🔄 <strong>Last updated:</strong> 1 May 2025</div>
+        <div class="legal-meta-item">🏢 <strong>Entity:</strong> SSH Ltd</div>
+      </div>
+    </div>
+
+    <div class="legal-intro">
+      Please read these Terms of Service carefully before using Estiquote. By creating an account, making a payment, or using any part of the Estiquote platform, you agree to be bound by these terms. If you do not agree, do not use Estiquote.<br><br>
+      These terms apply to all users of Estiquote, including homeowners, property professionals, and trade businesses listing their services.
+    </div>
+
+    <!-- 1. DEFINITIONS -->
+    <div class="legal-section" id="definitions">
+      <div class="section-num">Section 01</div>
+      <h2 class="section-heading">Definitions</h2>
+
+      <div class="definition"><div class="def-term">Estiquote</div><div class="def-body">The online platform and associated services operated by SSH Ltd, accessible at estiquote.co.uk and related URLs.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">SSH Ltd</div><div class="def-body">The holding company that owns and operates Estiquote. Registered in England and Wales. The legal contracting entity for all Estiquote subscriptions.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">User / You</div><div class="def-body">Any individual or business that accesses or uses the Estiquote platform, whether as a homeowner, property professional, or trade business.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">Homeowner User</div><div class="def-body">A user who accesses Estiquote to obtain cost estimates for home improvement projects, on the Free, Pro, or Trade plan.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">Builder / Trade User</div><div class="def-body">A trade business or sole trader that registers on Estiquote to advertise their services and receive homeowner enquiries via the Builder Marketplace.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">Builder Marketplace</div><div class="def-body">The map-based directory within Estiquote where verified trade businesses are listed and homeowners can search for and contact local contractors.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">Estimate</div><div class="def-body">An indicative cost range produced by the Estiquote tool based on user inputs, regional pricing data, and material cost indices. An Estimate is not a quote, tender, or contract.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">Subscription</div><div class="def-body">A paid recurring plan (monthly or annual) giving access to premium features on Estiquote, processed via Stripe on behalf of SSH Ltd.</div></div>
+      <div class="def-gap"></div>
+      <div class="definition"><div class="def-term">Content</div><div class="def-body">Any text, data, images, descriptions, or other material submitted to Estiquote by users, including business profiles, project descriptions, and reviews.</div></div>
+    </div>
+
+    <!-- 2. ABOUT -->
+    <div class="legal-section" id="about">
+      <div class="section-num">Section 02</div>
+      <h2 class="section-heading">About Estiquote</h2>
+
+      <p class="legal-p">Estiquote is a UK home improvement cost intelligence platform. It provides two core services:</p>
+      <ul class="legal-list">
+        <li><strong>Cost Estimator:</strong> An interactive tool that generates indicative cost ranges for home improvement projects across eight trade categories, using regional UK pricing data updated monthly.</li>
+        <li><strong>Builder Marketplace:</strong> A map-based directory of verified local trade businesses. Homeowners can search for contractors in their area and send direct enquiries. Builders pay a monthly subscription to be listed.</li>
+      </ul>
+      <p class="legal-p">Estiquote is operated by <strong>SSH Ltd</strong>, a holding company registered in England and Wales. Estiquote is a trading brand of SSH Ltd.</p>
+      <p class="legal-p">Estiquote is not a construction company, contractor, or regulated financial or legal adviser. We do not carry out building work, manage projects, or guarantee the quality of any trade business listed on the platform.</p>
+    </div>
+
+    <!-- 3. ACCEPTANCE -->
+    <div class="legal-section" id="acceptance">
+      <div class="section-num">Section 03</div>
+      <h2 class="section-heading">Acceptance of Terms</h2>
+
+      <p class="legal-p">By accessing Estiquote, creating an account, or making a payment, you confirm that:</p>
+      <ul class="legal-list">
+        <li>You are at least 18 years of age.</li>
+        <li>You have the legal capacity to enter into a binding agreement.</li>
+        <li>If registering as a business, you are authorised to bind that business to these terms.</li>
+        <li>All information you provide to us is accurate and up to date.</li>
+        <li>You have read and understood these Terms of Service in full.</li>
+      </ul>
+      <p class="legal-p">These terms form a legally binding agreement between you and SSH Ltd. If you do not agree to any part of these terms, you must not use Estiquote.</p>
+    </div>
+
+    <!-- 4. ACCOUNTS -->
+    <div class="legal-section" id="accounts">
+      <div class="section-num">Section 04</div>
+      <h2 class="section-heading">User Accounts</h2>
+
+      <div class="subsection-heading">4.1 Registration</div>
+      <p class="legal-p">To save estimates, access paid features, or list a builder profile, you must create an account. You agree to provide accurate, current, and complete information during registration and to keep your account details up to date.</p>
+
+      <div class="subsection-heading">4.2 Account security</div>
+      <p class="legal-p">You are responsible for maintaining the confidentiality of your login credentials and for all activity that occurs under your account. You must notify us immediately at <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a> if you suspect unauthorised access to your account.</p>
+
+      <div class="subsection-heading">4.3 Account termination</div>
+      <p class="legal-p">We reserve the right to suspend or terminate your account at any time if we believe you have violated these terms, provided false information, or engaged in conduct harmful to other users or to Estiquote. Where possible, we will notify you before doing so.</p>
+
+      <div class="subsection-heading">4.4 One account per person</div>
+      <p class="legal-p">Each individual may hold one homeowner account. Trade businesses may register one builder listing per business entity. Creating multiple accounts to circumvent plan limits or our verification process is not permitted.</p>
+    </div>
+
+    <div class="legal-divider"></div>
+
+    <!-- 5. HOMEOWNER PLANS -->
+    <div class="legal-section" id="homeowner-plans">
+      <div class="section-num">Section 05</div>
+      <h2 class="section-heading">Homeowner Plans & Features</h2>
+
+      <p class="legal-p">Estiquote offers three homeowner plans. The features available under each plan are set out below. By subscribing to a paid plan, you acknowledge that certain features are still in development and are marked accordingly.</p>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Pro</th>
+            <th>Trade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>All 8 trade categories</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>6 UK pricing regions</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Instant cost estimates</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Saved projects</td><td>3 max</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Basic material index (3 materials)</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Line-item cost breakdown</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Full material tracker (10 materials)</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Contractor quote comparison tool</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Postcode-level pricing</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>PDF report export</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Monthly material price alert emails</td><td>✗</td><td>Coming soon</td><td>Coming soon</td></tr>
+          <tr><td>White-label PDF reports</td><td>✗</td><td>✗</td><td>Coming soon</td></tr>
+          <tr><td>Client-facing estimate links</td><td>✗</td><td>✗</td><td>Coming soon</td></tr>
+          <tr><td>API data access</td><td>✗</td><td>✗</td><td>Coming soon</td></tr>
+          <tr><td>CSV data export</td><td>✗</td><td>✗</td><td>Coming soon</td></tr>
+          <tr><td>Priority email support</td><td>✗</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Early access to new features</td><td>✗</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Price</td><td><span class="price">Free</span></td><td><span class="price">£9.99/mo</span></td><td><span class="price">£29/mo</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <div class="hb-title">ℹ️ Features marked "Coming soon"</div>
+        <div class="hb-body">Some features listed in the Pro and Trade plans are in active development and not yet available. These are clearly labelled "Coming soon" in the app and in this table. You will not be charged for features that are not yet live. When these features launch, they will be available to eligible subscribers automatically with no price increase. See Section 12 for full details.</div>
+      </div>
+
+      <div class="subsection-heading">5.1 Free plan</div>
+      <p class="legal-p">The Free plan is available indefinitely at no cost. It includes access to the cost estimator for all 8 trade categories across 6 UK regions, with a limit of <strong>3 saved projects</strong>. The basic material index shows 3 materials. No payment details are required to use the Free plan.</p>
+
+      <div class="subsection-heading">5.2 Pro plan — £9.99/month</div>
+      <p class="legal-p">The Pro plan gives homeowners full access to the cost estimator including the line-item cost breakdown, full 10-material price tracker, contractor quote comparison tool, postcode-level pricing, unlimited saved projects, and PDF export. A 14-day free trial is available for new subscribers. You will not be charged until the trial period ends.</p>
+
+      <div class="subsection-heading">5.3 Trade plan — £29/month</div>
+      <p class="legal-p">The Trade plan is designed for property professionals including architects, surveyors, developers, estate agents, and mortgage brokers. It includes everything in Pro, plus priority email support and early access to new features. Additional features including white-label PDFs, client-facing links, API access, and CSV export are in development and will be available to Trade subscribers when launched.</p>
+    </div>
+
+    <!-- 6. BUILDER PLANS -->
+    <div class="legal-section" id="builder-plans">
+      <div class="section-num">Section 06</div>
+      <h2 class="section-heading">Builder Plans & the Marketplace</h2>
+
+      <p class="legal-p">Trade businesses can subscribe to list their services on the Estiquote Builder Marketplace. Three tiers are available:</p>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Listed</th>
+            <th>Featured</th>
+            <th>Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Live map pin</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Business profile page</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Direct enquiry button</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Verified business badge</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Unlimited enquiry receipt</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Priority map placement</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Project photo gallery</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Verified customer reviews</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Response time badge</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Top of search results</td><td>✗</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Direct message inbox</td><td>✗</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Profile view analytics</td><td>✗</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Competitor benchmarking</td><td>✗</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Price</td><td><span class="price">£29/mo</span></td><td><span class="price">£59/mo</span></td><td><span class="price">£99/mo</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="subsection-heading">6.1 Verification requirement</div>
+      <p class="legal-p">All builder listings are subject to verification before going live. Estiquote will verify the business name, contact details, public liability insurance, and relevant trade qualifications (for example, Gas Safe registration for heating engineers, NICEIC registration for electricians). The Verified badge is only awarded following successful verification.</p>
+      <p class="legal-p">We aim to complete verification within <strong>24 hours</strong> of a complete application. We reserve the right to decline any application that does not meet our verification standards, in which case any subscription payment will be refunded in full.</p>
+
+      <div class="subsection-heading">6.2 Accuracy of builder information</div>
+      <p class="legal-p">You are responsible for ensuring that all information on your builder profile — including trades, coverage area, insurance status, and qualifications — is accurate and kept up to date. You must notify us immediately if your insurance lapses or a relevant qualification expires.</p>
+
+      <div class="subsection-heading">6.3 Enquiries and leads</div>
+      <p class="legal-p">Estiquote provides a channel for homeowners to contact builder businesses directly. We do not guarantee any volume of enquiries. We do not charge per-lead fees — all enquiries received during your subscription period are included in your flat monthly fee. Estiquote is not a party to any contract formed between a homeowner and a builder as a result of an enquiry made through the platform.</p>
+
+      <div class="subsection-heading">6.4 Reviews</div>
+      <p class="legal-p">Verified customer reviews are available on the Featured and Pro builder tiers. Reviews are submitted by homeowners following a completed project. Estiquote reserves the right to moderate, remove, or decline to publish reviews that we determine to be false, defamatory, or in breach of these terms. We do not guarantee that all reviews will be published.</p>
+    </div>
+
+    <!-- 7. PAYMENTS -->
+    <div class="legal-section" id="payments">
+      <div class="section-num">Section 07</div>
+      <h2 class="section-heading">Payments & Billing</h2>
+
+      <div class="subsection-heading">7.1 Payment processor</div>
+      <p class="legal-p">All payments are processed by <strong>Stripe</strong>. By subscribing, you agree to Stripe's Terms of Service in addition to these terms. Payment card details are held securely by Stripe and are not stored by Estiquote or SSH Ltd.</p>
+
+      <div class="subsection-heading">7.2 Billing</div>
+      <p class="legal-p">Subscriptions are billed monthly in advance on a rolling basis. The billing date is set to the date on which your subscription first began (or, for trial users, the date the trial ended). Bills are sent to the email address associated with your Stripe account.</p>
+
+      <div class="subsection-heading">7.3 Free trials</div>
+      <p class="legal-p">New subscribers to the Pro homeowner plan and all builder plans are entitled to a <strong>14-day free trial</strong>. You will not be charged until the trial period ends. You may cancel at any time during the trial period without charge. After the trial ends, your subscription will automatically renew at the applicable monthly rate unless cancelled.</p>
+
+      <div class="subsection-heading">7.4 Price changes</div>
+      <p class="legal-p">We reserve the right to change subscription prices. If we increase the price of a plan you are subscribed to, we will give you at least <strong>30 days' notice</strong> by email before the new price applies. You may cancel your subscription at any time if you do not wish to pay the new price.</p>
+
+      <div class="subsection-heading">7.5 Failed payments</div>
+      <p class="legal-p">If a payment fails, Stripe will attempt to retry the charge over several days. If payment cannot be collected, your subscription will be suspended until payment is received. We will notify you by email if a payment fails.</p>
+
+      <div class="subsection-heading">7.6 VAT</div>
+      <p class="legal-p">All prices shown on Estiquote are inclusive of VAT where applicable. Estiquote cost estimates are shown exclusive of VAT unless otherwise stated. VAT receipts for subscription payments are available from your Stripe billing portal.</p>
+    </div>
+
+    <!-- 8. CANCELLATION -->
+    <div class="legal-section" id="cancellation">
+      <div class="section-num">Section 08</div>
+      <h2 class="section-heading">Cancellation & Refunds</h2>
+
+      <div class="subsection-heading">8.1 How to cancel</div>
+      <p class="legal-p">You may cancel your subscription at any time from your Estiquote account settings, or by contacting us at <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a>. Cancellation takes effect at the end of your current billing period. You retain access to paid features until that date.</p>
+
+      <div class="subsection-heading">8.2 Refund policy</div>
+      <p class="legal-p">We offer a <strong>14-day free trial</strong> on Pro and all builder plans so you can evaluate the service before being charged. Outside of the trial period, we do not offer refunds for subscription payments already made, except in the following circumstances:</p>
+      <ul class="legal-list">
+        <li>We are unable to verify your builder listing and your application is declined — a full refund will be issued.</li>
+        <li>A technical error on our part resulted in you being charged incorrectly.</li>
+        <li>You are entitled to a refund under applicable UK consumer law.</li>
+      </ul>
+
+      <div class="subsection-heading">8.3 Cancellation of builder listings</div>
+      <p class="legal-p">When you cancel a builder subscription, your listing will be removed from the Estiquote map and directory at the end of the current billing period. Any saved reviews or profile content will not be retained after cancellation.</p>
+
+      <div class="subsection-heading">8.4 Termination by Estiquote</div>
+      <p class="legal-p">If we terminate your account for breach of these terms, no refund will be issued for the current billing period. If we terminate your account for reasons other than breach — for example, if we withdraw a product or service — we will issue a pro-rata refund for the unused portion of your subscription.</p>
+    </div>
+
+    <div class="legal-divider"></div>
+
+    <!-- 9. ESTIMATES -->
+    <div class="legal-section" id="estimates">
+      <div class="section-num">Section 09</div>
+      <h2 class="section-heading">Cost Estimates — Important Disclaimer</h2>
+
+      <div class="warning-box">
+        <div class="hb-title">⚠️ Estimates are indicative only</div>
+        <div class="hb-body">Estiquote cost estimates are indicative ranges based on regional UK pricing data and user inputs. They are not quotes, tenders, or binding contracts. Actual project costs may differ significantly depending on site-specific conditions, contractor availability, material prices at time of purchase, specification changes, and other factors outside our control.</div>
+      </div>
+
+      <div class="subsection-heading">9.1 What estimates are based on</div>
+      <p class="legal-p">Estiquote estimates are derived from the following data sources:</p>
+      <ul class="legal-list">
+        <li><strong>BCIS (Building Cost Information Service):</strong> Regional construction cost indices and trade labour rates.</li>
+        <li><strong>BMF (Builders Merchant Federation):</strong> Merchant material pricing data.</li>
+        <li><strong>ONS (Office for National Statistics):</strong> Construction output price index.</li>
+        <li>Internal calibration data based on submitted and verified project outcomes.</li>
+      </ul>
+      <p class="legal-p">Material prices are updated <strong>monthly</strong>. Regional labour multipliers are reviewed <strong>quarterly</strong>.</p>
+
+      <div class="subsection-heading">9.2 Limitations</div>
+      <p class="legal-p">Estiquote estimates do not account for: site-specific access constraints, structural surveys, planning conditions, ground investigation findings, party wall obligations, unusual material specifications, contractor premiums, or any other project-specific factors. You should always obtain at least three written quotes from qualified contractors before committing to any project.</p>
+
+      <div class="subsection-heading">9.3 No professional advice</div>
+      <p class="legal-p">Nothing produced by Estiquote constitutes professional quantity surveying, structural engineering, architectural, financial, or legal advice. Estiquote does not accept liability for decisions made on the basis of its estimates. For significant capital expenditure, we strongly recommend engaging a qualified professional.</p>
+
+      <div class="subsection-heading">9.4 VAT on estimates</div>
+      <p class="legal-p">All Estiquote cost estimates are shown <strong>exclusive of VAT</strong> unless otherwise stated. Most UK building contractors charge VAT at 20% on labour and materials. Some projects may qualify for reduced VAT rates (for example, certain conversions and renovations). Always confirm VAT treatment with your contractor and seek professional advice where necessary.</p>
+    </div>
+
+    <!-- 10. BUILDER LISTINGS -->
+    <div class="legal-section" id="builder-listings">
+      <div class="section-num">Section 10</div>
+      <h2 class="section-heading">Builder Listings — Conduct & Obligations</h2>
+
+      <div class="subsection-heading">10.1 Accurate representation</div>
+      <p class="legal-p">Builder Users must ensure their listing accurately represents their business at all times. This includes trades offered, coverage area, qualifications, insurance status, and years of experience. Misrepresentation of any kind may result in immediate suspension without refund.</p>
+
+      <div class="subsection-heading">10.2 Insurance</div>
+      <p class="legal-p">All Builder Users must hold valid public liability insurance of at least £1,000,000 for the duration of their subscription. You must notify Estiquote immediately if your insurance lapses. We may request proof of insurance at any time and may suspend your listing if proof is not provided within 48 hours of request.</p>
+
+      <div class="subsection-heading">10.3 Trade qualifications</div>
+      <p class="legal-p">Where your services require statutory certification (for example, Gas Safe registration, NICEIC registration, or equivalent), you must hold and maintain the relevant current certification. Listing services for which you are not qualified is a serious breach of these terms and may constitute an offence under applicable UK law.</div>
+
+      <div class="subsection-heading">10.4 Responding to enquiries</div>
+      <p class="legal-p">Estiquote does not require builders to respond to every enquiry, but we encourage timely responses. Builders with consistently poor response rates may be deprioritised in search results or have their listings reviewed.</p>
+
+      <div class="subsection-heading">10.5 Prohibited conduct</div>
+      <p class="legal-p">Builder Users must not:</p>
+      <ul class="legal-list">
+        <li>Submit false or fabricated reviews for their own listing or for competitor listings.</li>
+        <li>Solicit homeowners to provide reviews in exchange for discounts or other benefits.</li>
+        <li>Contact homeowners via the platform for purposes other than responding to genuine project enquiries.</li>
+        <li>Use the platform to advertise services outside the trade categories selected on their profile.</li>
+        <li>Engage in any conduct that brings Estiquote or other listed businesses into disrepute.</li>
+      </ul>
+    </div>
+
+    <!-- 11. MAP & SEARCH -->
+    <div class="legal-section" id="map">
+      <div class="section-num">Section 11</div>
+      <h2 class="section-heading">Map & Search</h2>
+
+      <p class="legal-p">The Estiquote Builder Marketplace uses mapping data provided by <strong>OpenStreetMap</strong> contributors, delivered via Leaflet.js. Map data is licensed under the <a href="https://www.openstreetmap.org/copyright" target="_blank">Open Database Licence</a>.</p>
+      <p class="legal-p">Search results and map positioning are determined by a combination of subscription tier, distance from the user's search location, and profile completeness. <strong>Pro builder listings</strong> appear at the top of search results and receive priority map placement. <strong>Featured listings</strong> receive priority placement above Listed tier. Within each tier, results are ordered by distance from the homeowner's search point.</p>
+      <p class="legal-p">Estiquote does not guarantee any specific search ranking position. Rankings may change as new builders join or as algorithm improvements are made. We will give reasonable notice of any material changes to ranking logic.</p>
+      <p class="legal-p">Postcode-based search uses publicly available postcode data. Location accuracy is to postcode district level for Free users and postcode sector level for Pro and Trade users. Estiquote does not collect or store precise GPS location data without explicit consent.</p>
+    </div>
+
+    <!-- 12. COMING SOON FEATURES -->
+    <div class="legal-section" id="coming-soon">
+      <div class="section-num">Section 12</div>
+      <h2 class="section-heading">Features in Development ("Coming Soon")</h2>
+
+      <p class="legal-p">The following features are in active development and are not yet available on the platform. They are displayed on the pricing page and in the app with a <strong>"Coming soon"</strong> label:</p>
+
+      <table class="plan-table">
+        <thead><tr><th>Feature</th><th>Plan(s)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Monthly material price alert emails</td><td>Pro, Trade</td><td>In development</td></tr>
+          <tr><td>White-label PDF reports</td><td>Trade</td><td>In development</td></tr>
+          <tr><td>Client-facing estimate links</td><td>Trade</td><td>In development</td></tr>
+          <tr><td>API data access</td><td>Trade</td><td>In development</td></tr>
+          <tr><td>CSV data export</td><td>Trade</td><td>In development</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <div class="hb-title">✓ Our commitment on coming soon features</div>
+        <div class="hb-body">
+          We commit to the following in respect of all "Coming soon" features:<br><br>
+          1. <strong>No extra charge.</strong> When these features launch, they will be available to subscribers on the applicable plan at no additional cost and with no price increase.<br><br>
+          2. <strong>Email notification.</strong> We will notify you by email when each feature becomes available.<br><br>
+          3. <strong>Cancellation right.</strong> If you subscribed primarily on the basis of a "Coming soon" feature and it has not launched within 12 months of your subscription start date, you may contact us to request a partial refund for the period during which the feature was unavailable.<br><br>
+          4. <strong>No indefinite promises.</strong> If we decide not to build a feature that was previously listed as "Coming soon", we will update the pricing page and notify affected subscribers by email.
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-divider"></div>
+
+    <!-- 13. DATA -->
+    <div class="legal-section" id="data">
+      <div class="section-num">Section 13</div>
+      <h2 class="section-heading">Data & Privacy</h2>
+
+      <p class="legal-p">Your privacy is important to us. Our full <a href="privacy.html">Privacy Policy</a> explains in detail how we collect, use, and store your data. The key points are:</p>
+      <ul class="legal-list">
+        <li>We collect only the data necessary to provide the Estiquote service.</li>
+        <li>We do not sell your personal data to third parties.</li>
+        <li>Payment card data is processed and stored exclusively by Stripe. We do not have access to full card numbers.</li>
+        <li>Homeowner enquiry data sent to builders via the platform is shared with the relevant builder only, for the purpose of responding to that enquiry.</li>
+        <li>Builder contact details (name, phone, email) are displayed on builder profiles and may be seen by any Estiquote user who views that profile.</li>
+        <li>We use Formspree to process form submissions including contact forms, signup notifications, and builder enquiries. Form data is processed in accordance with Formspree's privacy policy.</li>
+        <li>We are registered with the <strong>Information Commissioner's Office (ICO)</strong> under UK GDPR. You have the right to access, correct, or delete your personal data at any time.</li>
+      </ul>
+      <p class="legal-p">To exercise your data rights, contact us at <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a>.</p>
+    </div>
+
+    <!-- 14. CONDUCT -->
+    <div class="legal-section" id="conduct">
+      <div class="section-num">Section 14</div>
+      <h2 class="section-heading">Acceptable Use</h2>
+
+      <p class="legal-p">You agree not to use Estiquote to:</p>
+      <ul class="legal-list">
+        <li>Submit false, misleading, or fraudulent information.</li>
+        <li>Scrape, copy, or extract data from Estiquote by automated means without our written consent.</li>
+        <li>Reverse engineer, decompile, or attempt to extract the source code of the platform.</li>
+        <li>Introduce malware, viruses, or other harmful code.</li>
+        <li>Harass, threaten, or abuse other users or Estiquote staff.</li>
+        <li>Use the platform in any way that violates UK or applicable international law.</li>
+        <li>Attempt to circumvent subscription limits or plan restrictions.</li>
+        <li>Use a competitor's registered trade name or trademarks in your builder profile without authorisation.</li>
+      </ul>
+      <p class="legal-p">Violation of these provisions may result in immediate account suspension and, where appropriate, referral to relevant authorities.</p>
+    </div>
+
+    <!-- 15. LIABILITY -->
+    <div class="legal-section" id="liability">
+      <div class="section-num">Section 15</div>
+      <h2 class="section-heading">Limitation of Liability</h2>
+
+      <div class="warning-box">
+        <div class="hb-title">⚠️ Please read this section carefully</div>
+        <div class="hb-body">This section limits SSH Ltd's liability to you. It does not affect your statutory rights as a consumer under UK law.</div>
+      </div>
+
+      <div class="subsection-heading">15.1 No liability for estimate accuracy</div>
+      <p class="legal-p">SSH Ltd accepts no liability for any financial loss, cost overrun, or other consequence arising from reliance on a cost estimate produced by Estiquote. Estimates are indicative only. You use them at your own risk and are solely responsible for decisions made on the basis of Estiquote output.</p>
+
+      <div class="subsection-heading">15.2 No liability for builder conduct</div>
+      <p class="legal-p">SSH Ltd is not a party to any contract formed between a homeowner and a builder as a result of a contact made through the Estiquote platform. We do not supervise, guarantee, or warrant the quality, safety, or legality of any work carried out by a listed builder. We are not liable for any loss, damage, injury, or dispute arising from the actions or omissions of any builder listed on Estiquote.</p>
+
+      <div class="subsection-heading">15.3 General limitation</div>
+      <p class="legal-p">To the maximum extent permitted by UK law, SSH Ltd's total aggregate liability to you in connection with these terms or your use of Estiquote (whether in contract, tort, or otherwise) shall not exceed the greater of: (a) the total subscription fees paid by you to SSH Ltd in the 12 months preceding the event giving rise to the claim; or (b) £100.</p>
+
+      <div class="subsection-heading">15.4 Exclusion of consequential loss</div>
+      <p class="legal-p">SSH Ltd shall not be liable for any indirect, incidental, special, or consequential loss, including loss of profit, loss of revenue, loss of data, or loss of opportunity, even if SSH Ltd was advised of the possibility of such loss.</p>
+
+      <div class="subsection-heading">15.5 Consumer rights</div>
+      <p class="legal-p">Nothing in these terms excludes or limits liability for death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot lawfully be excluded under UK consumer law. Your statutory rights as a UK consumer are not affected by these terms.</p>
+    </div>
+
+    <!-- 16. IP -->
+    <div class="legal-section" id="ip">
+      <div class="section-num">Section 16</div>
+      <h2 class="section-heading">Intellectual Property</h2>
+
+      <div class="subsection-heading">16.1 Estiquote content</div>
+      <p class="legal-p">All content on Estiquote — including the platform design, pricing methodology, trade cost data, software, text, and graphics — is owned by or licensed to SSH Ltd. You may not reproduce, distribute, or create derivative works from any Estiquote content without our prior written consent.</p>
+
+      <div class="subsection-heading">16.2 User content</div>
+      <p class="legal-p">You retain ownership of any content you submit to Estiquote (such as builder profile descriptions or project photos). By submitting content, you grant SSH Ltd a non-exclusive, royalty-free, worldwide licence to use, display, and reproduce that content on the Estiquote platform for the purposes of operating the service. This licence ends when you delete the content or close your account.</p>
+
+      <div class="subsection-heading">16.3 Trade marks</div>
+      <p class="legal-p">The Estiquote name and logo are trading marks of SSH Ltd. You may not use them without our prior written consent.</p>
+    </div>
+
+    <div class="legal-divider"></div>
+
+    <!-- 17. CHANGES -->
+    <div class="legal-section" id="changes">
+      <div class="section-num">Section 17</div>
+      <h2 class="section-heading">Changes to These Terms</h2>
+
+      <p class="legal-p">We may update these Terms of Service from time to time. When we make material changes, we will notify you by email at least <strong>14 days</strong> before the new terms take effect. Your continued use of Estiquote after that date constitutes your acceptance of the updated terms.</p>
+      <p class="legal-p">The current version of these terms is always available at <a href="terms.html">estiquote.co.uk/terms.html</a>. The effective date at the top of this page shows when the current version was last updated.</p>
+    </div>
+
+    <!-- 18. LAW -->
+    <div class="legal-section" id="law">
+      <div class="section-num">Section 18</div>
+      <h2 class="section-heading">Governing Law & Disputes</h2>
+
+      <p class="legal-p">These terms are governed by the laws of England and Wales. Any dispute arising from these terms or your use of Estiquote shall be subject to the exclusive jurisdiction of the courts of England and Wales, except where you are a consumer resident in Scotland or Northern Ireland, in which case you may bring proceedings in your local jurisdiction.</p>
+      <p class="legal-p">Before initiating any legal proceedings, we ask that you contact us at <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a> to attempt to resolve the matter informally. We aim to respond to all complaints within 5 working days.</p>
+    </div>
+
+    <!-- 19. CONTACT -->
+    <div class="legal-section" id="contact-us">
+      <div class="section-num">Section 19</div>
+      <h2 class="section-heading">Contact Us</h2>
+
+      <p class="legal-p">If you have questions about these Terms of Service, your subscription, or your rights, please contact us:</p>
+      <ul class="legal-list">
+        <li><strong>Email:</strong> <a href="mailto:estiquoteofficial@gmail.com">estiquoteofficial@gmail.com</a></li>
+        <li><strong>Contact form:</strong> <a href="contact.html">estiquote.co.uk/contact.html</a></li>
+        <li><strong>Trading name:</strong> Estiquote (a trading brand of SSH Ltd)</li>
+        <li><strong>Registered in:</strong> England and Wales</li>
+      </ul>
+      <p class="legal-p">We aim to respond to all enquiries within <strong>2 working days</strong>.</p>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="legal-footer">
+      <div>
+        <div class="lf-brand">Esti<span>quote</span></div>
+        <div class="lf-detail" style="margin-top:6px">A trading brand of SSH Ltd<br>Registered in England and Wales</div>
+      </div>
+      <div class="lf-detail" style="text-align:right">
+        Terms of Service<br>
+        Effective: 1 May 2025<br>
+        <a href="privacy.html" style="color:var(--teal-light);text-decoration:none">Privacy Policy</a> ·
+        <a href="contact.html" style="color:var(--teal-light);text-decoration:none">Contact</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer style="background:var(--navy-2);border-top:1px solid var(--border);padding:2rem 0;text-align:center">
+  <div class="container">
+    <div style="font-size:20px;font-family:var(--serif);font-weight:800;color:var(--teal-light);margin-bottom:0.5rem">Esti<span style="opacity:0.4">quote</span></div>
+    <div style="font-size:12px;color:var(--text-dim)">© 2026 Estiquote Ltd · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--teal-light)">Terms</a> · <a href="contact.html" style="color:var(--text-dim)">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.querySelector('.nav').classList.toggle('nav-scrolled', window.scrollY > 40);
+
+    // Reading progress bar
+    const doc = document.documentElement;
+    const scrolled = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+    document.getElementById('readingBar').style.width = scrolled + '%';
+
+    // Active TOC item
+    const sections = document.querySelectorAll('.legal-section');
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    document.querySelectorAll('.toc-item').forEach(item => {
+      item.classList.remove('active');
+      if (item.querySelector('a').getAttribute('href') === '#' + current) {
+        item.classList.add('active');
+      }
+    });
+  });
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

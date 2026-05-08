@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — Estiquote</title>
+<meta name="description" content="Create your free Estiquote account and start getting accurate UK home improvement cost estimates.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem; }
+  .shell { width:100%;max-width:440px; }
+  .logo { font-family:var(--serif);font-size:28px;font-weight:800;color:var(--teal-light);text-align:center;margin-bottom:0.5rem;display:block;text-decoration:none; }
+  .logo span { opacity:0.4; }
+  .tag { text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:2rem; }
+  .card { background:var(--navy-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem; }
+  .card-title { font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);margin-bottom:0.4rem; }
+  .card-sub { font-size:13px;color:var(--text-muted);margin-bottom:1.5rem; }
+  .form-row { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+  .form-group { margin-bottom:10px; }
+  .input-wrap { position:relative; }
+  .input-wrap input { padding-right:44px; }
+  .eye-btn { position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:14px;padding:0; }
+  .plan-opts { display:flex;flex-direction:column;gap:8px;margin-bottom:1rem; }
+  .plan-opt { border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,0.02); }
+  .plan-opt.sel { border-color:var(--teal);background:var(--teal-dim); }
+  .po-l { display:flex;align-items:center;gap:10px; }
+  .po-radio { width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;transition:var(--transition); }
+  .plan-opt.sel .po-radio { border-color:var(--teal);background:var(--teal);display:flex;align-items:center;justify-content:center; }
+  .plan-opt.sel .po-radio::after { content:'';width:6px;height:6px;border-radius:50%;background:var(--navy); }
+  .po-name { font-size:14px;font-weight:600;color:var(--text); }
+  .po-desc { font-size:11px;color:var(--text-muted);margin-top:1px; }
+  .po-price { font-family:var(--serif);font-size:17px;font-weight:700;color:var(--teal-light); }
+  .po-period { font-size:10px;color:var(--text-dim);text-align:right; }
+  .po-badge { font-size:10px;padding:2px 6px;border-radius:3px;background:linear-gradient(135deg,var(--teal),var(--teal-light));color:var(--navy);font-weight:700; }
+  .str-bar { height:3px;border-radius:2px;margin-top:6px;background:var(--border); }
+  .str-fill { height:100%;border-radius:2px;transition:all 0.3s; }
+  .str-label { font-size:11px;color:var(--text-dim);margin-top:3px; }
+  .submit { width:100%;padding:14px;border-radius:var(--radius);background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:var(--transition);margin-top:6px; }
+  .submit:hover { opacity:0.88; }
+  .submit:disabled { opacity:0.5;cursor:not-allowed; }
+  .switch { text-align:center;font-size:13px;color:var(--text-muted);margin-top:1.5rem; }
+  .switch a { color:var(--teal-light);text-decoration:none; }
+  .terms-note { font-size:11px;color:var(--text-dim);text-align:center;margin-top:10px;line-height:1.6; }
+  .terms-note a { color:var(--text-dim); }
+  .msg { border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none;line-height:1.6; }
+  .err { background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);color:rgba(255,150,130,0.9); }
+  .suc { background:rgba(0,201,167,0.08);border:1px solid rgba(0,201,167,0.25);color:var(--teal-light); }
+  .benefits { background:rgba(0,201,167,0.04);border:1px solid rgba(0,201,167,0.12);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:1.25rem; }
+  .ben { display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);margin-bottom:4px; }
+  .ben:last-child { margin-bottom:0; }
+  .ben-check { color:var(--teal-light); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+  <meta name="theme-color" content="#00c9a7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Estiquote">
+  <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://estiquote.co.uk/signup.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estiquote.co.uk/signup.html">
+  <meta property="og:title" content="Create your free account — Estiquote">
+  <meta property="og:description" content="Sign up free and start getting accurate UK home improvement cost estimates in 90 seconds.">
+  <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
+  <meta property="og:site_name" content="Estiquote">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Create your free account — Estiquote">
+  <meta name="twitter:description" content="Sign up free and start getting accurate UK home improvement cost estimates in 90 seconds.">
+  <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+<div class="shell">
+  <a href="index.html" class="logo">Esti<span>quote</span></a>
+  <div class="tag">Know the number before you call anyone</div>
+  <div class="card">
+    <div class="card-title">Create your account</div>
+    <div class="card-sub">Free to start. Upgrade any time.</div>
+
+    <div class="benefits">
+      <div class="ben"><span class="ben-check">✓</span> Instant cost estimates for 8 trades</div>
+      <div class="ben"><span class="ben-check">✓</span> Save projects across all your devices</div>
+      <div class="ben"><span class="ben-check">✓</span> Monthly material price alerts (Pro)</div>
+    </div>
+
+    <div class="msg err" id="err" role="alert" aria-live="assertive"></div>
+    <div class="msg suc" id="suc" role="status" aria-live="polite"></div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>First name</label>
+        <input type="text" id="firstName" placeholder="Josh" autocomplete="given-name">
+      </div>
+      <div class="form-group">
+        <label>Last name</label>
+        <input type="text" id="lastName" placeholder="Hill" autocomplete="family-name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label>Postcode</label>
+      <input type="text" id="postcode" placeholder="TN1 1AA" style="text-transform:uppercase;letter-spacing:1px" maxlength="8" autocomplete="postal-code">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="8+ characters" aria-label="Password, minimum 8 characters" aria-required="true" aria-describedby="str-label" autocomplete="new-password" oninput="checkStr(this.value)">
+        <button class="eye-btn" type="button" onclick="togglePass()">👁</button>
+      </div>
+      <div class="str-bar"><div class="str-fill" id="str-fill" style="width:0%"></div></div>
+      <div class="str-label" id="str-label"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Choose your plan</label>
+      <div class="plan-opts">
+        <div class="plan-opt sel" onclick="selectPlan(this,'free')" id="plan-free">
+          <div class="po-l"><div class="po-radio"></div><div><div class="po-name">Free</div><div class="po-desc">Estimates + 3 saved projects</div></div></div>
+          <div><div class="po-price">£0</div><div class="po-period">forever</div></div>
+        </div>
+        <div class="plan-opt" onclick="selectPlan(this,'pro')" id="plan-pro">
+          <div class="po-l"><div class="po-radio"></div><div><div class="po-name">Pro <span class="po-badge">POPULAR</span></div><div class="po-desc">Unlimited + full breakdown + PDF</div></div></div>
+          <div><div class="po-price">£9.99</div><div class="po-period">per month</div></div>
+        </div>
+        <div class="plan-opt" onclick="selectPlan(this,'trade')" id="plan-trade">
+          <div class="po-l"><div class="po-radio"></div><div><div class="po-name">Trade</div><div class="po-desc">API + CSV + white-label PDFs</div></div></div>
+          <div><div class="po-price">£29</div><div class="po-period">per month</div></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit" id="btn" aria-label="Create your Estiquote account" onclick="doSignup()">Create account →</button>
+    <p class="terms-note">By creating an account you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+  </div>
+  <div class="switch">Already have an account? <a href="login.html">Sign in</a></div>
+</div>
+<script>
+  // Redirect if already logged in
+  (async () => {
+    await EQ.init();
+    const user = await EQ.getUser();
+    if (user) // Send welcome email via Netlify function
+      try {
+        await fetch('/.netlify/functions/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'welcome',
+            to: email,
+            data: { name: first }
+          })
+        });
+      } catch(e) { /* non-blocking */ }
+      window.location.href = 'dashboard.html';
+  })();
+
+  let selectedPlan = 'free';
+
+  // Pre-select plan from URL param
+  const urlPlan = new URLSearchParams(window.location.search).get('plan');
+  if (urlPlan && document.getElementById('plan-' + urlPlan)) {
+    selectPlan(document.getElementById('plan-' + urlPlan), urlPlan);
+  }
+
+  document.addEventListener('keydown', e => { if(e.key==='Enter') doSignup(); });
+
+  function selectPlan(el, plan) {
+    document.querySelectorAll('.plan-opt').forEach(p => p.classList.remove('sel'));
+    el.classList.add('sel'); selectedPlan = plan;
+  }
+
+  function togglePass() {
+    const i = document.getElementById('password');
+    i.type = i.type === 'password' ? 'text' : 'password';
+  }
+
+  function checkStr(val) {
+    let s = 0;
+    if (val.length >= 8) s++;
+    if (val.length >= 12) s++;
+    if (/[A-Z]/.test(val)) s++;
+    if (/[0-9]/.test(val)) s++;
+    if (/[^A-Za-z0-9]/.test(val)) s++;
+    const pct = ['0%','20%','40%','60%','80%','100%'][s];
+    const col = ['','#ef4444','#f59e0b','#eab308','#22c55e','#00c9a7'][s];
+    const txt = ['','Too short','Weak','OK','Strong','Very strong'][s];
+    const f = document.getElementById('str-fill');
+    const l = document.getElementById('str-label');
+    f.style.width = pct; f.style.background = col;
+    l.textContent = val.length ? txt : ''; l.style.color = col;
+  }
+
+  function showErr(msg) {
+    const el = document.getElementById('err');
+    el.innerHTML = msg; el.style.display = 'block';
+    document.getElementById('suc').style.display = 'none';
+  }
+
+  async function doSignup() {
+    const first = document.getElementById('firstName').value.trim();
+    const last  = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const pc    = document.getElementById('postcode').value.trim().toUpperCase();
+    const pass  = document.getElementById('password').value;
+    const btn   = document.getElementById('btn');
+
+    document.getElementById('err').style.display = 'none';
+    document.getElementById('suc').style.display = 'none';
+
+    if (!first)       { showErr('Please enter your first name.'); return; }
+    if (!email || !email.includes('@')) { showErr('Please enter a valid email address.'); return; }
+    if (pass.length < 8) { showErr('Password must be at least 8 characters.'); return; }
+
+    btn.textContent = 'Creating account...'; btn.disabled = true;
+
+    const result = await EQ.signUp(first + ' ' + last, email, pass, selectedPlan, pc);
+
+    if (!result.success) {
+      btn.textContent = 'Create account →'; btn.disabled = false;
+      showErr(result.error || 'Something went wrong. Please try again.');
+      return;
+    }
+
+    // Paid plan — go to Stripe
+    if (selectedPlan === 'pro') {
+      btn.textContent = 'Redirecting to payment...';
+      setTimeout(() => goToStripe('homeowner_pro', email), 400);
+      return;
+    }
+    if (selectedPlan === 'trade') {
+      btn.textContent = 'Redirecting to payment...';
+      setTimeout(() => goToStripe('homeowner_trade', email), 400);
+      return;
+    }
+
+    // Free — go straight to dashboard
+    const suc = document.getElementById('suc');
+    suc.textContent = 'Account created! Taking you to your dashboard...';
+    suc.style.display = 'block';
+    btn.textContent = '✓ Account created!';
+    setTimeout(() => window.location.href = 'dashboard.html', 1200);
+  }
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

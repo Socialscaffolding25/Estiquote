@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Estiquote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  body { padding-top: 70px; }
+
+  .admin-layout {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .admin-title {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .admin-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: rgba(200,50,50,0.12);
+    border: 1px solid rgba(200,50,50,0.3);
+    color: rgba(255,130,110,0.9);
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .sc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; }
+  .sc-val { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--text); }
+  .sc-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  .panel {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .panel-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--text); }
+
+  /* MATERIAL EDITOR */
+  .mat-editor-table { width: 100%; border-collapse: collapse; }
+  .mat-editor-table th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    font-weight: 600;
+    padding: 8px 8px 8px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mat-editor-table td {
+    padding: 10px 8px 10px 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .mat-editor-table tr:last-child td { border-bottom: none; }
+
+  .mat-editor-table input {
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-family: var(--sans);
+    width: 100%;
+    outline: none;
+  }
+
+  .mat-editor-table input:focus { border-color: var(--teal); }
+
+  .change-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .change-badge.up { background: rgba(200,60,60,0.1); color: #f07050; }
+  .change-badge.down { background: rgba(50,180,100,0.1); color: #50c882; }
+  .change-badge.flat { background: rgba(255,255,255,0.04); color: var(--text-dim); }
+
+  /* REGION MULTIPLIERS */
+  .region-table { width: 100%; border-collapse: collapse; }
+  .region-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); font-weight: 600; padding: 8px 0; border-bottom: 1px solid var(--border); text-align: left; }
+  .region-table td { padding: 12px 8px 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+  .region-table tr:last-child td { border-bottom: none; }
+
+  .region-table input {
+    width: 80px;
+    padding: 7px 10px;
+    font-size: 13px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-family: var(--sans);
+    outline: none;
+    text-align: center;
+  }
+
+  /* USERS TABLE */
+  .users-table { width: 100%; border-collapse: collapse; }
+  .users-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); font-weight: 600; padding: 8px 0; border-bottom: 1px solid var(--border); text-align: left; }
+  .users-table td { padding: 12px 8px 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
+  .users-table tr:last-child td { border-bottom: none; }
+
+  .plan-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .plan-tag.free { background: rgba(255,255,255,0.06); color: var(--text-dim); }
+  .plan-tag.pro { background: var(--teal-dim); color: var(--teal-light); border: 1px solid rgba(0,201,167,0.3); }
+  .plan-tag.trade { background: rgba(100,200,150,0.1); color: rgba(100,220,160,0.9); border: 1px solid rgba(100,200,150,0.3); }
+
+  .save-strip {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: #0b1120;
+    padding: 14px 24px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    font-family: var(--sans);
+    box-shadow: 0 8px 24px rgba(0,201,167,0.4);
+    display: none;
+    transition: var(--transition);
+    z-index: 50;
+  }
+
+  .save-strip:hover { transform: translateY(-2px); }
+
+  .tabs-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .tab-btn {
+    padding: 10px 18px;
+    font-size: 14px;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: var(--transition);
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active { color: var(--teal-light); border-bottom-color: var(--teal); }
+
+  @media (max-width: 768px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stripe-links.js"></script>
+</head>
+<body>
+
+<nav class="nav nav-scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">← Dashboard</a>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+  </div>
+</nav>
+
+<div class="admin-layout">
+
+  <div class="admin-header">
+    <div>
+      <div class="admin-title">Admin panel</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Manage pricing data, regions, and users</div>
+    </div>
+    <span class="admin-badge">INTERNAL ONLY</span>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="sc-label">Total users</div>
+      <div class="sc-val" id="total-users">1</div>
+      <div class="sc-sub">registered accounts</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-label">Pro subscribers</div>
+      <div class="sc-val" style="color:var(--teal-light)" id="pro-users">0</div>
+      <div class="sc-sub">paying customers</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-label">Estimates generated</div>
+      <div class="sc-val" id="est-count">0</div>
+      <div class="sc-sub">saved projects</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-label">MRR</div>
+      <div class="sc-val" id="mrr-val">£0</div>
+      <div class="sc-sub">monthly recurring revenue</div>
+    </div>
+  </div>
+
+  <!-- MAIN PANEL WITH TABS -->
+  <div class="panel">
+    <div class="tabs-row">
+      <button class="tab-btn active" onclick="switchTab('materials', this)">Material prices</button>
+      <button class="tab-btn" onclick="switchTab('regions', this)">Region multipliers</button>
+      <button class="tab-btn" onclick="switchTab('trades', this)">Trade base rates</button>
+      <button class="tab-btn" onclick="switchTab('users', this)">Users</button>
+    </div>
+
+    <!-- MATERIALS TAB -->
+    <div id="atab-materials">
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem">Update these monthly based on BCIS/BMF/ONS data. Changes reflect immediately in the estimator tool.</p>
+      <table class="mat-editor-table" id="mat-table">
+        <thead><tr>
+          <th style="width:35%">Material</th>
+          <th style="width:15%">Unit</th>
+          <th style="width:20%">Price range</th>
+          <th style="width:15%">QoQ change %</th>
+          <th style="width:15%">Preview</th>
+        </tr></thead>
+        <tbody id="mat-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- REGIONS TAB -->
+    <div id="atab-regions" style="display:none">
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem">Multipliers are relative to London (1.0 = same as London). Adjust based on BCIS regional labour index.</p>
+      <table class="region-table">
+        <thead><tr><th>Region</th><th>Current multiplier</th><th>Effect on costs</th><th>Update</th></tr></thead>
+        <tbody id="region-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- TRADES TAB -->
+    <div id="atab-trades" style="display:none">
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem">Base rates (£/m² or £/unit) for each trade at mid-range spec, London pricing. Budget = ×0.71, Premium = ×1.43 of mid.</p>
+      <table class="region-table">
+        <thead><tr><th>Trade</th><th>Unit</th><th>Budget (£)</th><th>Mid (£)</th><th>Premium (£)</th></tr></thead>
+        <tbody id="trades-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- USERS TAB -->
+    <div id="atab-users" style="display:none">
+      <table class="users-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Projects</th></tr></thead>
+        <tbody id="users-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<button class="save-strip" id="save-btn" onclick="saveAll()">💾 Save all changes</button>
+
+<script>
+  const materials = [
+    { name: 'Structural timber C16', unit: 'per m³', price: '£280–£340', change: 5.1 },
+    { name: 'Concrete blocks (7N)', unit: 'per 100', price: '£68–£88', change: 2.3 },
+    { name: 'PIR rigid insulation (100mm)', unit: 'per m²', price: '£14–£19', change: 2.8 },
+    { name: 'Copper pipe (22mm)', unit: 'per metre', price: '£3.80–£5.20', change: 0.0 },
+    { name: 'Plasterboard (12.5mm)', unit: 'per sheet', price: '£9.50–£12.50', change: -1.2 },
+    { name: 'Clay roof tiles', unit: 'per 1,000', price: '£620–£850', change: 3.7 },
+    { name: 'Sand & aggregate', unit: 'per tonne', price: '£38–£55', change: 1.9 },
+    { name: 'Steel reinforcement (10mm)', unit: 'per tonne', price: '£680–£820', change: -0.8 },
+    { name: 'Facing bricks', unit: 'per 1,000', price: '£420–£750', change: 4.1 },
+    { name: 'MDPE pipe (25mm)', unit: 'per metre', price: '£1.20–£1.80', change: 0.0 },
+  ];
+
+  const regions = [
+    { name: 'London', mult: 1.00 },
+    { name: 'South East England', mult: 0.90 },
+    { name: 'South West England', mult: 0.82 },
+    { name: 'Midlands', mult: 0.78 },
+    { name: 'North of England', mult: 0.74 },
+    { name: 'Scotland & Wales', mult: 0.72 },
+  ];
+
+  const trades = [
+    { name: 'Extensions / Build', unit: 'per m²', budget: 1500, mid: 2100, premium: 3000 },
+    { name: 'Loft Conversion', unit: 'per m²', budget: 1400, mid: 1800, premium: 2600 },
+    { name: 'Kitchen Renovation', unit: 'per m²', budget: 600, mid: 1400, premium: 2800 },
+    { name: 'Bathroom Fit-Out', unit: 'per m²', budget: 700, mid: 1500, premium: 2600 },
+    { name: 'Electrical Works', unit: 'per m²', budget: 35, mid: 65, premium: 95 },
+    { name: 'Plumbing & Heating', unit: 'per m²', budget: 30, mid: 55, premium: 80 },
+    { name: 'Structural Works', unit: 'per opening', budget: 1800, mid: 2800, premium: 4500 },
+    { name: 'Decoration', unit: 'per m²', budget: 12, mid: 22, premium: 38 },
+  ];
+
+  function renderMaterials() {
+    document.getElementById('mat-tbody').innerHTML = materials.map((m, i) => {
+      const cls = m.change > 0 ? 'up' : m.change < 0 ? 'down' : 'flat';
+      const label = m.change > 0 ? '▲ +' + m.change.toFixed(1) + '%' : m.change < 0 ? '▼ ' + m.change.toFixed(1) + '%' : '— 0.0%';
+      return `<tr>
+        <td>${m.name}</td>
+        <td style="color:var(--text-dim)">${m.unit}</td>
+        <td><input value="${m.price}" oninput="markDirty()" style="font-size:13px"></td>
+        <td><input type="number" value="${m.change}" step="0.1" oninput="updateChange(${i}, this.value)" style="font-size:13px;width:90px;text-align:center"></td>
+        <td><span class="change-badge ${cls}" id="badge-${i}">${label}</span></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderRegions() {
+    document.getElementById('region-tbody').innerHTML = regions.map((r, i) => {
+      const pct = Math.round((1 - r.mult) * 100);
+      return `<tr>
+        <td style="font-weight:500;color:var(--text)">${r.name}</td>
+        <td><input type="number" value="${r.mult}" step="0.01" min="0.5" max="1.2" style="width:80px" oninput="markDirty()"></td>
+        <td style="color:var(--text-muted)">${pct > 0 ? pct + '% cheaper than London' : 'Baseline (London)'}</td>
+        <td style="color:var(--text-dim);font-size:12px">BCIS regional index</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderTrades() {
+    document.getElementById('trades-tbody').innerHTML = trades.map((t) => {
+      return `<tr>
+        <td style="font-weight:500;color:var(--text)">${t.name}</td>
+        <td style="color:var(--text-dim)">${t.unit}</td>
+        <td><input type="number" value="${t.budget}" oninput="markDirty()"></td>
+        <td><input type="number" value="${t.mid}" oninput="markDirty()"></td>
+        <td><input type="number" value="${t.premium}" oninput="markDirty()"></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderUsers() {
+    const user = JSON.parse(localStorage.getItem('eq_user') || 'null');
+    const projects = JSON.parse(localStorage.getItem('eq_projects') || '[]');
+    const rows = user ? [{
+      name: user.name || 'User',
+      email: user.email || '—',
+      plan: user.plan || 'free',
+      joined: user.joined ? new Date(user.joined).toLocaleDateString('en-GB') : '—',
+      projectCount: projects.length
+    }] : [];
+
+    document.getElementById('total-users').textContent = rows.length;
+    document.getElementById('pro-users').textContent = rows.filter(r => r.plan === 'pro').length;
+    document.getElementById('est-count').textContent = projects.length;
+    document.getElementById('mrr-val').textContent = '£' + (rows.filter(r => r.plan === 'pro').length * 9.99 + rows.filter(r => r.plan === 'trade').length * 29).toFixed(2);
+
+    if (rows.length === 0) {
+      document.getElementById('users-tbody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-dim)">No users registered yet</td></tr>';
+      return;
+    }
+
+    document.getElementById('users-tbody').innerHTML = rows.map(r => `
+      <tr>
+        <td style="color:var(--text);font-weight:500">${r.name}</td>
+        <td>${r.email}</td>
+        <td><span class="plan-tag ${r.plan}">${r.plan.toUpperCase()}</span></td>
+        <td>${r.joined}</td>
+        <td>${r.projectCount} projects</td>
+      </tr>`).join('');
+  }
+
+  function updateChange(i, val) {
+    materials[i].change = parseFloat(val) || 0;
+    const v = materials[i].change;
+    const cls = v > 0 ? 'up' : v < 0 ? 'down' : 'flat';
+    const label = v > 0 ? '▲ +' + v.toFixed(1) + '%' : v < 0 ? '▼ ' + v.toFixed(1) + '%' : '— 0.0%';
+    const badge = document.getElementById('badge-' + i);
+    badge.className = 'change-badge ' + cls;
+    badge.textContent = label;
+    markDirty();
+  }
+
+  function markDirty() {
+    document.getElementById('save-btn').style.display = 'block';
+  }
+
+  function saveAll() {
+    document.getElementById('save-btn').textContent = '✓ Saved!';
+    setTimeout(() => {
+      document.getElementById('save-btn').textContent = '💾 Save all changes';
+      document.getElementById('save-btn').style.display = 'none';
+    }, 2000);
+  }
+
+  function switchTab(tab, btn) {
+    ['materials','regions','trades','users'].forEach(t => {
+      document.getElementById('atab-' + t).style.display = t === tab ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (tab === 'users') renderUsers();
+  }
+
+  renderMaterials();
+  renderRegions();
+  renderTrades();
+  renderUsers();
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

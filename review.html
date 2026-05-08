@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave a review — Estiquote</title>
+<meta name="description" content="Share your experience with Estiquote — help other homeowners know what to expect.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/auth.js"></script>
+<style>
+body { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem; background:var(--navy); }
+.wrap { max-width:520px; width:100%; }
+.card { background:var(--navy-2); border:1px solid var(--border); border-radius:20px; padding:40px; }
+.logo { font-family:var(--serif); font-size:20px; font-weight:800; color:var(--text); margin-bottom:32px; text-align:center; }
+.logo span { color:var(--teal-light); }
+h1 { font-family:var(--serif); font-size:26px; font-weight:800; color:var(--text); margin-bottom:8px; text-align:center; }
+.sub { font-size:14px; color:var(--text-muted); text-align:center; margin-bottom:32px; line-height:1.6; }
+.stars-row { display:flex; justify-content:center; gap:8px; margin-bottom:28px; }
+.star-btn { font-size:36px; cursor:pointer; opacity:0.3; transition:opacity 0.15s, transform 0.15s; background:none; border:none; line-height:1; }
+.star-btn.active { opacity:1; transform:scale(1.1); }
+.star-btn:hover { opacity:0.8; }
+label { display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+input, textarea, select { width:100%; padding:12px 14px; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:var(--sans); font-size:14px; outline:none; transition:border-color 0.2s; margin-bottom:16px; }
+input:focus, textarea:focus { border-color:var(--teal); }
+textarea { height:120px; resize:vertical; }
+.feature-check { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
+.fc-item { display:flex; align-items:center; gap:8px; padding:10px 12px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; cursor:pointer; font-size:13px; color:var(--text-muted); }
+.fc-item input[type=checkbox] { accent-color:var(--teal); width:16px; height:16px; }
+.fc-item.checked { border-color:rgba(0,201,167,0.4); background:var(--teal-dim); color:var(--teal-light); }
+.msg { padding:12px 14px; border-radius:8px; font-size:13px; display:none; margin-bottom:16px; }
+.msg.suc { background:rgba(0,201,167,0.08); border:1px solid rgba(0,201,167,0.25); color:var(--teal-light); }
+.msg.err { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); color:#ef4444; }
+.success-state { display:none; text-align:center; padding:20px; }
+.success-state .big { font-size:64px; margin-bottom:16px; }
+.success-state h2 { font-family:var(--serif); font-size:24px; font-weight:800; color:var(--text); margin-bottom:8px; }
+.success-state p { font-size:14px; color:var(--text-muted); margin-bottom:24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="logo">Esti<span>quote</span></div>
+
+    <div id="form-state">
+      <h1>How was your experience?</h1>
+      <p class="sub">Your review helps other homeowners know what to expect — and helps us keep improving.</p>
+
+      <!-- STAR RATING -->
+      <div class="stars-row" role="group" aria-label="Star rating">
+        <button class="star-btn" data-val="1" onclick="setStars(1)" aria-label="1 star">★</button>
+        <button class="star-btn" data-val="2" onclick="setStars(2)" aria-label="2 stars">★</button>
+        <button class="star-btn" data-val="3" onclick="setStars(3)" aria-label="3 stars">★</button>
+        <button class="star-btn" data-val="4" onclick="setStars(4)" aria-label="4 stars">★</button>
+        <button class="star-btn" data-val="5" onclick="setStars(5)" aria-label="5 stars">★</button>
+      </div>
+
+      <div id="err" class="msg err" role="alert"></div>
+      <div id="suc" class="msg suc" role="status"></div>
+
+      <label for="reviewer-name">Your name</label>
+      <input id="reviewer-name" type="text" placeholder="Sarah M." autocomplete="name" aria-required="true">
+
+      <label for="reviewer-location">Your location <span style="font-weight:400;color:var(--text-dim)">(optional)</span></label>
+      <input id="reviewer-location" type="text" placeholder="e.g. Tunbridge Wells" autocomplete="address-level2">
+
+      <label for="reviewer-project">What project did you use Estiquote for?</label>
+      <select id="reviewer-project">
+        <option value="">Select a trade...</option>
+        <option>Extension / Build</option>
+        <option>Loft Conversion</option>
+        <option>Kitchen Renovation</option>
+        <option>Bathroom Fit-Out</option>
+        <option>Electrical Works</option>
+        <option>Plumbing & Heating</option>
+        <option>Structural Works</option>
+        <option>Decoration</option>
+        <option>Multiple trades</option>
+        <option>Just exploring costs</option>
+      </select>
+
+      <label>What did you find most useful? <span style="font-weight:400;color:var(--text-dim)">(tick all that apply)</span></label>
+      <div class="feature-check">
+        <label class="fc-item" onclick="this.classList.toggle('checked')">
+          <input type="checkbox" value="estimate"> Cost estimate
+        </label>
+        <label class="fc-item" onclick="this.classList.toggle('checked')">
+          <input type="checkbox" value="regional"> Regional pricing
+        </label>
+        <label class="fc-item" onclick="this.classList.toggle('checked')">
+          <input type="checkbox" value="breakdown"> Cost breakdown
+        </label>
+        <label class="fc-item" onclick="this.classList.toggle('checked')">
+          <input type="checkbox" value="builders"> Finding builders
+        </label>
+        <label class="fc-item" onclick="this.classList.toggle('checked')">
+          <input type="checkbox" value="materials"> Material prices
+        </label>
+        <label class="fc-item" onclick="this.classList.toggle('checked')">
+          <input type="checkbox" value="compare"> Quote comparison
+        </label>
+      </div>
+
+      <label for="reviewer-body">Tell us about your experience</label>
+      <textarea id="reviewer-body" placeholder="How did Estiquote help you? Did it change how you approached your project?..." aria-required="true"></textarea>
+
+      <button onclick="submitReview()" class="btn-primary" style="width:100%;padding:14px;cursor:pointer;" id="review-btn">
+        Submit review →
+      </button>
+      <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:10px;">Your review may be shared on the Estiquote website. We never share your email address.</p>
+    </div>
+
+    <div class="success-state" id="success-state">
+      <div class="big">⭐</div>
+      <h2>Thank you — genuinely.</h2>
+      <p>Your review helps other homeowners make better decisions. We read every single one.</p>
+      <a href="estimator.html" class="btn-primary">Run another estimate →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedStars = 0;
+
+function setStars(val) {
+  selectedStars = val;
+  document.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < val);
+  });
+}
+
+async function submitReview() {
+  const name = document.getElementById('reviewer-name').value.trim();
+  const location = document.getElementById('reviewer-location').value.trim();
+  const project = document.getElementById('reviewer-project').value;
+  const body = document.getElementById('reviewer-body').value.trim();
+  const btn = document.getElementById('review-btn');
+  const err = document.getElementById('err');
+  const suc = document.getElementById('suc');
+
+  err.style.display = 'none';
+
+  if (!selectedStars) { err.textContent = 'Please select a star rating.'; err.style.display='block'; return; }
+  if (!name) { err.textContent = 'Please enter your name.'; err.style.display='block'; return; }
+  if (!body || body.length < 20) { err.textContent = 'Please write at least 20 characters about your experience.'; err.style.display='block'; return; }
+
+  const features = [...document.querySelectorAll('.feature-check input:checked')].map(i => i.value);
+
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  // Send via Formspree (existing setup) or Netlify function
+  try {
+    const res = await fetch('https://formspree.io/f/xdkongap', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `[Estiquote Review] ${selectedStars}★ — ${name}`,
+        stars: selectedStars,
+        name,
+        location: location || 'Not provided',
+        project: project || 'Not specified',
+        features: features.join(', ') || 'None selected',
+        review: body,
+        submitted_at: new Date().toLocaleString('en-GB')
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('form-state').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch {
+    err.textContent = 'Something went wrong. Please try again or email estiquoteofficial@gmail.com';
+    err.style.display = 'block';
+    btn.textContent = 'Submit review →';
+    btn.disabled = false;
+  }
+}
+</script>
+
+<!-- COOKIE CONSENT -->
+<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
+    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem("eq_cookie_consent")){
+    var b=document.getElementById("eq-cookie");
+    if(b) setTimeout(function(){b.style.display="flex";},1000);
+  }
+})();
+function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
+function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
+</script>
+<!-- WHATSAPP CHAT BUTTON -->
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
+   title="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Netlify redirects — required for SPA routing
+/api/stripe-webhook    /.netlify/functions/stripe-webhook    200
+/api/send-email        /.netlify/functions/send-email        200
+/api/push-notify       /.netlify/functions/push-notify       200
+
+# 404 fallback
+/*    /404.html    404
