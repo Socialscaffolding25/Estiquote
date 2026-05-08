@@ -1238,7 +1238,7 @@ async function submitEnquiry(builderId) {
   if (lastSent && (Date.now() - parseInt(lastSent)) < 86400000) {
     const errEl = document.getElementById('enquiry-error');
     if (errEl) {
-      errEl.textContent = 'You've already sent an enquiry to this builder today. They will be in touch soon.';
+      errEl.textContent = 'You have already sent an enquiry to this builder today. They will be in touch soon.';
       errEl.style.display = 'block';
     }
     return;
