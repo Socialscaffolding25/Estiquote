@@ -172,14 +172,16 @@ body {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.75rem;
   white-space: nowrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .nav-link {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 400;
   transition: var(--transition);
   white-space: nowrap;
@@ -188,7 +190,7 @@ body {
 .nav-link:hover { color: var(--text); }
 
 .nav-cta {
-  padding: 8px 16px;
+  padding: 8px 12px;
   background: linear-gradient(135deg, #00c9a7 0%, #4dffd6 100%);
   color: #0b1120;
   font-weight: 600;
