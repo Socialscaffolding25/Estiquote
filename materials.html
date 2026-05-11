@@ -42,10 +42,10 @@ body { padding-top: 80px; }
 .mat-grid-public { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-bottom:3rem; }
 .mat-card { background:var(--navy-2); border:1px solid var(--border); border-radius:14px; padding:20px; transition:var(--transition); cursor:pointer; }
 .mat-card:hover { border-color:var(--teal); transform:translateY(-1px); }
-.mat-card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+.mat-card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; gap:8px; }
 .mat-card-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
 .mat-card-unit { font-size:12px; color:var(--text-dim); }
-.mat-card-price { font-family:var(--serif); font-size:22px; font-weight:800; color:var(--teal-light); }
+.mat-card-price { font-family:var(--serif); font-size:22px; font-weight:800; color:var(--teal-light); white-space:nowrap; }
 .mat-card-changes { display:flex; gap:12px; margin-bottom:14px; }
 .mat-change { font-size:11px; padding:3px 8px; border-radius:4px; font-weight:600; }
 .mc-up { background:rgba(240,112,80,0.1); color:#f07050; }
