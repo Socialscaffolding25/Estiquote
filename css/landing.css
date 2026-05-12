@@ -162,11 +162,12 @@
 
 .hc-range {
   font-family: var(--serif);
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--teal-light);
   letter-spacing: -0.5px;
   margin-bottom: 4px;
+  white-space: nowrap;
 }
 
 .hc-detail { font-size: 12px; color: var(--text-muted); margin-bottom: 1.5rem; }
