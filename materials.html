@@ -333,6 +333,17 @@ const MATERIALS = [
    searches:{jewson:'catnic+lintel+1200',travis:'steel+lintel+1200mm',buildbase:'lintel+1200mm',wickes:'lintel+1200mm',screwfix:'lintel+steel'}},
 ];
 
+// ── MERCHANT LIST (client-side, for source link cards) ─────────
+const MERCHANTS = [
+  { id: 'jewson',    name: 'Jewson',               s: 'J',   color: '#c8102e', bg: 'rgba(200,16,46,0.1)',    search: 'https://www.jewson.co.uk/search?query=',        branch: 'https://www.jewson.co.uk/branch-finder' },
+  { id: 'travis',    name: 'Travis Perkins',        s: 'TP',  color: '#005baa', bg: 'rgba(0,91,170,0.1)',     search: 'https://www.travisperkins.co.uk/search?term=', branch: 'https://www.travisperkins.co.uk/branch-finder' },
+  { id: 'buildbase', name: 'Buildbase',             s: 'B',   color: '#ff6b00', bg: 'rgba(255,107,0,0.1)',    search: 'https://www.buildbase.co.uk/search?q=',        branch: 'https://www.buildbase.co.uk/branches' },
+  { id: 'wickes',    name: 'Wickes',                s: 'W',   color: '#00953a', bg: 'rgba(0,149,58,0.1)',     search: 'https://www.wickes.co.uk/search?term=',        branch: 'https://www.wickes.co.uk/store-finder' },
+  { id: 'screwfix',  name: 'Screwfix',              s: 'SF',  color: '#003087', bg: 'rgba(0,48,135,0.1)',     search: 'https://www.screwfix.com/search?search=',      branch: 'https://www.screwfix.com/stores/find' },
+  { id: 'selco',     name: 'Selco',                 s: 'S',   color: '#e74c3c', bg: 'rgba(231,76,60,0.1)',    search: 'https://www.selcobw.com/search?q=',            branch: 'https://www.selcobw.com/branch-finder' },
+  { id: 'mkm',       name: 'MKM Building Supplies', s: 'MKM', color: '#1f618d', bg: 'rgba(31,97,141,0.1)',    search: 'https://www.mkmbs.co.uk/search?q=',            branch: 'https://www.mkmbs.co.uk/find-a-branch' },
+];
+
 let activeCat = 'all';
 let activeMaterial = null;
 
