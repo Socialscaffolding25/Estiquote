@@ -175,7 +175,7 @@
 .hc-bars { display: flex; flex-direction: column; gap: 10px; }
 .hc-bar-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); }
 .hc-bar { flex: 1; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
-.hc-bar-fill { height: 100%; background: var(--teal); border-radius: 3px; }
+.hc-bar-fill { height: 100%; background: var(--teal); border-radius: 3px; }.hc-bar-row span:last-child { min-width: 54px; text-align: right; font-variant-numeric: tabular-nums; }
 
 .hc-update {
   margin-top: 1.25rem;
