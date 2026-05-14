@@ -410,10 +410,10 @@ window.addEventListener('scroll', () => {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      const idx = Array.from(document.querySelectorAll('.trade-tile, .step-card, .testimonial-card, .plan-card')).indexOf(entry.target); setTimeout(() => entry.target.classList.add('visible'), (idx % 4) * 80); observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.trade-tile, .step-card, .testimonial-card, .plan-card').forEach(el => observer.observe(el));
 </script>
