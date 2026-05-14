@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +6,7 @@
 <meta name="description" content="Live UK construction material prices. Structural timber, concrete blocks, insulation, bricks, copper pipe and more. Find your nearest builders merchant.">
   <meta property="og:title" content="UK Construction Material Prices 2026 — Estiquote">
   <meta property="og:description" content="Live UK construction material prices. Timber, bricks, insulation, copper pipe and more. Find your nearest Jewson, Travis Perkins and local merchants.">
-  <meta property="og:image" content="https://estiquote.co.uk/og-image.svg">
+  <meta property="og:image" content="https://esiquote.co.uk/og-image.svg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://estiquote.co.uk/og-image.svg">
@@ -411,9 +410,9 @@ async function findMerchantsPublic(matId) {
   const results = document.getElementById('merchant-results');
   const section = document.getElementById('merchant-section');
   const subtitle = document.getElementById('merchant-subtitle');
-  if (!results || !section) return;
+  if (!results || !section) return; if (!matId) { const t=document.getElementById('merchant-title'); if(t) t.textContent='Merchants near you'; }
 
-  section.classList.add('visible');
+  section.classList.add('visible'); section.scrollIntoView({ behavior:'smooth', block:'start' });
 
   if (!postcode) {
     results.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:13px">Enter your postcode above to find your nearest branches across the UK.</div>';
