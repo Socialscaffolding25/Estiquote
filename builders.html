@@ -20,14 +20,14 @@
 .b-hero { padding: 100px 0 80px; text-align: center; position: relative; overflow: hidden; }
 .b-hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,201,167,0.08) 0%, transparent 70%); pointer-events:none; }
 .b-hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:#ef4444; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:1.5rem; }
-.b-hero h1 { font-family:var(--serif); font-size:clamp(36px,5vw,62px); font-weight:800; color:var(--text); line-height:1.1; margin-bottom:1.25rem; }
+.b-hero h1 { font-family:var(--sans); font-size:clamp(36px,5vw,62px); font-weight:700; color:var(--text); line-height:1.1; margin-bottom:1.25rem; }
 .b-hero h1 span { color:var(--teal-light); }
 .b-hero h1 del { color:rgba(239,68,68,0.7); text-decoration-color:rgba(239,68,68,0.5); }
 .b-hero-sub { font-size:18px; color:var(--text-muted); max-width:580px; margin:0 auto 2.5rem; line-height:1.6; }
 .b-hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:3rem; }
 .b-stats { display:flex; gap:32px; justify-content:center; flex-wrap:wrap; }
 .b-stat { text-align:center; }
-.b-stat-val { font-family:var(--serif); font-size:32px; font-weight:800; color:var(--teal-light); display:block; }
+.b-stat-val { font-family:var(--sans); font-size:32px; font-weight:700; color:var(--teal-light); display:block; }
 .b-stat-label { font-size:12px; color:var(--text-dim); margin-top:2px; }
 
 /* ── PAIN SECTION ── */
@@ -63,9 +63,9 @@
 .b-plan { background:var(--navy-3); border:1px solid var(--border); border-radius:16px; padding:28px; position:relative; transition:var(--transition); }
 .b-plan:hover { border-color:var(--border-hover); transform:translateY(-2px); }
 .b-plan.featured { border-color:var(--teal); background:linear-gradient(135deg, rgba(0,201,167,0.06), var(--navy-3)); }
-.b-plan-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,var(--teal),var(--teal-light)); color:var(--navy); font-size:11px; font-weight:800; padding:4px 14px; border-radius:20px; white-space:nowrap; }
+.b-plan-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,var(--teal),var(--teal-light)); color:var(--navy); font-size:11px; font-weight:700; padding:4px 14px; border-radius:20px; white-space:nowrap; }
 .b-plan-name { font-size:14px; font-weight:700; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
-.b-plan-price { font-family:var(--serif); font-size:42px; font-weight:800; color:var(--text); line-height:1; margin-bottom:4px; }
+.b-plan-price { font-family:var(--sans); font-size:42px; font-weight:700; color:var(--text); line-height:1; margin-bottom:4px; }
 .b-plan-price span { font-size:16px; color:var(--text-dim); font-family:var(--sans); font-weight:400; }
 .b-plan-period { font-size:13px; color:var(--text-dim); margin-bottom:16px; }
 .b-plan-desc { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--border); }
@@ -80,7 +80,7 @@
 .builder-how { padding:80px 0; }
 .b-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; margin-top:3rem; }
 .b-step { text-align:center; padding:32px 20px; background:var(--navy-2); border:1px solid var(--border); border-radius:14px; }
-.b-step-num { font-family:var(--serif); font-size:48px; font-weight:800; color:rgba(0,201,167,0.15); line-height:1; margin-bottom:12px; }
+.b-step-num { font-family:var(--sans); font-size:48px; font-weight:700; color:rgba(0,201,167,0.15); line-height:1; margin-bottom:12px; }
 .b-step-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
 .b-step-body { font-size:13px; color:var(--text-muted); line-height:1.6; }
 
@@ -88,7 +88,7 @@
 .qualified-section { padding:80px 0; background:rgba(0,201,167,0.03); border-top:1px solid rgba(0,201,167,0.08); border-bottom:1px solid rgba(0,201,167,0.08); }
 .qualified-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
 .qualified-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
-.qualified-h2 { font-family:var(--serif); font-size:clamp(24px,3vw,38px); font-weight:800; color:var(--text); margin-bottom:16px; line-height:1.2; }
+.qualified-h2 { font-family:var(--sans); font-size:clamp(24px,3vw,38px); font-weight:700; color:var(--text); margin-bottom:16px; line-height:1.2; }
 .qualified-body { font-size:15px; color:var(--text-muted); line-height:1.8; margin-bottom:20px; }
 .qualified-points { list-style:none; }
 .qualified-points li { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); font-size:14px; color:var(--text-muted); }
@@ -96,7 +96,7 @@
 .qualified-points li span:first-child { color:var(--teal); font-weight:700; flex-shrink:0; }
 .enquiry-mock { background:var(--navy-2); border:1px solid rgba(0,201,167,0.2); border-radius:16px; padding:24px; }
 .em-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border); }
-.em-avatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--teal-light)); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--navy); font-size:14px; }
+.em-avatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--teal-light)); display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--navy); font-size:14px; }
 .em-name { font-size:14px; font-weight:700; color:var(--text); }
 .em-sub { font-size:12px; color:var(--text-dim); }
 .em-row { display:flex; gap:8px; margin-bottom:10px; align-items:flex-start; }
@@ -108,8 +108,8 @@
 /* ── FOUNDER ── */
 .founder-section { padding:80px 0; }
 .founder-card { background:var(--navy-2); border:1px solid var(--border); border-radius:20px; padding:48px; display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:start; }
-.founder-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--teal-light)); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:28px; font-weight:800; color:var(--navy); flex-shrink:0; }
-.founder-name { font-size:18px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.founder-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--teal-light)); display:flex; align-items:center; justify-content:center; font-family:var(--sans); font-size:28px; font-weight:700; color:var(--navy); flex-shrink:0; }
+.founder-name { font-size:18px; font-weight:700; color:var(--text); margin-bottom:4px; }
 .founder-role { font-size:13px; color:var(--text-dim); margin-bottom:20px; }
 .founder-quote { font-size:17px; color:var(--text-muted); line-height:1.7; font-style:italic; margin-bottom:20px; }
 .founder-cred { display:flex; gap:20px; flex-wrap:wrap; }
@@ -124,7 +124,7 @@
 
 /* ── FINAL CTA ── */
 .b-cta { padding:80px 0; text-align:center; }
-.b-cta-h2 { font-family:var(--serif); font-size:clamp(28px,4vw,48px); font-weight:800; color:var(--text); margin-bottom:12px; }
+.b-cta-h2 { font-family:var(--sans); font-size:clamp(28px,4vw,48px); font-weight:700; color:var(--text); margin-bottom:12px; }
 .b-cta-sub { font-size:16px; color:var(--text-muted); margin-bottom:2rem; }
 
 @media (max-width:768px) {
