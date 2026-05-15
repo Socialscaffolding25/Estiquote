@@ -6,7 +6,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="shortcut icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find Local Builders Ã¢ÂÂ Estiquote</title>
+<title>Find Local Builders — Estiquote</title>
 <meta name="description" content="Find verified local builders, contractors and tradespeople near you. Search by trade, read reviews, and contact directly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
@@ -537,8 +537,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
 }
 
 .rc-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600; }
-.rc-val { font-size: 16px; font-weight: 600; color: var(--teal-light); font-family: var(--sans); margin-bottom: 8px; 
-}
+.rc-val { font-size: 16px; font-weight: 600; color: var(--teal-light); font-family: var(--sans); margin-bottom: 8px; }
 
 /* EMPTY STATE */
 .empty-builders {
@@ -564,7 +563,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
   .detail-panel { left: 0; right: 0; }
 }
 
-  /* Ã¢ÂÂÃ¢ÂÂ MOBILE LAYOUT FOR FIND BUILDERS Ã¢ÂÂÃ¢ÂÂ */
+  /* ── MOBILE LAYOUT FOR FIND BUILDERS ── */
   @media (max-width: 640px) {
     .map-layout {
       grid-template-columns: 1fr !important;
@@ -601,7 +600,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
     .sidebar-count { font-size: 13px !important; }
   }
 
-  /* Ã¢ÂÂÃ¢ÂÂ MAP TOGGLE BUTTON (mobile only) Ã¢ÂÂÃ¢ÂÂ */
+  /* ── MAP TOGGLE BUTTON (mobile only) ── */
   .map-toggle-btn {
     display: none;
     width: calc(100% - 32px);
@@ -633,18 +632,18 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
   <link rel="canonical" href="https://estiquote.co.uk/find-builders.html">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://estiquote.co.uk/find-builders.html">
-  <meta property="og:title" content="Find Local Builders Ã¢ÂÂ Estiquote">
+  <meta property="og:title" content="Find Local Builders — Estiquote">
   <meta property="og:description" content="Find verified local builders, contractors and tradespeople near you. Every builder knows you already have a cost estimate.">
   <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
   <meta property="og:site_name" content="Estiquote">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Find Local Builders Ã¢ÂÂ Estiquote">
+  <meta name="twitter:title" content="Find Local Builders — Estiquote">
   <meta name="twitter:description" content="Find verified local builders, contractors and tradespeople near you. Every builder knows you already have a cost estimate.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Find Local Builders Ã¢ÂÂ Estiquote",
+  "name": "Find Local Builders — Estiquote",
   "description": "Find verified local builders and tradespeople near you. All homeowners have confirmed their budget before contacting you.",
   "url": "https://estiquote.co.uk/find-builders.html",
   "breadcrumb": {
@@ -659,7 +658,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
   <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
-<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">Find Vetted Local Builders Near You Ã¢ÂÂ Extensions, Kitchens, Lofts, Bathrooms</h1>
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">Find Vetted Local Builders Near You — Extensions, Kitchens, Lofts, Bathrooms</h1>
 
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
@@ -668,25 +667,25 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
   <a href="index.html" class="top-logo">Esti<span>quote</span></a>
 
   <div class="search-bar">
-    <input type="text" id="postcodeSearch" placeholder="Enter postcode to search Ã¢ÂÂ e.g. TN1 1AA" value="TN1">
-    <button class="search-btn" onclick="searchArea()">Search Ã¢ÂÂ</button>
+    <input type="text" id="postcodeSearch" placeholder="Enter postcode to search — e.g. TN1 1AA" value="TN1">
+    <button class="search-btn" onclick="searchArea()">Search →</button>
   </div>
 
   <div class="trade-filters" id="tradeFilters">
     <button class="filter-pill active" onclick="filterTrade('all',this)">All trades</button>
-    <button class="filter-pill" onclick="filterTrade('extension',this)">Ã°ÂÂÂ Extensions</button>
-    <button class="filter-pill" onclick="filterTrade('kitchen',this)">Ã°ÂÂÂ³ Kitchen</button>
-    <button class="filter-pill" onclick="filterTrade('bathroom',this)">Ã°ÂÂÂ¿ Bathroom</button>
-    <button class="filter-pill" onclick="filterTrade('electrical',this)">Ã¢ÂÂ¡ Electrical</button>
-    <button class="filter-pill" onclick="filterTrade('plumbing',this)">Ã°ÂÂÂ§ Plumbing</button>
-    <button class="filter-pill" onclick="filterTrade('structural',this)">Ã°ÂÂÂ Structural</button>
-    <button class="filter-pill" onclick="filterTrade('decoration',this)">Ã°ÂÂÂ¨ Decoration</button>
+    <button class="filter-pill" onclick="filterTrade('extension',this)">🏗 Extensions</button>
+    <button class="filter-pill" onclick="filterTrade('kitchen',this)">🍳 Kitchen</button>
+    <button class="filter-pill" onclick="filterTrade('bathroom',this)">🚿 Bathroom</button>
+    <button class="filter-pill" onclick="filterTrade('electrical',this)">⚡ Electrical</button>
+    <button class="filter-pill" onclick="filterTrade('plumbing',this)">🔧 Plumbing</button>
+    <button class="filter-pill" onclick="filterTrade('structural',this)">🏛 Structural</button>
+    <button class="filter-pill" onclick="filterTrade('decoration',this)">🎨 Decoration</button>
   </div>
 
   <div class="top-nav-links">
     <a href="estimator.html" class="top-nav-link">Estimator</a>
     <button id="logout-btn" onclick="EQ.signOut()" style="display:none;padding:7px 14px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:13px;cursor:pointer;">Sign out</button>
-    <a href="builder-signup.html" class="top-nav-link cta">List your business Ã¢ÂÂ</a>
+    <a href="builder-signup.html" class="top-nav-link cta">List your business →</a>
   </div>
 </div>
 
@@ -708,7 +707,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
     </div>
     <div class="builder-list" id="builderList">
       <div class="empty-builders">
-        <div class="ei">Ã°ÂÂÂ</div>
+        <div class="ei">📍</div>
         <p>Loading builders in your area...</p>
       </div>
     </div>
@@ -716,19 +715,19 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
 
   <!-- MAP -->
   <div class="map-container">
-    <button class="map-toggle-btn" onclick="toggleMap()" id="map-toggle-btn">Ã°ÂÂÂº Show map</button>
+    <button class="map-toggle-btn" onclick="toggleMap()" id="map-toggle-btn">🗺 Show map</button>
     <div id="map" style="display:none"></div>
 
     <!-- MAP OVERLAY -->
     <div class="map-overlay">
       <button class="map-btn primary" onclick="window.location.href='builder-signup.html'">
-        Ã°ÂÂÂ List your business
+        🏗 List your business
       </button>
       <button class="map-btn" onclick="locateMe()">
-        Ã°ÂÂÂ Use my location
+        📍 Use my location
       </button>
       <button class="map-btn" id="radiusToggle" onclick="toggleRadius()">
-        Ã¢Â­Â Show 10 mile radius
+        ⭕ Show 10 mile radius
       </button>
     </div>
 
@@ -742,7 +741,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
     <!-- BUILDER DETAIL PANEL -->
     <div class="detail-panel" id="detailPanel">
       <div class="dp-handle"></div>
-      <button class="dp-close" onclick="closeDetail()">Ã¢ÂÂ</button>
+      <button class="dp-close" onclick="closeDetail()">✕</button>
       <div id="detailContent"></div>
     </div>
   </div>
@@ -752,11 +751,11 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 // ============================================================
-// DEMO BUILDER DATA Ã¢ÂÂ shown only when real DB returns 0 results
+// DEMO BUILDER DATA — shown only when real DB returns 0 results
 // ============================================================
 const DEMO_BUILDERS = [
   {
-    id: 1, name: 'Hartwood Construction', emoji: 'Ã°ÂÂÂ',
+    id: 1, name: 'Hartwood Construction', emoji: '🏗',
     trades: ['Extensions','Structural','Loft Conversions','Renovations'],
     primaryTrade: 'extension',
     lat: 51.132, lng: 0.263,
@@ -769,7 +768,7 @@ const DEMO_BUILDERS = [
     completedJobs: 184
   },
   {
-    id: 2, name: 'Apex Kitchen Installations', emoji: 'Ã°ÂÂÂ³',
+    id: 2, name: 'Apex Kitchen Installations', emoji: '🍳',
     trades: ['Kitchen Renovation','Bathroom Fit-Out','Tiling'],
     primaryTrade: 'kitchen',
     lat: 51.118, lng: 0.271,
@@ -782,7 +781,7 @@ const DEMO_BUILDERS = [
     completedJobs: 96
   },
   {
-    id: 3, name: 'SureSpark Electrical', emoji: 'Ã¢ÂÂ¡',
+    id: 3, name: 'SureSpark Electrical', emoji: '⚡',
     trades: ['Electrical','EV Chargers','Consumer Units'],
     primaryTrade: 'electrical',
     lat: 51.141, lng: 0.252,
@@ -795,7 +794,7 @@ const DEMO_BUILDERS = [
     completedJobs: 312
   },
   {
-    id: 4, name: 'FlowRight Plumbing', emoji: 'Ã°ÂÂÂ§',
+    id: 4, name: 'FlowRight Plumbing', emoji: '🔧',
     trades: ['Plumbing','Central Heating','Boilers','Underfloor Heating'],
     primaryTrade: 'plumbing',
     lat: 51.126, lng: 0.281,
@@ -808,7 +807,7 @@ const DEMO_BUILDERS = [
     completedJobs: 143
   },
   {
-    id: 5, name: 'Crest Loft Conversions', emoji: 'Ã°ÂÂÂ¨',
+    id: 5, name: 'Crest Loft Conversions', emoji: '🔨',
     trades: ['Loft Conversions','Extensions','Carpentry'],
     primaryTrade: 'extension',
     lat: 51.148, lng: 0.244,
@@ -821,7 +820,7 @@ const DEMO_BUILDERS = [
     completedJobs: 67
   },
   {
-    id: 6, name: 'Premier Decorators SW', emoji: 'Ã°ÂÂÂ¨',
+    id: 6, name: 'Premier Decorators SW', emoji: '🎨',
     trades: ['Decoration','Plastering','Rendering'],
     primaryTrade: 'decoration',
     lat: 51.112, lng: 0.255,
@@ -834,7 +833,7 @@ const DEMO_BUILDERS = [
     completedJobs: 228
   },
   {
-    id: 7, name: 'Solid Ground Structural', emoji: 'Ã°ÂÂÂ',
+    id: 7, name: 'Solid Ground Structural', emoji: '🏛',
     trades: ['Structural Works','Underpinning','Steel Beams'],
     primaryTrade: 'structural',
     lat: 51.155, lng: 0.275,
@@ -847,7 +846,7 @@ const DEMO_BUILDERS = [
     completedJobs: 89
   },
   {
-    id: 8, name: 'Clean Slate Bathrooms', emoji: 'Ã°ÂÂÂ¿',
+    id: 8, name: 'Clean Slate Bathrooms', emoji: '🚿',
     trades: ['Bathroom Fit-Out','Wet Rooms','Tiling'],
     primaryTrade: 'bathroom',
     lat: 51.108, lng: 0.268,
@@ -883,15 +882,15 @@ function initMap() {
 
   // Primary tile layer with crossOrigin and error handling
   const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'ÃÂ© <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: '© <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 19,
     crossOrigin: true,
     keepBuffer: 4,
   });
 
-  // Fallback tile provider (CartoDB dark Ã¢ÂÂ matches site theme)
+  // Fallback tile provider (CartoDB dark — matches site theme)
   const fallbackLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: 'ÃÂ© OpenStreetMap contributors ÃÂ© CARTO',
+    attribution: '© OpenStreetMap contributors © CARTO',
     maxZoom: 19,
     subdomains: 'abcd',
     crossOrigin: true,
@@ -929,7 +928,7 @@ document.addEventListener('visibilitychange', () => {
 // ============================================================
 // MARKERS
 // ============================================================
-// Active builder dataset Ã¢ÂÂ starts as demo, replaced by real DB data
+// Active builder dataset — starts as demo, replaced by real DB data
 let builders = [];
 let usingDemoData = true;
 
@@ -947,7 +946,7 @@ async function loadRealBuilders() {
       .order('plan', { ascending: false }); // pro first, then featured, then listed
 
     if (error || !data || data.length === 0) {
-      // No real builders yet Ã¢ÂÂ use demo data with a banner
+      // No real builders yet — use demo data with a banner
       builders = DEMO_BUILDERS;
       usingDemoData = true;
       showDemoBanner();
@@ -993,8 +992,8 @@ async function loadRealBuilders() {
 }
 
 function tradeEmoji(trade) {
-  const map = { extension:'Ã°ÂÂÂ', loft:'Ã°ÂÂÂ ', kitchen:'Ã°ÂÂÂ³', bathroom:'Ã°ÂÂÂ¿', electrical:'Ã¢ÂÂ¡', plumbing:'Ã°ÂÂÂ§', structural:'Ã°ÂÂÂ', decoration:'Ã°ÂÂÂ¨', general:'Ã°ÂÂÂ¨' };
-  return map[(trade||'').toLowerCase()] || 'Ã°ÂÂÂ¨';
+  const map = { extension:'🏗', loft:'🏠', kitchen:'🍳', bathroom:'🚿', electrical:'⚡', plumbing:'🔧', structural:'🏛', decoration:'🎨', general:'🔨' };
+  return map[(trade||'').toLowerCase()] || '🔨';
 }
 
 function showDemoBanner() {
@@ -1002,7 +1001,7 @@ function showDemoBanner() {
   const bar = document.createElement('div');
   bar.id = 'demo-data-banner';
   bar.style.cssText = 'background:rgba(255,180,0,0.08);border-bottom:1px solid rgba(255,180,0,0.2);padding:8px 20px;font-size:12px;color:rgba(255,200,80,0.8);text-align:center;';
-  bar.textContent = 'Ã°ÂÂÂ· Showing example builders Ã¢ÂÂ real builders coming soon. Are you a builder? List your business free.';
+  bar.textContent = '👷 Showing example builders — real builders coming soon. Are you a builder? List your business free.';
   const nav = document.querySelector('.top-nav') || document.querySelector('nav') || document.body.firstElementChild;
   if (nav) nav.insertAdjacentElement('afterend', bar);
 }
@@ -1056,7 +1055,7 @@ function renderList() {
   const container = document.getElementById('builderList');
 
   if (list.length === 0) {
-    container.innerHTML = `<div class="empty-builders"><div class="ei">Ã°ÂÂÂ</div><p>No builders found for this trade in your area.<br>Try a different filter or expand your radius.</p></div>`;
+    container.innerHTML = `<div class="empty-builders"><div class="ei">🔍</div><p>No builders found for this trade in your area.<br>Try a different filter or expand your radius.</p></div>`;
     return;
   }
 
@@ -1065,7 +1064,7 @@ function renderList() {
       <div class="bc-top">
         <div class="bc-avatar">
           ${b.emoji}
-          ${b.verified ? '<div class="bc-verified">Ã¢ÂÂ</div>' : ''}
+          ${b.verified ? '<div class="bc-verified">✓</div>' : ''}
         </div>
         <div class="bc-info">
           <div class="bc-name">${b.name}</div>
@@ -1074,9 +1073,9 @@ function renderList() {
         <span class="bc-tier ${b.tier}">${b.tier.toUpperCase()}</span>
       </div>
       <div class="bc-meta">
-        <span class="bc-stars">${'Ã¢ÂÂ'.repeat(Math.floor(b.rating))}${b.rating % 1 >= 0.5 ? 'ÃÂ½' : ''}</span>
+        <span class="bc-stars">${'★'.repeat(Math.floor(b.rating))}${b.rating % 1 >= 0.5 ? '½' : ''}</span>
         <span class="bc-rating">${b.rating} (${b.reviews})</span>
-        <span class="bc-dist">Ã°ÂÂÂ ${b.distance} mi</span>
+        <span class="bc-dist">📍 ${b.distance} mi</span>
       </div>
       <div class="bc-trades">
         ${b.trades.slice(0,3).map(t => `<span class="bc-trade-tag">${t}</span>`).join('')}
@@ -1105,17 +1104,17 @@ function showDetail(b) {
   // Fly map to builder
   map.flyTo([b.lat, b.lng], 14, { duration: 0.8 });
 
-  const stars = 'Ã¢ÂÂ'.repeat(Math.floor(b.rating)) + (b.rating % 1 >= 0.5 ? 'ÃÂ½' : '');
+  const stars = '★'.repeat(Math.floor(b.rating)) + (b.rating % 1 >= 0.5 ? '½' : '');
 
   document.getElementById('detailContent').innerHTML = `
     <div class="dp-header">
       <div class="dp-avatar">${b.emoji}</div>
       <div>
         <div class="dp-name">${b.name}</div>
-        <div class="dp-trade">${b.area} ÃÂ· ${b.distance} miles away</div>
+        <div class="dp-trade">${b.area} · ${b.distance} miles away</div>
         <div class="dp-badges">
-          ${b.verified ? '<span class="dp-badge verified">Ã¢ÂÂ Verified</span>' : ''}
-          ${b.insured ? '<span class="dp-badge insured">Ã°ÂÂÂ¡ Insured</span>' : ''}
+          ${b.verified ? '<span class="dp-badge verified">✓ Verified</span>' : ''}
+          ${b.insured ? '<span class="dp-badge insured">🛡 Insured</span>' : ''}
           <span class="dp-badge years">${b.years} yrs experience</span>
         </div>
       </div>
@@ -1124,7 +1123,7 @@ function showDetail(b) {
     <div class="dp-stats">
       <div class="dp-stat">
         <span class="dp-stat-val">${stars}</span>
-        <div class="dp-stat-label">${b.rating} ÃÂ· ${b.reviews} reviews</div>
+        <div class="dp-stat-label">${b.rating} · ${b.reviews} reviews</div>
       </div>
       <div class="dp-stat">
         <span class="dp-stat-val">${b.completedJobs}</span>
@@ -1143,8 +1142,8 @@ function showDetail(b) {
     </div>
 
     <div class="dp-actions">
-      <button class="dp-btn-primary" onclick="contactBuilder(${b.id})">Ã°ÂÂÂ Get a quote</button>
-      <button class="dp-btn-secondary" onclick="viewProfile(${b.id})">View full profile Ã¢ÂÂ</button>
+      <button class="dp-btn-primary" onclick="contactBuilder(${b.id})">📞 Get a quote</button>
+      <button class="dp-btn-secondary" onclick="viewProfile(${b.id})">View full profile →</button>
     </div>
   `;
 
@@ -1175,11 +1174,11 @@ function contactBuilder(id) {
   modal.innerHTML = `
     <div style="background:var(--navy-2);border:1px solid rgba(0,201,167,0.2);border-radius:16px;padding:2rem;width:100%;max-width:460px;position:relative;">
       <button onclick="document.getElementById('enquiry-modal').remove()"
-        style="position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;cursor:pointer;color:var(--text-muted);font-size:14px;display:flex;align-items:center;justify-content:center;">Ã¢ÂÂ</button>
+        style="position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;cursor:pointer;color:var(--text-muted);font-size:14px;display:flex;align-items:center;justify-content:center;">✕</button>
 
       <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:6px">Enquiry</div>
       <div style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px">${b.name}</div>
-      <div style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem">${b.area} ÃÂ· ${b.trades[0]}</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:1.5rem">${b.area} · ${b.trades[0]}</div>
 
       <div id="enquiry-error" style="display:none;background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:rgba(255,150,130,0.9);margin-bottom:1rem;"></div>
 
@@ -1203,12 +1202,12 @@ function contactBuilder(id) {
       </div>
       <div style="margin-bottom:1.25rem">
         <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">Brief description of your project</label>
-        <textarea id="eq-project" rows="3" placeholder="e.g. Single storey rear extension, approx 25mÃÂ², mid-range spec. Looking for quotes in the next 2Ã¢ÂÂ3 weeks." style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;resize:none;"></textarea>
+        <textarea id="eq-project" rows="3" placeholder="e.g. Single storey rear extension, approx 25m², mid-range spec. Looking for quotes in the next 2–3 weeks." style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;resize:none;"></textarea>
       </div>
 
       <button id="eq-submit" onclick="submitEnquiry(${b.id})"
         style="width:100%;padding:13px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:10px;color:var(--navy);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s;">
-        Send enquiry to ${b.name} Ã¢ÂÂ
+        Send enquiry to ${b.name} →
       </button>
       <div style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;line-height:1.6">
         Your details are sent directly to the builder.<br>Estiquote does not share your data with third parties.
@@ -1233,7 +1232,7 @@ function contactBuilder(id) {
 async function submitEnquiry(builderId) {
   const b = builders.find(x => x.id === builderId);
 
-  // Deduplication Ã¢ÂÂ prevent same homeowner contacting same builder within 24hrs
+  // Deduplication — prevent same homeowner contacting same builder within 24hrs
   const dedupKey = `eq_sent_${builderId}_${document.getElementById('eq-email')?.value?.trim()?.toLowerCase()?.split('@')[0] || 'anon'}`;
   const lastSent = localStorage.getItem(dedupKey);
   if (lastSent && (Date.now() - parseInt(lastSent)) < 86400000) {
@@ -1284,7 +1283,7 @@ async function submitEnquiry(builderId) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        _subject: `[Estiquote] New enquiry for ${b.name} Ã¢ÂÂ ${name}`,
+        _subject: `[Estiquote] New enquiry for ${b.name} — ${name}`,
         form_type: 'Builder Enquiry',
         builder_name: b.name,
         builder_id: b.id,
@@ -1304,7 +1303,7 @@ async function submitEnquiry(builderId) {
       const modal = document.getElementById('enquiry-modal');
       modal.querySelector('div').innerHTML = `
         <div style="text-align:center;padding:1.5rem 1rem">
-          <div style="font-size:44px;margin-bottom:1rem">Ã¢ÂÂ</div>
+          <div style="font-size:44px;margin-bottom:1rem">✓</div>
           <div style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">Enquiry sent</div>
           <div style="font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:1.25rem">
             Your enquiry has been sent to <strong style="color:var(--teal-light)">${b.name}</strong>.<br>
@@ -1323,7 +1322,7 @@ async function submitEnquiry(builderId) {
       throw new Error('Failed');
     }
   } catch (err) {
-    btn.textContent = `Send enquiry to ${b.name} Ã¢ÂÂ`;
+    btn.textContent = `Send enquiry to ${b.name} →`;
     btn.disabled = false;
     const errEl = document.getElementById('enquiry-error');
     errEl.textContent = `Something went wrong. Contact the builder directly: ${b.phone}`;
@@ -1484,7 +1483,7 @@ function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential")
       mapEl.style.display = mapVisible ? 'block' : 'none';
       if (mapVisible && typeof map !== 'undefined') map.invalidateSize();
     }
-    if (btn) btn.textContent = mapVisible ? 'Ã¢ÂÂ Hide map' : 'Ã°ÂÂÂº Show map';
+    if (btn) btn.textContent = mapVisible ? '✕ Hide map' : '🗺 Show map';
   }
   // On desktop always show map
   if (window.innerWidth > 640) {
