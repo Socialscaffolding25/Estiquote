@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Builders â Estiquote | Cancel Checkatrade. Get Better Leads.</title>
-<meta name="description" content="Estiquote gives builders qualified, budget-aware leads for Â£29-99/month. Every homeowner already knows their budget before they contact you. No shared leads, no race to the bottom.">
+<title>For Builders Ã¢ÂÂ Estiquote | Cancel Checkatrade. Get Better Leads.</title>
+<meta name="description" content="Estiquote gives builders qualified, budget-aware leads for ÃÂ£29-99/month. Every homeowner already knows their budget before they contact you. No shared leads, no race to the bottom.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
 <script src="js/auth.js"></script>
 <script src="js/stripe-links.js"></script>
 <style>
-/* ââ HERO ââ */
+/* Ã¢ÂÂÃ¢ÂÂ HERO Ã¢ÂÂÃ¢ÂÂ */
 .b-hero { padding: 100px 0 80px; text-align: center; position: relative; overflow: hidden; }
 .b-hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,201,167,0.08) 0%, transparent 70%); pointer-events:none; }
 .b-hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:#ef4444; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:1.5rem; }
@@ -28,12 +28,10 @@
 .b-stats { display:flex; gap:32px; justify-content:center; flex-wrap:wrap; }
 .b-stat { text-align:center; }
 .b-stat-val { font-family:var(--serif); font-size:32px; font-weight:800; color:var(--teal-light); display:block; 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 .b-stat-label { font-size:12px; color:var(--text-dim); margin-top:2px; }
 
-/* ââ PAIN SECTION ââ */
+/* Ã¢ÂÂÃ¢ÂÂ PAIN SECTION Ã¢ÂÂÃ¢ÂÂ */
 .pain-section { background:rgba(239,68,68,0.04); border-top:1px solid rgba(239,68,68,0.1); border-bottom:1px solid rgba(239,68,68,0.1); padding:80px 0; }
 .pain-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:3rem; }
 .pain-card { background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); border-radius:14px; padding:24px; }
@@ -42,7 +40,7 @@
 .pain-body { font-size:13px; color:var(--text-muted); line-height:1.6; }
 .pain-quote { font-style:italic; color:rgba(239,68,68,0.8); font-size:12px; margin-top:10px; border-left:2px solid rgba(239,68,68,0.3); padding-left:10px; }
 
-/* ââ COMPARISON ââ */
+/* Ã¢ÂÂÃ¢ÂÂ COMPARISON Ã¢ÂÂÃ¢ÂÂ */
 .compare-section { padding:80px 0; }
 .compare-table { width:100%; border-collapse:separate; border-spacing:0 4px; margin-top:3rem; }
 .compare-table th { padding:10px 20px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); text-align:left; }
@@ -60,7 +58,7 @@
 .compare-winner { background:rgba(0,201,167,0.05); border:1px solid rgba(0,201,167,0.15); }
 .compare-winner td { background:rgba(0,201,167,0.05); }
 
-/* ââ PLANS ââ */
+/* Ã¢ÂÂÃ¢ÂÂ PLANS Ã¢ÂÂÃ¢ÂÂ */
 .builder-plans { padding:80px 0; background:var(--navy-2); }
 .plans-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:3rem; }
 .b-plan { background:var(--navy-3); border:1px solid var(--border); border-radius:16px; padding:28px; position:relative; transition:var(--transition); }
@@ -69,31 +67,27 @@
 .b-plan-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,var(--teal),var(--teal-light)); color:var(--navy); font-size:11px; font-weight:800; padding:4px 14px; border-radius:20px; white-space:nowrap; }
 .b-plan-name { font-size:14px; font-weight:700; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
 .b-plan-price { font-family:var(--serif); font-size:42px; font-weight:800; color:var(--text); line-height:1; margin-bottom:4px; 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 .b-plan-price span { font-size:16px; color:var(--text-dim); font-family:var(--sans); font-weight:400; }
 .b-plan-period { font-size:13px; color:var(--text-dim); margin-bottom:16px; }
 .b-plan-desc { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--border); }
 .b-plan-features { list-style:none; margin-bottom:24px; }
 .b-plan-features li { font-size:13px; color:var(--text-muted); padding:5px 0; display:flex; align-items:flex-start; gap:8px; }
-.b-plan-features li::before { content:'â'; color:var(--teal); font-weight:700; flex-shrink:0; margin-top:1px; }
+.b-plan-features li::before { content:'Ã¢ÂÂ'; color:var(--teal); font-weight:700; flex-shrink:0; margin-top:1px; }
 .b-plan-cta { width:100%; }
 .checkatrade-compare { background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); border-radius:10px; padding:12px 16px; margin-top:16px; font-size:12px; color:var(--text-muted); text-align:center; }
 .checkatrade-compare strong { color:#ef4444; }
 
-/* ââ HOW IT WORKS FOR BUILDERS ââ */
+/* Ã¢ÂÂÃ¢ÂÂ HOW IT WORKS FOR BUILDERS Ã¢ÂÂÃ¢ÂÂ */
 .builder-how { padding:80px 0; }
 .b-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; margin-top:3rem; }
 .b-step { text-align:center; padding:32px 20px; background:var(--navy-2); border:1px solid var(--border); border-radius:14px; }
 .b-step-num { font-family:var(--serif); font-size:48px; font-weight:800; color:rgba(0,201,167,0.15); line-height:1; margin-bottom:12px; 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 .b-step-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
 .b-step-body { font-size:13px; color:var(--text-muted); line-height:1.6; }
 
-/* ââ QUALIFIED LEAD EXPLAINER ââ */
+/* Ã¢ÂÂÃ¢ÂÂ QUALIFIED LEAD EXPLAINER Ã¢ÂÂÃ¢ÂÂ */
 .qualified-section { padding:80px 0; background:rgba(0,201,167,0.03); border-top:1px solid rgba(0,201,167,0.08); border-bottom:1px solid rgba(0,201,167,0.08); }
 .qualified-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
 .qualified-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
@@ -114,7 +108,7 @@
 .em-val.highlight { color:var(--teal-light); font-weight:700; }
 .em-badge { display:inline-block; background:rgba(0,201,167,0.1); border:1px solid rgba(0,201,167,0.25); color:var(--teal-light); font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; margin-top:12px; }
 
-/* ââ FOUNDER ââ */
+/* Ã¢ÂÂÃ¢ÂÂ FOUNDER Ã¢ÂÂÃ¢ÂÂ */
 .founder-section { padding:80px 0; }
 .founder-card { background:var(--navy-2); border:1px solid var(--border); border-radius:20px; padding:48px; display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:start; }
 .founder-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--teal-light)); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:28px; font-weight:800; color:var(--navy); flex-shrink:0; }
@@ -124,14 +118,14 @@
 .founder-cred { display:flex; gap:20px; flex-wrap:wrap; }
 .cred-item { font-size:12px; color:var(--text-dim); background:var(--navy-3); padding:6px 12px; border-radius:6px; border:1px solid var(--border); }
 
-/* ââ FAQ ââ */
+/* Ã¢ÂÂÃ¢ÂÂ FAQ Ã¢ÂÂÃ¢ÂÂ */
 .faq-section { padding:80px 0; background:var(--navy-2); }
 .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:3rem; }
 .faq-item { background:var(--navy-3); border:1px solid var(--border); border-radius:12px; padding:20px 24px; }
 .faq-q { font-size:14px; font-weight:700; color:var(--text); margin-bottom:8px; }
 .faq-a { font-size:13px; color:var(--text-muted); line-height:1.6; }
 
-/* ââ FINAL CTA ââ */
+/* Ã¢ÂÂÃ¢ÂÂ FINAL CTA Ã¢ÂÂÃ¢ÂÂ */
 .b-cta { padding:80px 0; text-align:center; }
 .b-cta-h2 { font-family:var(--serif); font-size:clamp(28px,4vw,48px); font-weight:800; color:var(--text); margin-bottom:12px; }
 .b-cta-sub { font-size:16px; color:var(--text-muted); margin-bottom:2rem; }
@@ -152,13 +146,13 @@
   <link rel="canonical" href="https://estiquote.co.uk/builders.html">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://estiquote.co.uk/builders.html">
-  <meta property="og:title" content="For Builders â Better leads than Checkatrade at 70% less cost">
-  <meta property="og:description" content="Every homeowner who contacts you on Estiquote already knows their budget. No shared leads, no race to the bottom. From Â£29/month.">
+  <meta property="og:title" content="For Builders Ã¢ÂÂ Better leads than Checkatrade at 70% less cost">
+  <meta property="og:description" content="Every homeowner who contacts you on Estiquote already knows their budget. No shared leads, no race to the bottom. From ÃÂ£29/month.">
   <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
   <meta property="og:site_name" content="Estiquote">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="For Builders â Better leads than Checkatrade at 70% less cost">
-  <meta name="twitter:description" content="Every homeowner who contacts you on Estiquote already knows their budget. No shared leads, no race to the bottom. From Â£29/month.">
+  <meta name="twitter:title" content="For Builders Ã¢ÂÂ Better leads than Checkatrade at 70% less cost">
+  <meta name="twitter:description" content="Every homeowner who contacts you on Estiquote already knows their budget. No shared leads, no race to the bottom. From ÃÂ£29/month.">
 </head>
 <body>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -173,7 +167,7 @@
       <a href="pricing.html" class="nav-link">Pricing</a>
       <a href="find-builders.html" class="nav-link">Find builders</a>
       <a href="login.html" class="nav-link">Sign in</a>
-      <a href="builder-signup.html" class="nav-cta">List your business â</a>
+      <a href="builder-signup.html" class="nav-cta">List your business Ã¢ÂÂ</a>
     </div>
     <button class="nav-burger" id="navBurger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
@@ -185,25 +179,25 @@
     <a href="pricing.html">Pricing</a>
     <a href="find-builders.html">Find builders</a>
     <a href="login.html">Sign in</a>
-    <a href="builder-signup.html" class="mobile-cta">List your business â</a>
+    <a href="builder-signup.html" class="mobile-cta">List your business Ã¢ÂÂ</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="b-hero">
   <div class="container">
-    <div class="b-hero-eyebrow">â  Built by a builder, not a tech company</div>
+    <div class="b-hero-eyebrow">Ã¢ÂÂ  Built by a builder, not a tech company</div>
     <h1>Better leads than <del>Checkatrade</del>.<br><span>At a third of the price.</span></h1>
     <p class="b-hero-sub">Every homeowner who contacts you on Estiquote already knows their budget. No shared leads. No race to the bottom on price. Just qualified, exclusive enquiries from people ready to build.</p>
     <div class="b-hero-actions">
-      <a href="builder-signup.html" class="btn-primary btn-lg">List your business â from Â£29/mo â</a>
+      <a href="builder-signup.html" class="btn-primary btn-lg">List your business Ã¢ÂÂ from ÃÂ£29/mo Ã¢ÂÂ</a>
       <a href="#compare" class="btn-ghost">See the comparison</a>
     </div>
     <div class="b-stats">
-      <div class="b-stat"><span class="b-stat-val">Â£29</span><span class="b-stat-label">Starting price/month</span></div>
-      <div class="b-stat"><span class="b-stat-val">100%</span><span class="b-stat-label">Exclusive leads â not shared</span></div>
+      <div class="b-stat"><span class="b-stat-val">ÃÂ£29</span><span class="b-stat-label">Starting price/month</span></div>
+      <div class="b-stat"><span class="b-stat-val">100%</span><span class="b-stat-label">Exclusive leads Ã¢ÂÂ not shared</span></div>
       <div class="b-stat"><span class="b-stat-val">0</span><span class="b-stat-label">Lock-in contracts</span></div>
-      <div class="b-stat"><span class="b-stat-val">3Ã</span><span class="b-stat-label">Higher lead quality than directories</span></div>
+      <div class="b-stat"><span class="b-stat-val">3ÃÂ</span><span class="b-stat-label">Higher lead quality than directories</span></div>
     </div>
   </div>
 </section>
@@ -218,40 +212,40 @@
     </div>
     <div class="pain-grid">
       <div class="pain-card">
-        <div class="pain-icon">ð¸</div>
-        <div class="pain-title">Paying Â£370/month for cold leads</div>
-        <div class="pain-body">Fixed monthly cost whether you win jobs or not. The same enquiry goes to 3â4 of your competitors simultaneously.</div>
-        <div class="pain-quote">"I'm paying Â£370 a month and only getting one or two cold leads." â UK builder, 2026</div>
+        <div class="pain-icon">Ã°ÂÂÂ¸</div>
+        <div class="pain-title">Paying ÃÂ£370/month for cold leads</div>
+        <div class="pain-body">Fixed monthly cost whether you win jobs or not. The same enquiry goes to 3Ã¢ÂÂ4 of your competitors simultaneously.</div>
+        <div class="pain-quote">"I'm paying ÃÂ£370 a month and only getting one or two cold leads." Ã¢ÂÂ UK builder, 2026</div>
       </div>
       <div class="pain-card">
-        <div class="pain-icon">ð</div>
+        <div class="pain-icon">Ã°ÂÂÂ</div>
         <div class="pain-title">Racing to the bottom on price</div>
         <div class="pain-body">Homeowners know they're comparing you against competitors. The only way to win is to be cheapest. Quality builders lose out.</div>
-        <div class="pain-quote">"Checkatrade is for price-shoppers. I do quality work and I was tired of competing on price." â Hartwood contractor</div>
+        <div class="pain-quote">"Checkatrade is for price-shoppers. I do quality work and I was tired of competing on price." Ã¢ÂÂ Hartwood contractor</div>
       </div>
       <div class="pain-card">
-        <div class="pain-icon">ð</div>
-        <div class="pain-title">Trapped â and you own nothing</div>
-        <div class="pain-body">14-day cancellation window. Miss it and you're locked in for another year. Your reviews, your reputation â all on their servers. Stop paying and it disappears.</div>
-        <div class="pain-quote">"They tried to renew me automatically. Had to fight for months to cancel." â Tool Talk forum, 2026</div>
+        <div class="pain-icon">Ã°ÂÂÂ</div>
+        <div class="pain-title">Trapped Ã¢ÂÂ and you own nothing</div>
+        <div class="pain-body">14-day cancellation window. Miss it and you're locked in for another year. Your reviews, your reputation Ã¢ÂÂ all on their servers. Stop paying and it disappears.</div>
+        <div class="pain-quote">"They tried to renew me automatically. Had to fight for months to cancel." Ã¢ÂÂ Tool Talk forum, 2026</div>
       </div>
       <div class="pain-card">
-        <div class="pain-icon">ð</div>
+        <div class="pain-icon">Ã°ÂÂÂ</div>
         <div class="pain-title">Support that couldn't care less</div>
-        <div class="pain-body">Call centres only open MonâFri 9amâ5pm. Exactly when you're on the tools. Staff who don't understand the trade. Owned by a Canadian investment fund.</div>
-        <div class="pain-quote">"The support staff couldn't care less. I get treated like I'm some sort of wally." â 5-year Checkatrade member</div>
+        <div class="pain-body">Call centres only open MonÃ¢ÂÂFri 9amÃ¢ÂÂ5pm. Exactly when you're on the tools. Staff who don't understand the trade. Owned by a Canadian investment fund.</div>
+        <div class="pain-quote">"The support staff couldn't care less. I get treated like I'm some sort of wally." Ã¢ÂÂ 5-year Checkatrade member</div>
       </div>
       <div class="pain-card">
-        <div class="pain-icon">ð</div>
+        <div class="pain-icon">Ã°ÂÂÂ</div>
         <div class="pain-title">Price doubles at renewal</div>
-        <div class="pain-body">Multiple builders report costs jumping from Â£800 to Â£2,000/year at renewal with little notice. No negotiation. Take it or leave it.</div>
-        <div class="pain-quote">"They've just told me it's nearly Â£2,000 to renew. Used to pay about Â£800." â Tool Talk, 2026</div>
+        <div class="pain-body">Multiple builders report costs jumping from ÃÂ£800 to ÃÂ£2,000/year at renewal with little notice. No negotiation. Take it or leave it.</div>
+        <div class="pain-quote">"They've just told me it's nearly ÃÂ£2,000 to renew. Used to pay about ÃÂ£800." Ã¢ÂÂ Tool Talk, 2026</div>
       </div>
       <div class="pain-card">
-        <div class="pain-icon">ð</div>
+        <div class="pain-icon">Ã°ÂÂÂ</div>
         <div class="pain-title">Wasted quoting time</div>
         <div class="pain-body">Homeowners contact you with no idea what their project costs. You drive out, spend 45 minutes quoting, and they tell you it's "more than expected." That's not a lead. That's unpaid work.</div>
-        <div class="pain-quote">"I wasted 8 visits last month on projects people couldn't afford." â Extension specialist</div>
+        <div class="pain-quote">"I wasted 8 visits last month on projects people couldn't afford." Ã¢ÂÂ Extension specialist</div>
       </div>
     </div>
   </div>
@@ -262,7 +256,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-label">The honest comparison</div>
-      <h2 class="section-h2">Estiquote vs Checkatrade â head to head</h2>
+      <h2 class="section-h2">Estiquote vs Checkatrade Ã¢ÂÂ head to head</h2>
     </div>
     <table class="compare-table">
       <thead>
@@ -273,18 +267,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td>Monthly cost</td><td>Â£80â370/mo</td><td>Â£29â99/mo</td></tr>
-        <tr><td>Annual commitment</td><td>Yes â 14-day cancel window</td><td>Monthly â cancel any time</td></tr>
-        <tr class="compare-winner"><td>Lead type</td><td>Shared with 3â4 competitors</td><td>â Exclusive direct contact</td></tr>
-        <tr class="compare-winner"><td>Homeowner budget awareness</td><td>None â they're browsing blind</td><td>â Every homeowner has run an estimate</td></tr>
-        <tr><td>You own your reviews</td><td>No â belongs to Checkatrade</td><td>â Always exportable, yours forever</td></tr>
-        <tr><td>Compliance document storage</td><td>No</td><td>â Insurance, certs, expiry alerts</td></tr>
-        <tr><td>Review suppression</td><td>Yes â traders can challenge</td><td>â Project-verified, fully transparent</td></tr>
-        <tr><td>Lead quality</td><td>Cold browsers</td><td>â Budget-confirmed, project-ready</td></tr>
-        <tr><td>Price at renewal</td><td>Can double with no notice</td><td>â Locked in at your signup price</td></tr>
-        <tr class="compare-winner"><td>Founded by</td><td>Canadian investment fund</td><td>â Active UK contractor</td></tr>
-        <tr><td>Support hours</td><td>MonâFri 9â5 only</td><td>â Email + chat, 7 days</td></tr>
-        <tr><td>Analytics dashboard</td><td>Basic</td><td>â Enquiry tracking, response rates</td></tr>
+        <tr><td>Monthly cost</td><td>ÃÂ£80Ã¢ÂÂ370/mo</td><td>ÃÂ£29Ã¢ÂÂ99/mo</td></tr>
+        <tr><td>Annual commitment</td><td>Yes Ã¢ÂÂ 14-day cancel window</td><td>Monthly Ã¢ÂÂ cancel any time</td></tr>
+        <tr class="compare-winner"><td>Lead type</td><td>Shared with 3Ã¢ÂÂ4 competitors</td><td>Ã¢ÂÂ Exclusive direct contact</td></tr>
+        <tr class="compare-winner"><td>Homeowner budget awareness</td><td>None Ã¢ÂÂ they're browsing blind</td><td>Ã¢ÂÂ Every homeowner has run an estimate</td></tr>
+        <tr><td>You own your reviews</td><td>No Ã¢ÂÂ belongs to Checkatrade</td><td>Ã¢ÂÂ Always exportable, yours forever</td></tr>
+        <tr><td>Compliance document storage</td><td>No</td><td>Ã¢ÂÂ Insurance, certs, expiry alerts</td></tr>
+        <tr><td>Review suppression</td><td>Yes Ã¢ÂÂ traders can challenge</td><td>Ã¢ÂÂ Project-verified, fully transparent</td></tr>
+        <tr><td>Lead quality</td><td>Cold browsers</td><td>Ã¢ÂÂ Budget-confirmed, project-ready</td></tr>
+        <tr><td>Price at renewal</td><td>Can double with no notice</td><td>Ã¢ÂÂ Locked in at your signup price</td></tr>
+        <tr class="compare-winner"><td>Founded by</td><td>Canadian investment fund</td><td>Ã¢ÂÂ Active UK contractor</td></tr>
+        <tr><td>Support hours</td><td>MonÃ¢ÂÂFri 9Ã¢ÂÂ5 only</td><td>Ã¢ÂÂ Email + chat, 7 days</td></tr>
+        <tr><td>Analytics dashboard</td><td>Basic</td><td>Ã¢ÂÂ Enquiry tracking, response rates</td></tr>
       </tbody>
     </table>
   </div>
@@ -297,12 +291,12 @@
       <div>
         <div class="qualified-label">The Estiquote difference</div>
         <h2 class="qualified-h2">Every lead already knows their budget.</h2>
-        <p class="qualified-body">Before a homeowner contacts you on Estiquote, they've run a regional cost estimate for their exact project. They know what a fair price looks like. They've self-selected to contact you specifically â not you and three competitors at once.</p>
+        <p class="qualified-body">Before a homeowner contacts you on Estiquote, they've run a regional cost estimate for their exact project. They know what a fair price looks like. They've self-selected to contact you specifically Ã¢ÂÂ not you and three competitors at once.</p>
         <ul class="qualified-points">
-          <li><span>â</span> No more "that's more than I expected" after you've driven 30 minutes to quote</li>
-          <li><span>â</span> No more racing three other builders to submit the cheapest price</li>
-          <li><span>â</span> No more wasted quoting visits on projects people can't afford</li>
-          <li><span>â</span> Homeowners who contact you are ready to commission, not just browsing</li>
+          <li><span>Ã¢ÂÂ</span> No more "that's more than I expected" after you've driven 30 minutes to quote</li>
+          <li><span>Ã¢ÂÂ</span> No more racing three other builders to submit the cheapest price</li>
+          <li><span>Ã¢ÂÂ</span> No more wasted quoting visits on projects people can't afford</li>
+          <li><span>Ã¢ÂÂ</span> Homeowners who contact you are ready to commission, not just browsing</li>
         </ul>
       </div>
       <div class="enquiry-mock">
@@ -310,17 +304,17 @@
           <div class="em-avatar">SJ</div>
           <div>
             <div class="em-name">Sarah Jones</div>
-            <div class="em-sub">New enquiry via Estiquote Â· Just now</div>
+            <div class="em-sub">New enquiry via Estiquote ÃÂ· Just now</div>
           </div>
         </div>
         <div class="em-row"><div class="em-key">Project type</div><div class="em-val">Single storey rear extension</div></div>
         <div class="em-row"><div class="em-key">Location</div><div class="em-val">Tunbridge Wells, TN1</div></div>
-        <div class="em-row"><div class="em-key">Size</div><div class="em-val">28mÂ² open-plan kitchen diner</div></div>
+        <div class="em-row"><div class="em-key">Size</div><div class="em-val">28mÃÂ² open-plan kitchen diner</div></div>
         <div class="em-row"><div class="em-key">Spec level</div><div class="em-val">Mid-range</div></div>
-        <div class="em-row"><div class="em-key">Budget</div><div class="em-val highlight">Â£58,000âÂ£72,000 confirmed â</div></div>
+        <div class="em-row"><div class="em-key">Budget</div><div class="em-val highlight">ÃÂ£58,000Ã¢ÂÂÃÂ£72,000 confirmed Ã¢ÂÂ</div></div>
         <div class="em-row"><div class="em-key">Start date</div><div class="em-val">Spring 2026</div></div>
         <div class="em-row"><div class="em-key">Message</div><div class="em-val">"I've run the cost estimate and I'm ready to start getting quotes. Can you come and take a look?"</div></div>
-        <div class="em-badge">â Budget-qualified lead â exclusive to you</div>
+        <div class="em-badge">Ã¢ÂÂ Budget-qualified lead Ã¢ÂÂ exclusive to you</div>
       </div>
     </div>
   </div>
@@ -337,8 +331,8 @@
     <div class="plans-row">
       <div class="b-plan">
         <div class="b-plan-name">Listed</div>
-        <div class="b-plan-price">Â£29<span>/mo</span></div>
-        <div class="b-plan-period">billed monthly Â· cancel any time</div>
+        <div class="b-plan-price">ÃÂ£29<span>/mo</span></div>
+        <div class="b-plan-period">billed monthly ÃÂ· cancel any time</div>
         <div class="b-plan-desc">Get found by budget-aware homeowners searching in your area. A professional listing with direct enquiry form.</div>
         <ul class="b-plan-features">
           <li>Map listing with full profile</li>
@@ -348,14 +342,14 @@
           <li>Customer review collection</li>
           <li>Contact details visible</li>
         </ul>
-        <button onclick="goToStripe('builder_listed')" class="btn-outline b-plan-cta">Get listed â</button>
-        <div class="checkatrade-compare">Checkatrade basic: <strong>Â£80â100/mo</strong> for shared leads</div>
+        <button onclick="goToStripe('builder_listed')" class="btn-outline b-plan-cta">Get listed Ã¢ÂÂ</button>
+        <div class="checkatrade-compare">Checkatrade basic: <strong>ÃÂ£80Ã¢ÂÂ100/mo</strong> for shared leads</div>
       </div>
       <div class="b-plan featured">
         <div class="b-plan-badge">Most popular</div>
         <div class="b-plan-name">Featured</div>
-        <div class="b-plan-price">Â£59<span>/mo</span></div>
-        <div class="b-plan-period">billed monthly Â· cancel any time</div>
+        <div class="b-plan-price">ÃÂ£59<span>/mo</span></div>
+        <div class="b-plan-period">billed monthly ÃÂ· cancel any time</div>
         <div class="b-plan-desc">Priority placement in search results. Stand out with a featured profile, project gallery, and response analytics.</div>
         <ul class="b-plan-features">
           <li>Everything in Listed</li>
@@ -366,25 +360,25 @@
           <li>Enquiry analytics dashboard</li>
           <li>Monthly performance report</li>
         </ul>
-        <button onclick="goToStripe('builder_featured')" class="btn-primary b-plan-cta">Get featured â</button>
-        <div class="checkatrade-compare">Checkatrade enhanced: <strong>Â£150â200/mo</strong> + still shared leads</div>
+        <button onclick="goToStripe('builder_featured')" class="btn-primary b-plan-cta">Get featured Ã¢ÂÂ</button>
+        <div class="checkatrade-compare">Checkatrade enhanced: <strong>ÃÂ£150Ã¢ÂÂ200/mo</strong> + still shared leads</div>
       </div>
       <div class="b-plan">
         <div class="b-plan-name">Pro</div>
-        <div class="b-plan-price">Â£99<span>/mo</span></div>
-        <div class="b-plan-period">billed monthly Â· cancel any time</div>
+        <div class="b-plan-price">ÃÂ£99<span>/mo</span></div>
+        <div class="b-plan-period">billed monthly ÃÂ· cancel any time</div>
         <div class="b-plan-desc">Top of search results in your area. Full analytics, verified status, and dedicated account support from a builder who gets it.</div>
         <ul class="b-plan-features">
           <li>Everything in Featured</li>
-          <li>Top placement â always first in area</li>
+          <li>Top placement Ã¢ÂÂ always first in area</li>
           <li>Unlimited portfolio photos</li>
           <li>Verified professional status</li>
           <li>Lead value analytics</li>
           <li>Priority support from real builders</li>
           <li>Estiquote Pro badge on all materials</li>
         </ul>
-        <button onclick="goToStripe('builder_pro')" class="btn-outline b-plan-cta">Go Pro â</button>
-        <div class="checkatrade-compare">Checkatrade Pro: <strong>Â£300â370/mo</strong> for the same visibility</div>
+        <button onclick="goToStripe('builder_pro')" class="btn-outline b-plan-cta">Go Pro Ã¢ÂÂ</button>
+        <div class="checkatrade-compare">Checkatrade Pro: <strong>ÃÂ£300Ã¢ÂÂ370/mo</strong> for the same visibility</div>
       </div>
     </div>
   </div>
@@ -411,7 +405,7 @@
       <div class="b-step">
         <div class="b-step-num">03</div>
         <div class="b-step-title">Get the enquiry directly</div>
-        <div class="b-step-body">The homeowner submits directly to you â not to 3 competitors. You receive their name, project details, budget range and contact info.</div>
+        <div class="b-step-body">The homeowner submits directly to you Ã¢ÂÂ not to 3 competitors. You receive their name, project details, budget range and contact info.</div>
       </div>
       <div class="b-step">
         <div class="b-step-num">04</div>
@@ -429,13 +423,13 @@
       <div class="founder-avatar">JH</div>
       <div>
         <div class="founder-name">Josh Hill</div>
-        <div class="founder-role">Co-Founder, Estiquote Â· Director, Hartwood Construction Ltd</div>
-        <p class="founder-quote">"I built Estiquote because I've been on both sides. As a contractor, I've wasted hours quoting for homeowners who had no idea what anything costs. As someone who's watched builders in my network get bled dry by Checkatrade's renewal pricing, I knew there had to be a better way. This platform was built by someone who actually does the work â not a tech company that learned about construction from a spreadsheet."</p>
+        <div class="founder-role">Co-Founder, Estiquote ÃÂ· Director, Hartwood Construction Ltd</div>
+        <p class="founder-quote">"I built Estiquote because I've been on both sides. As a contractor, I've wasted hours quoting for homeowners who had no idea what anything costs. As someone who's watched builders in my network get bled dry by Checkatrade's renewal pricing, I knew there had to be a better way. This platform was built by someone who actually does the work Ã¢ÂÂ not a tech company that learned about construction from a spreadsheet."</p>
         <div class="founder-cred">
-          <span class="cred-item">ð Active contractor â Sussex, Surrey, Kent</span>
-          <span class="cred-item">ð Hartwood Construction Ltd</span>
-          <span class="cred-item">ð  Residential, commercial, equestrian</span>
-          <span class="cred-item">ð± Co-founder, Social Scaffolding</span>
+          <span class="cred-item">Ã°ÂÂÂ Active contractor Ã¢ÂÂ Sussex, Surrey, Kent</span>
+          <span class="cred-item">Ã°ÂÂÂ Hartwood Construction Ltd</span>
+          <span class="cred-item">Ã°ÂÂÂ  Residential, commercial, equestrian</span>
+          <span class="cred-item">Ã°ÂÂÂ± Co-founder, Social Scaffolding</span>
         </div>
       </div>
     </div>
@@ -456,7 +450,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">Are the leads actually exclusive?</div>
-        <div class="faq-a">Yes. When a homeowner contacts you on Estiquote, that enquiry goes to you alone â not to 3 competitors simultaneously. You're not entering a race before you've even picked up the phone.</div>
+        <div class="faq-a">Yes. When a homeowner contacts you on Estiquote, that enquiry goes to you alone Ã¢ÂÂ not to 3 competitors simultaneously. You're not entering a race before you've even picked up the phone.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">What happens to my reviews if I cancel?</div>
@@ -464,15 +458,15 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">How do homeowners find me?</div>
-        <div class="faq-a">After running a cost estimate, homeowners see a "Find builders in your area" section. They filter by trade and location â and your profile appears. These are high-intent users actively planning a project.</div>
+        <div class="faq-a">After running a cost estimate, homeowners see a "Find builders in your area" section. They filter by trade and location Ã¢ÂÂ and your profile appears. These are high-intent users actively planning a project.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Will my Checkatrade reviews transfer?</div>
-        <div class="faq-a">We can't import them directly â they belong to Checkatrade. But we'll help you reach out to past clients to collect new verified reviews on Estiquote. Most builders have their profile reviews rebuilt within 4â6 weeks.</div>
+        <div class="faq-a">We can't import them directly Ã¢ÂÂ they belong to Checkatrade. But we'll help you reach out to past clients to collect new verified reviews on Estiquote. Most builders have their profile reviews rebuilt within 4Ã¢ÂÂ6 weeks.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">What areas does Estiquote cover?</div>
-        <div class="faq-a">We launched in SE England (Sussex, Surrey, Kent) and are expanding nationally. If you're outside our current coverage area, register now and you'll be live the moment we expand to your region â at founding member pricing.</div>
+        <div class="faq-a">We launched in SE England (Sussex, Surrey, Kent) and are expanding nationally. If you're outside our current coverage area, register now and you'll be live the moment we expand to your region Ã¢ÂÂ at founding member pricing.</div>
       </div>
     </div>
   </div>
@@ -484,7 +478,7 @@
     <h2 class="b-cta-h2">Cancel Checkatrade.<br>List on Estiquote today.</h2>
     <p class="b-cta-sub">Better leads. 70% cheaper. Cancel any time. Built by a builder.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="builder-signup.html" class="btn-primary btn-lg">List your business â from Â£29/mo â</a>
+      <a href="builder-signup.html" class="btn-primary btn-lg">List your business Ã¢ÂÂ from ÃÂ£29/mo Ã¢ÂÂ</a>
       <a href="find-builders.html" class="btn-ghost">See the builder map</a>
     </div>
     <p style="font-size:12px;color:var(--text-dim);margin-top:1rem;">No setup fee. No contract. First month free for Hartwood network members.</p>
@@ -521,7 +515,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Â© 2026 Estiquote Ltd. All estimates are indicative only.</span>
+      <span>ÃÂ© 2026 Estiquote Ltd. All estimates are indicative only.</span>
     </div>
   </div>
 </footer>
