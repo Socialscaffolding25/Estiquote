@@ -2,15 +2,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UK Construction Material Prices 2026 Ã¢ÂÂ Estiquote</title>
+<title>UK Construction Material Prices 2026 — Estiquote</title>
 <meta name="description" content="Live UK construction material prices. Structural timber, concrete blocks, insulation, bricks, copper pipe and more. Find your nearest builders merchant.">
-  <meta property="og:title" content="UK Construction Material Prices 2026 Ã¢ÂÂ Estiquote">
+  <meta property="og:title" content="UK Construction Material Prices 2026 — Estiquote">
   <meta property="og:description" content="Live UK construction material prices. Timber, bricks, insulation, copper pipe and more. Find your nearest Jewson, Travis Perkins and local merchants.">
   <meta property="og:image" content="https://esiquote.co.uk/og-image.svg">
   <meta property="og:type" content="website"
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://estiquote.co.uk/og-image.svg">
-<meta property="og:title" content="UK Construction Material Prices 2026 Ã¢ÂÂ Estiquote">
+<meta property="og:title" content="UK Construction Material Prices 2026 — Estiquote">
 <meta property="og:description" content="Track UK construction material prices. Find your nearest Jewson, Travis Perkins, Buildbase and more.">
 <link rel="canonical" href="https://estiquote.co.uk/materials.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -44,8 +44,7 @@ body { padding-top: 80px; }
 .mat-card-top { display:flex; flex-direction:column; margin-bottom:12px; gap:4px; }
 .mat-card-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
 .mat-card-unit { font-size:12px; color:var(--text-dim); }
-.mat-card-price { font-family:var(--serif); font-size:20px; font-weight:800; color:var(--teal-light); white-space:nowrap; line-height:1.2; 
-}
+.mat-card-price { font-family:var(--serif); font-size:20px; font-weight:800; color:var(--teal-light); white-space:nowrap; line-height:1.2; }
 .mat-card-changes { display:flex; gap:12px; margin-bottom:14px; }
 .mat-change { font-size:11px; padding:3px 8px; border-radius:4px; font-weight:600; }
 .mc-up { background:rgba(240,112,80,0.1); color:#f07050; }
@@ -132,12 +131,12 @@ body { padding-top: 80px; }
 <main id="main-content">
   <section class="page-hero">
     <div class="container">
-      <div class="updated-badge">Ã°ÂÂÂ Updated May 2026</div>
+      <div class="updated-badge">🔄 Updated May 2026</div>
       <h1>UK Construction Material Prices</h1>
       <p class="sub">Live market prices for 12 key UK construction materials. Find your nearest builders merchant. Powered by real project data.</p>
       <div class="postcode-bar">
         <input type="text" id="postcode-input" placeholder="Your postcode" maxlength="8" aria-label="Enter your postcode to find nearby merchants">
-        <button onclick="findMerchantsPublic()" class="btn-primary">Find merchants near me Ã¢ÂÂ</button>
+        <button onclick="findMerchantsPublic()" class="btn-primary">Find merchants near me →</button>
       </div>
       <div class="cat-filters" id="cat-filters">
         <button class="cat-btn active" onclick="filterCat('all',this)">All materials</button>
@@ -162,7 +161,7 @@ body { padding-top: 80px; }
           <div style="font-family:var(--serif);font-size:20px;font-weight:800;color:var(--text)" id="merchant-title">Nearby merchants</div>
           <div style="font-size:13px;color:var(--text-muted);margin-top:4px" id="merchant-subtitle">Sorted by distance from your postcode</div>
         </div>
-        <button onclick="document.getElementById('merchant-section').classList.remove('visible')" style="background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:20px">Ã¢ÂÂ</button>
+        <button onclick="document.getElementById('merchant-section').classList.remove('visible')" style="background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:20px">✕</button>
       </div>
       <div id="merchant-results"></div>
       <div id="source-links-section"></div>
@@ -170,19 +169,19 @@ body { padding-top: 80px; }
 
     <!-- CONTRIBUTE + API TEASER -->
     <div class="contribute-strip">
-      <div style="font-size:36px">Ã°ÂÂÂ</div>
+      <div style="font-size:36px">🏗</div>
       <div style="flex:1;min-width:200px">
         <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Have better price data?</div>
-        <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Submit what you actually paid at a merchant. Every submission improves accuracy for all Estiquote users Ã¢ÂÂ and helps build the most comprehensive UK construction price database in existence.</div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Submit what you actually paid at a merchant. Every submission improves accuracy for all Estiquote users — and helps build the most comprehensive UK construction price database in existence.</div>
       </div>
-      <button onclick="showSubmitModal()" class="btn-primary" style="white-space:nowrap">Submit a price Ã¢ÂÂ</button>
+      <button onclick="showSubmitModal()" class="btn-primary" style="white-space:nowrap">Submit a price →</button>
     </div>
 
     <!-- API TEASER -->
     <div class="api-teaser">
       <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);color:#a78bfa;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;">COMING SOON</div>
       <h2>Estiquote becomes the API</h2>
-      <p>No UK builders merchant offers a public pricing API. Estiquote is building one Ã¢ÂÂ powered by real submitted prices from builders, architects and homeowners across the UK. Apply for early access.</p>
+      <p>No UK builders merchant offers a public pricing API. Estiquote is building one — powered by real submitted prices from builders, architects and homeowners across the UK. Apply for early access.</p>
       <div class="api-code">
         <div style="color:var(--text-dim)"># Get current UK price for any material</div>
         <div>GET https://api.estiquote.co.uk/v1/materials/timber</div>
@@ -192,7 +191,7 @@ body { padding-top: 80px; }
         <div>&nbsp;&nbsp;"unit": "per_m3", "region": "south_east",</div>
         <div>&nbsp;&nbsp;"updated": "2026-05-01" }</div>
       </div>
-      <a href="mailto:estiquoteofficial@gmail.com?subject=Estiquote API early access" class="btn-primary">Request API access Ã¢ÂÂ</a>
+      <a href="mailto:estiquoteofficial@gmail.com?subject=Estiquote API early access" class="btn-primary">Request API access →</a>
       <div style="font-size:12px;color:var(--text-dim);margin-top:10px">Currently in private beta. Free for architects and surveyors during beta.</div>
     </div>
 
@@ -202,12 +201,12 @@ body { padding-top: 80px; }
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
         <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
           <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px">BCIS</div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:6px">Building Cost Information Service Ã¢ÂÂ quarterly price surveys</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:6px">Building Cost Information Service — quarterly price surveys</div>
           <span style="font-size:10px;padding:2px 7px;border-radius:3px;background:var(--teal-dim);color:var(--teal-light);font-weight:600">Primary</span>
         </div>
         <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
           <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px">BMF</div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:6px">Builders Merchants Federation Ã¢ÂÂ monthly merchant price index</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:6px">Builders Merchants Federation — monthly merchant price index</div>
           <span style="font-size:10px;padding:2px 7px;border-radius:3px;background:var(--teal-dim);color:var(--teal-light);font-weight:600">Primary</span>
         </div>
         <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
@@ -217,7 +216,7 @@ body { padding-top: 80px; }
         </div>
         <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
           <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px">Hartwood</div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:6px">Real project quotes from Hartwood Construction 2024Ã¢ÂÂ2026</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:6px">Real project quotes from Hartwood Construction 2024–2026</div>
           <span style="font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(255,200,50,0.1);color:rgba(255,220,80,0.9);font-weight:600">Validation</span>
         </div>
         <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;">
@@ -227,7 +226,7 @@ body { padding-top: 80px; }
         </div>
       </div>
       <div style="font-size:11px;color:var(--text-dim);margin-top:14px;line-height:1.6">
-        All prices are indicative market rates. Trade account prices vary by volume and relationship. Estiquote updates the index monthly. Last updated: May 2026. <a href="contact.html" style="color:var(--teal-light)">Report an inaccuracy Ã¢ÂÂ</a>
+        All prices are indicative market rates. Trade account prices vary by volume and relationship. Estiquote updates the index monthly. Last updated: May 2026. <a href="contact.html" style="color:var(--teal-light)">Report an inaccuracy →</a>
       </div>
     </div>
   </div>
@@ -255,7 +254,7 @@ body { padding-top: 80px; }
         </select>
       </div>
       <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;display:block">Price paid (ÃÂ£)</label>
+        <label style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;display:block">Price paid (£)</label>
         <input type="number" id="sm-price" placeholder="e.g. 295" step="0.01" min="0" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;" aria-label="Price paid">
       </div>
       <div>
@@ -268,7 +267,7 @@ body { padding-top: 80px; }
       <div>
         <label style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;display:block">Trade account?</label>
         <select id="sm-account" style="width:100%;padding:10px 12px;background:var(--navy-3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;" aria-label="Trade account">
-          <option value="yes">Yes Ã¢ÂÂ trade price</option><option value="no">No Ã¢ÂÂ walk-in price</option>
+          <option value="yes">Yes — trade price</option><option value="no">No — walk-in price</option>
         </select>
       </div>
       <div>
@@ -279,7 +278,7 @@ body { padding-top: 80px; }
     <div id="sm-msg" style="display:none;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;"></div>
     <div style="display:flex;gap:10px">
       <button onclick="document.getElementById('submit-modal').style.display='none'" style="flex:1;padding:11px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer">Cancel</button>
-      <button onclick="submitPrice()" style="flex:2;padding:11px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer" id="sm-btn">Submit price Ã¢ÂÂ</button>
+      <button onclick="submitPrice()" style="flex:2;padding:11px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;border-radius:8px;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer" id="sm-btn">Submit price →</button>
     </div>
   </div>
 </div>
@@ -287,7 +286,7 @@ body { padding-top: 80px; }
 <footer class="footer">
   <div class="container">
     <div style="text-align:center;font-size:12px;color:var(--text-dim);padding:2rem 0">
-      ÃÂ© 2026 Estiquote Ltd ÃÂ· Prices are indicative only ÃÂ· <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> ÃÂ· <a href="terms.html" style="color:var(--text-dim)">Terms</a>
+      © 2026 Estiquote Ltd · Prices are indicative only · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a>
     </div>
   </div>
 </footer>
@@ -306,35 +305,35 @@ body { padding-top: 80px; }
 <script>
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('nav-scrolled',window.scrollY>40);});
 
-// Ã¢ÂÂÃ¢ÂÂ MATERIAL DATA Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── MATERIAL DATA ──────────────────────────────────────────────
 const MATERIALS = [
-  {id:'timber',name:'Structural timber C16',unit:'per mÃÂ³',price:'ÃÂ£280Ã¢ÂÂÃÂ£340',qoq:5.1,yoy:9.3,cat:'structural',
+  {id:'timber',name:'Structural timber C16',unit:'per m³',price:'£280–£340',qoq:5.1,yoy:9.3,cat:'structural',
    searches:{jewson:'structural+timber+c16+47x100',travis:'structural+timber+c16',buildbase:'c16+structural+timber',wickes:'structural+timber',screwfix:'c16+timber'}},
-  {id:'blocks',name:'Concrete blocks (7N)',unit:'per 100',price:'ÃÂ£68Ã¢ÂÂÃÂ£88',qoq:2.3,yoy:4.8,cat:'structural',
+  {id:'blocks',name:'Concrete blocks (7N)',unit:'per 100',price:'£68–£88',qoq:2.3,yoy:4.8,cat:'structural',
    searches:{jewson:'concrete+blocks+7n',travis:'concrete+blocks+440x215x100',buildbase:'7n+concrete+block',wickes:'concrete+blocks',screwfix:'concrete+blocks'}},
-  {id:'insulation',name:'PIR insulation (100mm)',unit:'per mÃÂ²',price:'ÃÂ£14Ã¢ÂÂÃÂ£19',qoq:2.8,yoy:6.2,cat:'insulation',
+  {id:'insulation',name:'PIR insulation (100mm)',unit:'per m²',price:'£14–£19',qoq:2.8,yoy:6.2,cat:'insulation',
    searches:{jewson:'pir+insulation+100mm',travis:'rigid+insulation+100mm',buildbase:'pir+insulation+board',wickes:'rigid+insulation',screwfix:'pir+insulation+100mm'}},
-  {id:'copper',name:'Copper pipe (22mm)',unit:'per metre',price:'ÃÂ£3.80Ã¢ÂÂÃÂ£5.20',qoq:0,yoy:-2.1,cat:'plumbing',
+  {id:'copper',name:'Copper pipe (22mm)',unit:'per metre',price:'£3.80–£5.20',qoq:0,yoy:-2.1,cat:'plumbing',
    searches:{jewson:'copper+pipe+22mm',travis:'copper+tube+22mm',buildbase:'copper+pipe+22mm',wickes:'copper+pipe+22mm',screwfix:'copper+pipe+22mm'}},
-  {id:'plasterboard',name:'Plasterboard (12.5mm)',unit:'per sheet',price:'ÃÂ£9.50Ã¢ÂÂÃÂ£12.50',qoq:-1.2,yoy:-3.4,cat:'internal',
+  {id:'plasterboard',name:'Plasterboard (12.5mm)',unit:'per sheet',price:'£9.50–£12.50',qoq:-1.2,yoy:-3.4,cat:'internal',
    searches:{jewson:'plasterboard+12.5mm',travis:'plasterboard+2400x1200',buildbase:'plasterboard+standard',wickes:'plasterboard',screwfix:'plasterboard+12.5mm'}},
-  {id:'tiles',name:'Clay roof tiles',unit:'per 1,000',price:'ÃÂ£620Ã¢ÂÂÃÂ£850',qoq:3.7,yoy:7.1,cat:'roofing',
+  {id:'tiles',name:'Clay roof tiles',unit:'per 1,000',price:'£620–£850',qoq:3.7,yoy:7.1,cat:'roofing',
    searches:{jewson:'clay+roof+tiles',travis:'plain+clay+roof+tiles',buildbase:'clay+plain+tile',wickes:'roof+tiles',screwfix:'roof+tiles'}},
-  {id:'aggregate',name:'Sand & aggregate',unit:'per tonne',price:'ÃÂ£38Ã¢ÂÂÃÂ£55',qoq:1.9,yoy:5.5,cat:'groundwork',
+  {id:'aggregate',name:'Sand & aggregate',unit:'per tonne',price:'£38–£55',qoq:1.9,yoy:5.5,cat:'groundwork',
    searches:{jewson:'sharp+sand+aggregate',travis:'ballast+aggregate',buildbase:'building+sand',wickes:'building+sand',screwfix:'sharp+sand'}},
-  {id:'steel',name:'Steel reinforcement (10mm)',unit:'per tonne',price:'ÃÂ£680Ã¢ÂÂÃÂ£820',qoq:-0.8,yoy:-4.2,cat:'structural',
+  {id:'steel',name:'Steel reinforcement (10mm)',unit:'per tonne',price:'£680–£820',qoq:-0.8,yoy:-4.2,cat:'structural',
    searches:{jewson:'steel+rebar+10mm',travis:'reinforcement+bar+10mm',buildbase:'steel+bar+10mm',wickes:'rebar',screwfix:'rebar+10mm'}},
-  {id:'bricks',name:'Facing bricks',unit:'per 1,000',price:'ÃÂ£420Ã¢ÂÂÃÂ£750',qoq:4.1,yoy:8.8,cat:'structural',
+  {id:'bricks',name:'Facing bricks',unit:'per 1,000',price:'£420–£750',qoq:4.1,yoy:8.8,cat:'structural',
    searches:{jewson:'facing+bricks',travis:'facing+bricks',buildbase:'facing+bricks',wickes:'facing+bricks',screwfix:'facing+bricks'}},
-  {id:'mdpe',name:'MDPE water pipe (25mm)',unit:'per metre',price:'ÃÂ£1.20Ã¢ÂÂÃÂ£1.80',qoq:0,yoy:1.5,cat:'plumbing',
+  {id:'mdpe',name:'MDPE water pipe (25mm)',unit:'per metre',price:'£1.20–£1.80',qoq:0,yoy:1.5,cat:'plumbing',
    searches:{jewson:'mdpe+blue+pipe+25mm',travis:'mdpe+water+pipe+25mm',buildbase:'blue+mdpe+pipe',wickes:'mdpe+pipe',screwfix:'mdpe+water+pipe+25mm'}},
-  {id:'cement',name:'General purpose cement',unit:'per 25kg bag',price:'ÃÂ£7.50Ã¢ÂÂÃÂ£10.50',qoq:1.2,yoy:4.1,cat:'groundwork',
+  {id:'cement',name:'General purpose cement',unit:'per 25kg bag',price:'£7.50–£10.50',qoq:1.2,yoy:4.1,cat:'groundwork',
    searches:{jewson:'gp+cement+25kg',travis:'general+purpose+cement+25kg',buildbase:'cement+25kg+bag',wickes:'cement+bag',screwfix:'cement+25kg'}},
-  {id:'lintels',name:'Steel lintel (1200mm)',unit:'each',price:'ÃÂ£28Ã¢ÂÂÃÂ£65',qoq:0.5,yoy:3.8,cat:'structural',
+  {id:'lintels',name:'Steel lintel (1200mm)',unit:'each',price:'£28–£65',qoq:0.5,yoy:3.8,cat:'structural',
    searches:{jewson:'catnic+lintel+1200',travis:'steel+lintel+1200mm',buildbase:'lintel+1200mm',wickes:'lintel+1200mm',screwfix:'lintel+steel'}},
 ];
 
-// Ã¢ÂÂÃ¢ÂÂ MERCHANT LIST (client-side, for source link cards) Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── MERCHANT LIST (client-side, for source link cards) ─────────
 const MERCHANTS = [
   { id: 'jewson',    name: 'Jewson',               s: 'J',   color: '#c8102e', bg: 'rgba(200,16,46,0.1)',    search: 'https://www.jewson.co.uk/search?query=',        branch: 'https://www.jewson.co.uk/branch-finder' },
   { id: 'travis',    name: 'Travis Perkins',        s: 'TP',  color: '#005baa', bg: 'rgba(0,91,170,0.1)',     search: 'https://www.travisperkins.co.uk/search?term=', branch: 'https://www.travisperkins.co.uk/branch-finder' },
@@ -348,7 +347,7 @@ const MERCHANTS = [
 let activeCat = 'all';
 let activeMaterial = null;
 
-// Ã¢ÂÂÃ¢ÂÂ RENDER CARDS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── RENDER CARDS ─────────────────────────────────────────────
 function renderCards() {
   const grid = document.getElementById('mat-cards');
   const mats = activeCat === 'all' ? MATERIALS : MATERIALS.filter(m => m.cat === activeCat);
@@ -361,10 +360,10 @@ function renderCards() {
         <div class="mat-card-price">${m.price}</div>
       </div>
       <div class="mat-card-changes">
-        <span class="mat-change ${qPos?'mc-up':qNeg?'mc-down':'mc-flat'}">${qPos?'Ã¢ÂÂ² +':qNeg?'Ã¢ÂÂ¼ ':'Ã¢ÂÂ '}${Math.abs(m.qoq)}% QoQ</span>
-        <span class="mat-change ${yPos?'mc-up':yNeg?'mc-down':'mc-flat'}">${yPos?'Ã¢ÂÂ² +':yNeg?'Ã¢ÂÂ¼ ':'Ã¢ÂÂ '}${Math.abs(m.yoy)}% YoY</span>
+        <span class="mat-change ${qPos?'mc-up':qNeg?'mc-down':'mc-flat'}">${qPos?'▲ +':qNeg?'▼ ':'— '}${Math.abs(m.qoq)}% QoQ</span>
+        <span class="mat-change ${yPos?'mc-up':yNeg?'mc-down':'mc-flat'}">${yPos?'▲ +':yNeg?'▼ ':'— '}${Math.abs(m.yoy)}% YoY</span>
       </div>
-      <button class="mat-find-btn">Find at merchants near me Ã¢ÂÂ</button>
+      <button class="mat-find-btn">Find at merchants near me →</button>
     </div>`;
   }).join('');
 }
@@ -376,7 +375,7 @@ function filterCat(cat, btn) {
   renderCards();
 }
 
-// Ã¢ÂÂÃ¢ÂÂ SHOW SOURCES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── SHOW SOURCES ──────────────────────────────────────────────
 async function showSources(matId) {
   activeMaterial = matId;
   const mat = MATERIALS.find(m => m.id === matId);
@@ -391,7 +390,7 @@ async function showSources(matId) {
   const linksHtml = `
     <div style="margin-bottom:1.5rem">
       <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Search this material at each merchant</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">Opens the merchant pre-searched. Get a trade account for 10Ã¢ÂÂ20% discount on large orders.</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">Opens the merchant pre-searched. Get a trade account for 10–20% discount on large orders.</div>
       <div class="source-grid">
         ${MERCHANTS.map(m => `
           <div class="source-card">
@@ -400,10 +399,10 @@ async function showSources(matId) {
               <div class="source-name">${m.name}</div>
             </div>
             <a href="${m.search}${mat.searches[m.id]||mat.name.replace(/ /g,'+')}" target="_blank" rel="noopener" class="source-link">
-              <span>Ã°ÂÂÂ</span> Search "${mat.name.split(' ').slice(0,3).join(' ')}"
+              <span>🔍</span> Search "${mat.name.split(' ').slice(0,3).join(' ')}"
             </a>
             <a href="${m.branch}" target="_blank" rel="noopener" class="source-link">
-              <span>Ã°ÂÂÂ</span> Find nearest branch
+              <span>📍</span> Find nearest branch
             </a>
           </div>`).join('')}
       </div>
@@ -415,7 +414,7 @@ async function showSources(matId) {
   section.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-// Ã¢ÂÂÃ¢ÂÂ FIND NEARBY MERCHANTS (nationwide via Netlify function) Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── FIND NEARBY MERCHANTS (nationwide via Netlify function) ──────
 async function findMerchantsPublic(matId) {
   const raw = document.getElementById('postcode-input')?.value.trim().toUpperCase() || '';
   const postcode = raw.replace(/\s/g, '');
@@ -435,7 +434,7 @@ async function findMerchantsPublic(matId) {
   const matName = mat ? (mat.searches.jewson || mat.name) : '';
 
   results.innerHTML = '<div style="font-size:13px;color:var(--text-dim);padding:1rem;text-align:center">Finding merchants near ' + postcode + '...</div>';
-  if (subtitle) subtitle.textContent = 'Merchants near ' + postcode + ' Ã¢ÂÂ UK-wide';
+  if (subtitle) subtitle.textContent = 'Merchants near ' + postcode + ' — UK-wide';
 
   try {
     const url = '/.netlify/functions/find-merchants?postcode=' + postcode + (matName ? '&material=' + encodeURIComponent(matName) : '');
@@ -443,7 +442,7 @@ async function findMerchantsPublic(matId) {
     const data = await res.json();
 
     if (!res.ok || data.error) {
-      results.innerHTML = '<div style="color:#ef4444;font-size:13px;padding:1rem;text-align:center">Ã¢ÂÂ  ' + (data.error || 'Could not find postcode. Check and try again.') + '</div>';
+      results.innerHTML = '<div style="color:#ef4444;font-size:13px;padding:1rem;text-align:center">⚠ ' + (data.error || 'Could not find postcode. Check and try again.') + '</div>';
       return;
     }
 
@@ -451,7 +450,7 @@ async function findMerchantsPublic(matId) {
   } catch(e) {
     results.innerHTML = `
       <div style="text-align:center;padding:2rem 1rem;">
-        <div style="font-size:32px;margin-bottom:10px">Ã¢ÂÂ Ã¯Â¸Â</div>
+        <div style="font-size:32px;margin-bottom:10px">⚠️</div>
         <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">Could not find merchants right now</div>
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:16px;line-height:1.5">Check your postcode (e.g. RH19 1AA) and try again. If the problem continues, the service may be temporarily unavailable.</div>
         <button onclick="findMerchantsPublic()" style="padding:8px 20px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--sans);font-size:12px;cursor:pointer;">Try again</button>
@@ -472,7 +471,7 @@ function renderMerchantsFromApi(container, data, mat) {
 
   html += nationwide.map(m => renderMerchantCard(m, mat)).join('');
 
-  html += '<div style="margin-top:14px;padding:12px 14px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.15);border-radius:8px;font-size:12px;color:var(--text-muted);line-height:1.6">Ã°ÂÂÂ¡ <strong style="color:var(--text)">Trade account tip:</strong> Always open a trade account before your first large order Ã¢ÂÂ Jewson, Travis Perkins and Buildbase all offer self-builder accounts. You\'ll save 10Ã¢ÂÂ20% on large material orders versus walk-in prices.</div>';
+  html += '<div style="margin-top:14px;padding:12px 14px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.15);border-radius:8px;font-size:12px;color:var(--text-muted);line-height:1.6">💡 <strong style="color:var(--text)">Trade account tip:</strong> Always open a trade account before your first large order — Jewson, Travis Perkins and Buildbase all offer self-builder accounts. You\'ll save 10–20% on large material orders versus walk-in prices.</div>';
 
   container.innerHTML = html;
 }
@@ -482,12 +481,12 @@ function renderMerchantCard(m, mat) {
   return '<div class="merchant-row">' +
     '<div class="m-logo" style="background:' + m.bg + ';color:' + m.color + '">' + m.shortName + '</div>' +
     '<div class="m-info">' +
-      '<div class="m-name">' + m.name + ' <span style="font-size:10px;color:var(--text-dim);font-weight:400">ÃÂ·</span> <span style="font-size:11px;color:var(--text-dim)">' + m.approxBranches + '+ UK branches</span></div>' +
+      '<div class="m-name">' + m.name + ' <span style="font-size:10px;color:var(--text-dim);font-weight:400">·</span> <span style="font-size:11px;color:var(--text-dim)">' + m.approxBranches + '+ UK branches</span></div>' +
       '<div class="m-branch">' + m.bestFor + '</div>' +
-      (m.phone ? '<div class="m-dist">Ã°ÂÂÂ ' + m.phone + '</div>' : '') +
+      (m.phone ? '<div class="m-dist">📞 ' + m.phone + '</div>' : '') +
     '</div>' +
     '<div class="m-links">' +
-      '<a href="' + m.branchFinderUrl + '" target="_blank" rel="noopener" class="m-btn" style="background:var(--teal-dim);color:var(--teal-light);border:1px solid rgba(0,201,167,0.25)">Find nearest Ã¢ÂÂ</a>' +
+      '<a href="' + m.branchFinderUrl + '" target="_blank" rel="noopener" class="m-btn" style="background:var(--teal-dim);color:var(--teal-light);border:1px solid rgba(0,201,167,0.25)">Find nearest →</a>' +
       searchLink +
     '</div>' +
   '</div>';
@@ -499,7 +498,7 @@ function haversine(lat1,lng1,lat2,lng2) {
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))*0.621371;
 }
 
-// Ã¢ÂÂÃ¢ÂÂ PRICE SUBMIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── PRICE SUBMIT ──────────────────────────────────────────────
 function showSubmitModal() {
   const sel = document.getElementById('sm-material');
   if (sel && !sel.options.length) {
@@ -534,8 +533,8 @@ async function submitPrice() {
     });
   } catch(e){}
 
-  if(msg){msg.style.cssText='display:block;padding:10px 14px;border-radius:8px;background:rgba(0,201,167,0.08);border:1px solid rgba(0,201,167,0.25);color:var(--teal-light);font-size:13px;margin-bottom:12px';msg.textContent='Ã¢ÂÂ Price submitted Ã¢ÂÂ thank you. Your data helps improve accuracy for everyone.';}
-  if(btn){btn.textContent='Submitted Ã¢ÂÂ';btn.style.opacity='0.5';}
+  if(msg){msg.style.cssText='display:block;padding:10px 14px;border-radius:8px;background:rgba(0,201,167,0.08);border:1px solid rgba(0,201,167,0.25);color:var(--teal-light);font-size:13px;margin-bottom:12px';msg.textContent='✓ Price submitted — thank you. Your data helps improve accuracy for everyone.';}
+  if(btn){btn.textContent='Submitted ✓';btn.style.opacity='0.5';}
   setTimeout(()=>document.getElementById('submit-modal').style.display='none',2500);
 }
 
