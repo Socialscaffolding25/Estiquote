@@ -116,14 +116,12 @@
 
 .stat-num {
   display: block;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--teal-light);
   letter-spacing: -0.5px;
 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 
 .stat-desc {
@@ -164,16 +162,14 @@
 }
 
 .hc-range {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--teal-light);
   letter-spacing: -0.5px;
   margin-bottom: 4px;
   white-space: nowrap;
 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 
 .hc-detail { font-size: 12px; color: var(--text-muted); margin-bottom: 1.5rem; }
@@ -279,16 +275,14 @@
 .step-card.visible { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s ease; }
 
 .step-num {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 52px;
-  font-weight: 800;
+  font-weight: 700;
   color: rgba(0,201,167,0.15);
   line-height: 1;
   margin-bottom: 1rem;
   letter-spacing: -2px;
 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 
 .step-title { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
@@ -364,9 +358,7 @@
 }
 
 .plan-name { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
-.plan-price { font-family: var(--serif); font-size: 44px; font-weight: 800; color: var(--text); letter-spacing: -1.5px; 
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
+.plan-price { font-family: var(--sans); font-size: 44px; font-weight: 700; color: var(--text); letter-spacing: -1.5px; 
 }
 .plan-period { font-size: 13px; color: var(--text-dim); margin-bottom: 1.5rem; }
 
