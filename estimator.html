@@ -7,7 +7,7 @@
   <link rel="shortcut icon" href="favicon.svg">
 <meta name="description" content="Get an instant cost estimate for your home improvement project. 8 trade categories, 6 UK regions, real pricing data updated monthly.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estimate costs — Estiquote</title>
+<title>Estimate costs â Estiquote</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -239,7 +239,10 @@
     line-height: 1;
     margin-bottom: 4px;
     white-space: nowrap;
-  }
+  
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
 
   .est-context {
     font-size: 12px;
@@ -399,7 +402,7 @@
     border-radius:0 4px 4px 0;
   }
 
-  /* ── PRINT STYLES ── */
+  /* ââ PRINT STYLES ââ */
   @media print {
     nav, .trade-selector, .controls-panel, .footer,
     .btn-save, .btn-pdf, .lock-overlay, .upgrade-prompt,
@@ -423,20 +426,20 @@
   <link rel="canonical" href="https://estiquote.co.uk/estimator.html">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://estiquote.co.uk/estimator.html">
-  <meta property="og:title" content="Home Improvement Cost Estimator — Estiquote">
+  <meta property="og:title" content="Home Improvement Cost Estimator â Estiquote">
   <meta property="og:description" content="Get an instant, accurate cost estimate for any UK home improvement project. Regional pricing, real data. Free.">
   <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
   <meta property="og:site_name" content="Estiquote">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Home Improvement Cost Estimator — Estiquote">
+  <meta name="twitter:title" content="Home Improvement Cost Estimator â Estiquote">
   <meta name="twitter:description" content="Get an instant, accurate cost estimate for any UK home improvement project. Regional pricing, real data. Free.">
   <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
-<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">UK Home Improvement Cost Estimator 2026 — Extension, Loft, Kitchen &amp; Bathroom Prices</h1>
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">UK Home Improvement Cost Estimator 2026 â Extension, Loft, Kitchen &amp; Bathroom Prices</h1>
 
 <div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
-  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
+  â¡ <strong>Demo mode</strong> â Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
 </div>
 <script>
 (function(){
@@ -454,7 +457,7 @@
 })();
 </script>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
-<!-- TEST MODE BANNER — remove when Stripe goes live -->
+<!-- TEST MODE BANNER â remove when Stripe goes live -->
 
 
 <nav class="nav nav-scrolled" id="nav">
@@ -494,27 +497,27 @@
 
       <div class="postcode-row">
         <input type="text" id="postcodeIn" placeholder="Enter postcode e.g. TN1 1AA" maxlength="8">
-        <button onclick="applyPostcode()">Locate →</button>
+        <button onclick="applyPostcode()">Locate â</button>
       </div>
 
       <div class="region-grid">
         <button class="region-btn" onclick="selectRegion(this,1.0,'London')" id="r-london">
-          <span class="region-icon">🏙</span>London
+          <span class="region-icon">ð</span>London
         </button>
         <button class="region-btn active" onclick="selectRegion(this,0.88,'South East')" id="r-se">
-          <span class="region-icon">🌳</span>South East
+          <span class="region-icon">ð³</span>South East
         </button>
         <button class="region-btn" onclick="selectRegion(this,0.80,'South West')" id="r-sw">
-          <span class="region-icon">🌊</span>South West
+          <span class="region-icon">ð</span>South West
         </button>
         <button class="region-btn" onclick="selectRegion(this,0.78,'Midlands')" id="r-mids">
-          <span class="region-icon">🏭</span>Midlands
+          <span class="region-icon">ð­</span>Midlands
         </button>
         <button class="region-btn" onclick="selectRegion(this,0.74,'North England')" id="r-north">
-          <span class="region-icon">⛰</span>North England
+          <span class="region-icon">â°</span>North England
         </button>
         <button class="region-btn" onclick="selectRegion(this,0.72,'Scotland & Wales')" id="r-scotland">
-          <span class="region-icon">🏔</span>Scotland & Wales
+          <span class="region-icon">ð</span>Scotland & Wales
         </button>
       </div>
     </div>
@@ -527,59 +530,59 @@
 
       <div class="trade-grid">
         <div class="trade-card active" onclick="selectTrade(this,'extension')" id="t-extension">
-          <div class="trade-icon">🏗</div>
+          <div class="trade-icon">ð</div>
           <div>
             <div class="trade-name">Extension / Build</div>
-            <div class="trade-range">£1,500–£3,200/m²</div>
+            <div class="trade-range">Â£1,500âÂ£3,200/mÂ²</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'loft')" id="t-loft">
-          <div class="trade-icon">🔨</div>
+          <div class="trade-icon">ð¨</div>
           <div>
             <div class="trade-name">Loft Conversion</div>
-            <div class="trade-range">£28k–£72k</div>
+            <div class="trade-range">Â£28kâÂ£72k</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'kitchen')" id="t-kitchen">
-          <div class="trade-icon">🍳</div>
+          <div class="trade-icon">ð³</div>
           <div>
             <div class="trade-name">Kitchen Renovation</div>
-            <div class="trade-range">£8k–£45k</div>
+            <div class="trade-range">Â£8kâÂ£45k</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'bathroom')" id="t-bathroom">
-          <div class="trade-icon">🚿</div>
+          <div class="trade-icon">ð¿</div>
           <div>
             <div class="trade-name">Bathroom Fit-Out</div>
-            <div class="trade-range">£4k–£18k</div>
+            <div class="trade-range">Â£4kâÂ£18k</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'electrical')" id="t-electrical">
-          <div class="trade-icon">⚡</div>
+          <div class="trade-icon">â¡</div>
           <div>
             <div class="trade-name">Electrical Works</div>
-            <div class="trade-range">£400–£12k</div>
+            <div class="trade-range">Â£400âÂ£12k</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'plumbing')" id="t-plumbing">
-          <div class="trade-icon">🔧</div>
+          <div class="trade-icon">ð§</div>
           <div>
             <div class="trade-name">Plumbing & Heating</div>
-            <div class="trade-range">£300–£8.5k</div>
+            <div class="trade-range">Â£300âÂ£8.5k</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'structural')" id="t-structural">
-          <div class="trade-icon">🏛</div>
+          <div class="trade-icon">ð</div>
           <div>
             <div class="trade-name">Structural Works</div>
-            <div class="trade-range">£2k–£35k</div>
+            <div class="trade-range">Â£2kâÂ£35k</div>
           </div>
         </div>
         <div class="trade-card" onclick="selectTrade(this,'decoration')" id="t-decoration">
-          <div class="trade-icon">🎨</div>
+          <div class="trade-icon">ð¨</div>
           <div>
             <div class="trade-name">Decoration</div>
-            <div class="trade-range">£200–£4.5k</div>
+            <div class="trade-range">Â£200âÂ£4.5k</div>
           </div>
         </div>
       </div>
@@ -593,11 +596,11 @@
 
       <div class="slider-block">
         <div class="slider-row">
-          <span class="slider-label" id="s1-label">Floor area (m²)</span>
-          <span class="slider-val" id="s1-val">30m²</span>
+          <span class="slider-label" id="s1-label">Floor area (mÂ²)</span>
+          <span class="slider-val" id="s1-val">30mÂ²</span>
         </div>
-        <input type="range" id="s1" min="10" aria-label="Project area in square metres" aria-valuenow="30" aria-valuemin="10" aria-valuemax="150" max="150" value="30" step="1" oninput="updateEst();document.getElementById('s1-val').textContent=this.value+' m²'">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;"><span style="font-size:11px;color:var(--text-dim)">10 m²</span><span style="font-size:11px;color:var(--text-dim)">150 m²</span></div>
+        <input type="range" id="s1" min="10" aria-label="Project area in square metres" aria-valuenow="30" aria-valuemin="10" aria-valuemax="150" max="150" value="30" step="1" oninput="updateEst();document.getElementById('s1-val').textContent=this.value+' mÂ²'">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;"><span style="font-size:11px;color:var(--text-dim)">10 mÂ²</span><span style="font-size:11px;color:var(--text-dim)">150 mÂ²</span></div>
       </div>
 
       <div class="slider-block" id="s2-wrap">
@@ -622,31 +625,31 @@
       <div id="extras-wrap" style="margin-top:1.5rem">
         <label>Include professional fees</label>
         <div class="extra-row" onclick="toggleExtra('planning',3500,this)">
-          <div class="cb-box checked" id="cb-planning">✓</div>
+          <div class="cb-box checked" id="cb-planning">â</div>
           <div class="extra-label">Planning application & drawings</div>
-          <div class="extra-cost">+£3,500</div>
+          <div class="extra-cost">+Â£3,500</div>
         </div>
         <div class="extra-row" onclick="toggleExtra('structural',2800,this)">
           <div class="cb-box" id="cb-structural"></div>
           <div class="extra-label">Structural engineer calculations</div>
-          <div class="extra-cost">+£2,800</div>
+          <div class="extra-cost">+Â£2,800</div>
         </div>
         <div class="extra-row" onclick="toggleExtra('warranty',1200,this)">
           <div class="cb-box" id="cb-warranty"></div>
           <div class="extra-label">10-year structural warranty</div>
-          <div class="extra-cost">+£1,200</div>
+          <div class="extra-cost">+Â£1,200</div>
         </div>
         <div class="extra-row" onclick="toggleExtra('pwall',900,this)">
           <div class="cb-box" id="cb-pwall"></div>
           <div class="extra-label">Party wall agreement</div>
-          <div class="extra-cost">+£900</div>
+          <div class="extra-cost">+Â£900</div>
         </div>
       </div>
     </div>
 
     <!-- INFO TIP -->
     <div class="info-tip" id="trade-tip">
-      Extensions typically cost between £1,500–£3,200/m² depending on specification. Single storey rear extensions are most affordable. Bi-fold doors, underfloor heating and vaulted ceilings add 15–35% to base costs. Always budget a 15% contingency on top of your estimate.
+      Extensions typically cost between Â£1,500âÂ£3,200/mÂ² depending on specification. Single storey rear extensions are most affordable. Bi-fold doors, underfloor heating and vaulted ceilings add 15â35% to base costs. Always budget a 15% contingency on top of your estimate.
     </div>
 
   </div>
@@ -656,79 +659,79 @@
 
     <div class="estimate-card">
       <div class="est-label">Estimated project cost</div>
-      <div class="est-range" id="est-range" role="status" aria-live="polite" aria-label="Estimated cost range">£55,400 – £80,600</div>
-      <div class="est-context" id="est-context">South East · Mid-Range · 30m²</div>
+      <div class="est-range" id="est-range" role="status" aria-live="polite" aria-label="Estimated cost range">Â£55,400 â Â£80,600</div>
+      <div class="est-context" id="est-context">South East Â· Mid-Range Â· 30mÂ²</div>
 
-      <!-- LINE-ITEM BREAKDOWN — Pro only -->
+      <!-- LINE-ITEM BREAKDOWN â Pro only -->
       <div id="breakdown-pro" title="Labour = workers on site. Materials = physical goods. Prelims = site setup, insurance, scaffolding, waste." class="breakdown-grid" style="display:none">
         <div class="bk-item">
-          <span class="bk-num" id="bk-labour">£36,200</span>
+          <span class="bk-num" id="bk-labour">Â£36,200</span>
           <div class="bk-desc">Labour</div>
         </div>
         <div class="bk-item">
-          <span class="bk-num" id="bk-materials">£26,300</span>
+          <span class="bk-num" id="bk-materials">Â£26,300</span>
           <div class="bk-desc">Materials</div>
         </div>
         <div class="bk-item">
-          <span class="bk-num" id="bk-prelims">£8,100</span>
+          <span class="bk-num" id="bk-prelims">Â£8,100</span>
           <div class="bk-desc">Prelims & fees</div>
         </div>
       </div>
 
-      <!-- BREAKDOWN LOCK — free users -->
+      <!-- BREAKDOWN LOCK â free users -->
       <div id="breakdown-lock" style="padding:12px;margin:12px 0;background:rgba(0,201,167,0.04);border:1px dashed rgba(0,201,167,0.2);border-radius:8px;text-align:center;">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">🔒 Line-item breakdown</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">ð Line-item breakdown</div>
         <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">See exactly how costs split across labour, materials and prelims</div>
-        <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Unlock with Pro →</button>
+        <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Unlock with Pro â</button>
       </div>
 
       <div class="per-sqm">
-        <span>Cost per m²</span>
-        <strong id="per-sqm-val">£2,358/m²</strong>
+        <span>Cost per mÂ²</span>
+        <strong id="per-sqm-val">Â£2,358/mÂ²</strong>
       </div>
 
       <div id="vat-note" style="font-size:12px;color:var(--text-dim);margin-bottom:10px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;line-height:1.5;"></div>
       <div id="confidence-msg" style="font-size:12px;color:var(--text-dim);margin-bottom:10px;line-height:1.5;"></div>
       <div class="contingency-strip">
-        ⚠ Add 15% contingency: <strong id="contingency-val">£10,500</strong> — unplanned works, price changes, access issues.
+        â  Add 15% contingency: <strong id="contingency-val">Â£10,500</strong> â unplanned works, price changes, access issues.
       </div>
 
-      <!-- POSTCODE PRICING — Pro only -->
+      <!-- POSTCODE PRICING â Pro only -->
       <div id="postcode-pro" style="display:none;margin-top:10px;padding:10px 12px;background:rgba(0,201,167,0.05);border:1px solid rgba(0,201,167,0.15);border-radius:8px;">
         <div style="font-size:11px;color:var(--teal);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Postcode-level pricing</div>
-        <div style="font-size:13px;color:var(--text-muted)">Your postcode area: <strong id="postcode-area" style="color:var(--text)">—</strong></div>
+        <div style="font-size:13px;color:var(--text-muted)">Your postcode area: <strong id="postcode-area" style="color:var(--text)">â</strong></div>
         <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Local labour index applied to your estimate</div>
       </div>
 
-      <!-- POSTCODE LOCK — free users -->
+      <!-- POSTCODE LOCK â free users -->
       <div id="postcode-lock" style="margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
-        <div style="font-size:12px;color:var(--text-dim)">🔒 Postcode-level pricing</div>
+        <div style="font-size:12px;color:var(--text-dim)">ð Postcode-level pricing</div>
         <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;white-space:nowrap;">Pro only</button>
       </div>
 
       <div class="market-note">
-        <span class="up">▲</span>
-        Timber +5.1% · Insulation +2.8% since Q3 2024
+        <span class="up">â²</span>
+        Timber +5.1% Â· Insulation +2.8% since Q3 2024
       </div>
     </div>
 
     <div class="actions-stack">
-      <button class="btn-save" onclick="saveProject()">💾 Save this estimate</button>
-      <button class="btn-pdf" onclick="exportPDF()">📄 Export as PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Pro</span></button>
+      <button class="btn-save" onclick="saveProject()">ð¾ Save this estimate</button>
+      <button class="btn-pdf" onclick="exportPDF()">ð Export as PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Pro</span></button>
       <div class="pro-lock" id="pdf-lock">
-        <span class="lock-icon">🔒</span>
-        PDF export available on Pro — <a href="#" onclick="goToStripe('homeowner_pro');return false;" style="color:var(--teal);text-decoration:none">upgrade for £9.99/mo</a>
+        <span class="lock-icon">ð</span>
+        PDF export available on Pro â <a href="#" onclick="goToStripe('homeowner_pro');return false;" style="color:var(--teal);text-decoration:none">upgrade for Â£9.99/mo</a>
       </div>
 
-      <!-- WHITE-LABEL PDF — Trade only -->
+      <!-- WHITE-LABEL PDF â Trade only -->
       <button id="btn-wl-pdf" onclick="exportWhiteLabelPDF()" style="display:none;width:100%;padding:12px;border-radius:var(--radius);background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:var(--sans);font-size:14px;cursor:pointer;transition:var(--transition);display:none;align-items:center;justify-content:center;gap:6px;">
-        🏷 Export white-label PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Trade</span>
+        ð· Export white-label PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Trade</span>
       </button>
 
-      <!-- SHARE LINK — Trade only -->
+      <!-- SHARE LINK â Trade only -->
       <div id="share-link-trade" style="display:none">
         <button onclick="generateShareLink()" style="width:100%;padding:12px;border-radius:var(--radius);background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:var(--sans);font-size:14px;cursor:pointer;transition:var(--transition);">
-          🔗 Generate client share link <span style="font-size:10px;opacity:0.5;margin-left:4px">Trade</span>
+          ð Generate client share link <span style="font-size:10px;opacity:0.5;margin-left:4px">Trade</span>
         </button>
         <div id="share-link-output" style="display:none;margin-top:8px;padding:10px 12px;background:rgba(0,201,167,0.04);border:1px solid rgba(0,201,167,0.2);border-radius:8px;">
           <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">Share this link with your client</div>
@@ -739,14 +742,14 @@
         </div>
       </div>
 
-      <!-- SHARE LOCK — free/pro users -->
+      <!-- SHARE LOCK â free/pro users -->
       <div id="share-link-lock" style="text-align:center;padding:10px 0">
-        <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">🔒 Client-facing share links — Trade plan</div>
-        <button onclick="goToStripe('homeowner_trade')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Upgrade to Trade →</button>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">ð Client-facing share links â Trade plan</div>
+        <button onclick="goToStripe('homeowner_trade')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Upgrade to Trade â</button>
       </div>
     </div>
 
-    <!-- QUOTE COMPARISON — Pro only -->
+    <!-- QUOTE COMPARISON â Pro only -->
     <div id="quote-compare-pro" style="display:none" class="materials-panel">
       <div class="panel-label" style="margin-bottom:10px">Quote comparison</div>
       <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;line-height:1.6">Paste contractor quotes below to see how they compare against the Estiquote benchmark for your project.</div>
@@ -754,12 +757,12 @@
       <button onclick="addQuote()" style="width:100%;padding:10px;border-radius:8px;background:transparent;border:1px dashed rgba(0,201,167,0.3);color:var(--teal-light);font-family:var(--sans);font-size:13px;cursor:pointer;margin-top:8px;">+ Add a contractor quote</button>
     </div>
 
-    <!-- QUOTE COMPARISON LOCK — free users -->
+    <!-- QUOTE COMPARISON LOCK â free users -->
     <div id="quote-compare-lock" class="materials-panel" style="text-align:center;padding:1.5rem;">
-      <div style="font-size:24px;margin-bottom:8px;opacity:0.4">📊</div>
+      <div style="font-size:24px;margin-bottom:8px;opacity:0.4">ð</div>
       <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">Contractor quote comparison</div>
       <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.6">Paste quotes from contractors and instantly see if they're fair, high, or a bargain against your Estiquote estimate.</div>
-      <button onclick="goToStripe('homeowner_pro')" style="padding:10px 22px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Unlock with Pro — £9.99/mo</button>
+      <button onclick="goToStripe('homeowner_pro')" style="padding:10px 22px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border:none;color:var(--navy);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;">Unlock with Pro â Â£9.99/mo</button>
     </div>
 
     <!-- MATERIAL TRACKER -->
@@ -769,37 +772,37 @@
       <!-- Free: show 3 rows only, rest locked -->
       <div id="mat-free">
         <div class="mat-row">
-          <div><div class="mat-name">Timber (C16 structural)</div><div style="font-size:11px;color:var(--text-dim)">per m³ · Jan 2025</div></div>
-          <div class="mat-change up">▲ +5.1%</div>
+          <div><div class="mat-name">Timber (C16 structural)</div><div style="font-size:11px;color:var(--text-dim)">per mÂ³ Â· Jan 2025</div></div>
+          <div class="mat-change up">â² +5.1%</div>
         </div>
         <div class="mat-row">
-          <div><div class="mat-name">Concrete blocks</div><div style="font-size:11px;color:var(--text-dim)">per 100 blocks · Jan 2025</div></div>
-          <div class="mat-change up">▲ +2.3%</div>
+          <div><div class="mat-name">Concrete blocks</div><div style="font-size:11px;color:var(--text-dim)">per 100 blocks Â· Jan 2025</div></div>
+          <div class="mat-change up">â² +2.3%</div>
         </div>
         <div class="mat-row">
-          <div><div class="mat-name">Rigid insulation</div><div style="font-size:11px;color:var(--text-dim)">per m² · Jan 2025</div></div>
-          <div class="mat-change up">▲ +2.8%</div>
+          <div><div class="mat-name">Rigid insulation</div><div style="font-size:11px;color:var(--text-dim)">per mÂ² Â· Jan 2025</div></div>
+          <div class="mat-change up">â² +2.8%</div>
         </div>
         <div style="margin-top:10px;padding:10px;background:rgba(0,201,167,0.03);border:1px dashed rgba(0,201,167,0.2);border-radius:8px;text-align:center;">
-          <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">🔒 +7 more materials tracked on Pro</div>
-          <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Unlock full tracker →</button>
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">ð +7 more materials tracked on Pro</div>
+          <button onclick="goToStripe('homeowner_pro')" style="font-size:11px;padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(0,201,167,0.3);color:var(--teal-light);cursor:pointer;font-family:var(--sans);font-weight:600;">Unlock full tracker â</button>
         </div>
       </div>
 
       <!-- Pro: show all rows -->
       <div id="mat-pro" style="display:none">
-        <div class="mat-row"><div><div class="mat-name">Timber (C16 structural)</div><div style="font-size:11px;color:var(--text-dim)">per m³ · Jan 2025</div></div><div class="mat-change up">▲ +5.1%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Concrete blocks</div><div style="font-size:11px;color:var(--text-dim)">per 100 blocks · Jan 2025</div></div><div class="mat-change up">▲ +2.3%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Rigid insulation</div><div style="font-size:11px;color:var(--text-dim)">per m² · Jan 2025</div></div><div class="mat-change up">▲ +2.8%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Copper pipe (22mm)</div><div style="font-size:11px;color:var(--text-dim)">per metre · Jan 2025</div></div><div class="mat-change flat">— 0.0%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Plasterboard (12.5mm)</div><div style="font-size:11px;color:var(--text-dim)">per sheet · Jan 2025</div></div><div class="mat-change down">▼ -1.2%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Roof tiles (clay)</div><div style="font-size:11px;color:var(--text-dim)">per 1000 · Jan 2025</div></div><div class="mat-change up">▲ +3.7%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Facing bricks</div><div style="font-size:11px;color:var(--text-dim)">per 1000 · Jan 2025</div></div><div class="mat-change up">▲ +4.1%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Sand & aggregate</div><div style="font-size:11px;color:var(--text-dim)">per tonne · Jan 2025</div></div><div class="mat-change up">▲ +1.9%</div></div>
-        <div class="mat-row"><div><div class="mat-name">Steel reinforcement</div><div style="font-size:11px;color:var(--text-dim)">per tonne · Jan 2025</div></div><div class="mat-change down">▼ -0.8%</div></div>
-        <div class="mat-row"><div><div class="mat-name">MDPE pipe (25mm)</div><div style="font-size:11px;color:var(--text-dim)">per metre · Jan 2025</div></div><div class="mat-change flat">— 0.0%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Timber (C16 structural)</div><div style="font-size:11px;color:var(--text-dim)">per mÂ³ Â· Jan 2025</div></div><div class="mat-change up">â² +5.1%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Concrete blocks</div><div style="font-size:11px;color:var(--text-dim)">per 100 blocks Â· Jan 2025</div></div><div class="mat-change up">â² +2.3%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Rigid insulation</div><div style="font-size:11px;color:var(--text-dim)">per mÂ² Â· Jan 2025</div></div><div class="mat-change up">â² +2.8%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Copper pipe (22mm)</div><div style="font-size:11px;color:var(--text-dim)">per metre Â· Jan 2025</div></div><div class="mat-change flat">â 0.0%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Plasterboard (12.5mm)</div><div style="font-size:11px;color:var(--text-dim)">per sheet Â· Jan 2025</div></div><div class="mat-change down">â¼ -1.2%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Roof tiles (clay)</div><div style="font-size:11px;color:var(--text-dim)">per 1000 Â· Jan 2025</div></div><div class="mat-change up">â² +3.7%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Facing bricks</div><div style="font-size:11px;color:var(--text-dim)">per 1000 Â· Jan 2025</div></div><div class="mat-change up">â² +4.1%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Sand & aggregate</div><div style="font-size:11px;color:var(--text-dim)">per tonne Â· Jan 2025</div></div><div class="mat-change up">â² +1.9%</div></div>
+        <div class="mat-row"><div><div class="mat-name">Steel reinforcement</div><div style="font-size:11px;color:var(--text-dim)">per tonne Â· Jan 2025</div></div><div class="mat-change down">â¼ -0.8%</div></div>
+        <div class="mat-row"><div><div class="mat-name">MDPE pipe (25mm)</div><div style="font-size:11px;color:var(--text-dim)">per metre Â· Jan 2025</div></div><div class="mat-change flat">â 0.0%</div></div>
         <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-dim)">
-          ✓ Monthly email alerts enabled · Source: BCIS, BMF, ONS
+          â Monthly email alerts enabled Â· Source: BCIS, BMF, ONS
         </div>
       </div>
     </div>
@@ -810,68 +813,68 @@
 <script>
   const tradeData = {
     extension: {
-      title:'Extension details', s1l:'Floor area (m²)', s1min:10, s1max:150, s1v:30, s1u:'m²',
+      title:'Extension details', s1l:'Floor area (mÂ²)', s1min:10, s1max:150, s1v:30, s1u:'mÂ²',
       s2l:'Number of storeys', s2min:1, s2max:3, s2v:1, s2show:true, extrasShow:true,
       base:{budget:1700,mid:2400,premium:3400}, labour:0.51, mats:0.37, prelims:0.12,
       warning: null,
-      tip:'Extensions in 2026 cost £1,700–£3,600/m² depending on specification and location. Post-pandemic labour and material inflation has pushed costs up 18–22% since 2021. Single-storey rear extensions remain most affordable. Bi-fold doors add £4k–£8k, underfloor heating £60–£100/m², vaulted ceilings £3k–£6k. Always hold a 15% contingency — unplanned groundworks and drainage diversions are common.',
-      benchmarks: ['30m² mid-spec SE England: £60k–£88k', 'Same in London: £72k–£105k', '50m² premium SE: £145k–£195k']
+      tip:'Extensions in 2026 cost Â£1,700âÂ£3,600/mÂ² depending on specification and location. Post-pandemic labour and material inflation has pushed costs up 18â22% since 2021. Single-storey rear extensions remain most affordable. Bi-fold doors add Â£4kâÂ£8k, underfloor heating Â£60âÂ£100/mÂ², vaulted ceilings Â£3kâÂ£6k. Always hold a 15% contingency â unplanned groundworks and drainage diversions are common.',
+      benchmarks: ['30mÂ² mid-spec SE England: Â£60kâÂ£88k', 'Same in London: Â£72kâÂ£105k', '50mÂ² premium SE: Â£145kâÂ£195k']
     },
     loft: {
-      title:'Loft conversion details', s1l:'Loft floor area (m²)', s1min:15, s1max:80, s1v:35, s1u:'m²',
+      title:'Loft conversion details', s1l:'Loft floor area (mÂ²)', s1min:15, s1max:80, s1v:35, s1u:'mÂ²',
       s2l:'Number of dormers', s2min:0, s2max:4, s2v:1, s2show:true, extrasShow:true,
       base:{budget:1450,mid:1900,premium:2900}, labour:0.50, mats:0.38, prelims:0.12,
       warning: null,
-      tip:'Velux-only conversions: £25k–£40k. Dormer conversions: £45k–£70k. Hip-to-gable extension adds £8k–£14k on top. Mansard: £55k–£85k. Party wall agreement required if terraced or semi-detached. Structural engineer report essential — budget £500–£900. Fire door and escape window requirements apply.',
-      benchmarks: ['35m² dormer, 1 dormer, SE: £50k–£73k', 'Velux-only 30m² SE: £27k–£42k', 'Full mansard 45m² London: £72k–£105k']
+      tip:'Velux-only conversions: Â£25kâÂ£40k. Dormer conversions: Â£45kâÂ£70k. Hip-to-gable extension adds Â£8kâÂ£14k on top. Mansard: Â£55kâÂ£85k. Party wall agreement required if terraced or semi-detached. Structural engineer report essential â budget Â£500âÂ£900. Fire door and escape window requirements apply.',
+      benchmarks: ['35mÂ² dormer, 1 dormer, SE: Â£50kâÂ£73k', 'Velux-only 30mÂ² SE: Â£27kâÂ£42k', 'Full mansard 45mÂ² London: Â£72kâÂ£105k']
     },
     kitchen: {
-      title:'Kitchen renovation details', s1l:'Kitchen size (m²)', s1min:5, s1max:50, s1v:15, s1u:'m²',
+      title:'Kitchen renovation details', s1l:'Kitchen size (mÂ²)', s1min:5, s1max:50, s1v:15, s1u:'mÂ²',
       s2l:'Number of appliances', s2min:2, s2max:12, s2v:5, s2show:false, extrasShow:false,
       base:{budget:720,mid:1700,premium:3500}, labour:0.35, mats:0.52, prelims:0.13,
       warning: null,
-      tip:'Kitchens are materials-driven — units, worktops and appliances typically represent 52% of total cost. Budget units (B&Q/Wickes): £3k–£8k supply. Mid-range (Howdens/Benchmarx): £6k–£14k. Premium (Neff/Siemens/Bulthaup): £15k–£60k+. Quartz worktops: £400–£800/m². Moving the sink position adds £800–£1,800 for plumbing. Always factor in tiling, plastering and electrical circuits.',
-      benchmarks: ['15m² budget SE England: £9k–£14k', '15m² mid-spec SE: £19k–£28k', '20m² premium London: £55k–£90k']
+      tip:'Kitchens are materials-driven â units, worktops and appliances typically represent 52% of total cost. Budget units (B&Q/Wickes): Â£3kâÂ£8k supply. Mid-range (Howdens/Benchmarx): Â£6kâÂ£14k. Premium (Neff/Siemens/Bulthaup): Â£15kâÂ£60k+. Quartz worktops: Â£400âÂ£800/mÂ². Moving the sink position adds Â£800âÂ£1,800 for plumbing. Always factor in tiling, plastering and electrical circuits.',
+      benchmarks: ['15mÂ² budget SE England: Â£9kâÂ£14k', '15mÂ² mid-spec SE: Â£19kâÂ£28k', '20mÂ² premium London: Â£55kâÂ£90k']
     },
     bathroom: {
-      title:'Bathroom fit-out details', s1l:'Bathroom size (m²)', s1min:3, s1max:20, s1v:6, s1u:'m²',
+      title:'Bathroom fit-out details', s1l:'Bathroom size (mÂ²)', s1min:3, s1max:20, s1v:6, s1u:'mÂ²',
       s2l:'Number of bathrooms', s2min:1, s2max:5, s2v:1, s2show:false, extrasShow:false,
       base:{budget:1100,mid:1950,premium:3400}, labour:0.48, mats:0.42, prelims:0.10,
       warning: null,
-      tip:'A complete bathroom renovation includes full strip-out (£400–£800), waterproof tanking, tiling (budget £35/m², premium £120/m²), sanitaryware supply and fit, and making good. Wet rooms cost 25–35% more due to drainage and waterproofing complexity. En-suite conversions to an existing room add partitioning and plumbing connection costs. Underfloor heating: £150–£300 for a 6m² bathroom. Allow 2–3 weeks minimum.',
-      benchmarks: ['6m² mid-spec SE: £10k–£14k', '4m² en-suite budget: £7k–£11k', '8m² premium wet room London: £22k–£32k']
+      tip:'A complete bathroom renovation includes full strip-out (Â£400âÂ£800), waterproof tanking, tiling (budget Â£35/mÂ², premium Â£120/mÂ²), sanitaryware supply and fit, and making good. Wet rooms cost 25â35% more due to drainage and waterproofing complexity. En-suite conversions to an existing room add partitioning and plumbing connection costs. Underfloor heating: Â£150âÂ£300 for a 6mÂ² bathroom. Allow 2â3 weeks minimum.',
+      benchmarks: ['6mÂ² mid-spec SE: Â£10kâÂ£14k', '4mÂ² en-suite budget: Â£7kâÂ£11k', '8mÂ² premium wet room London: Â£22kâÂ£32k']
     },
     electrical: {
-      title:'Electrical works details', s1l:'Property size (m²)', s1min:30, s1max:300, s1v:85, s1u:'m²',
+      title:'Electrical works details', s1l:'Property size (mÂ²)', s1min:30, s1max:300, s1v:85, s1u:'mÂ²',
       s2l:'Number of circuits', s2min:5, s2max:30, s2v:12, s2show:false, extrasShow:false,
       base:{budget:40,mid:72,premium:130}, labour:0.62, mats:0.28, prelims:0.10,
       warning: null,
-      tip:'Full rewire for a 3-bed (85m²): £5,000–£9,500 in SE England, up to £12,000 for older properties with difficult cable routes. Consumer unit upgrade alone: £600–£1,400. EV charger installation: £900–£1,600 including load management. Solar PV system (6kW): £7,000–£11,000. All notifiable electrical work requires Part P Building Regulations sign-off — ensure your electrician is NICEIC or NAPIT registered.',
-      benchmarks: ['Full rewire 85m² SE: £5k–£9.5k', 'Consumer unit upgrade only: £600–£1,400', 'Full rewire + consumer unit older property: £8k–£14k']
+      tip:'Full rewire for a 3-bed (85mÂ²): Â£5,000âÂ£9,500 in SE England, up to Â£12,000 for older properties with difficult cable routes. Consumer unit upgrade alone: Â£600âÂ£1,400. EV charger installation: Â£900âÂ£1,600 including load management. Solar PV system (6kW): Â£7,000âÂ£11,000. All notifiable electrical work requires Part P Building Regulations sign-off â ensure your electrician is NICEIC or NAPIT registered.',
+      benchmarks: ['Full rewire 85mÂ² SE: Â£5kâÂ£9.5k', 'Consumer unit upgrade only: Â£600âÂ£1,400', 'Full rewire + consumer unit older property: Â£8kâÂ£14k']
     },
     plumbing: {
-      title:'Plumbing & heating details', s1l:'Property size (m²)', s1min:30, s1max:300, s1v:85, s1u:'m²',
+      title:'Plumbing & heating details', s1l:'Property size (mÂ²)', s1min:30, s1max:300, s1v:85, s1u:'mÂ²',
       s2l:'Number of radiators', s2min:4, s2max:20, s2v:8, s2show:false, extrasShow:false,
       base:{budget:38,mid:65,premium:100}, labour:0.58, mats:0.32, prelims:0.10,
       warning: null,
-      tip:'New combi boiler supply and fit (Worcester/Vaillant): £2,400–£4,800. Heat pump installation: £8,000–£15,000 (BUS grant of £7,500 available). Full central heating system including boiler, rads and pipework: £6,000–£11,000. Underfloor heating (wet system): £70–£120/m². All gas work must be Gas Safe registered — check the register before instructing anyone. OFTEC registered for oil boilers.',
-      benchmarks: ['Boiler replacement only: £2.4k–£4.8k', 'Full central heating system SE: £6.5k–£11k', 'Heat pump + UFH whole house: £18k–£28k']
+      tip:'New combi boiler supply and fit (Worcester/Vaillant): Â£2,400âÂ£4,800. Heat pump installation: Â£8,000âÂ£15,000 (BUS grant of Â£7,500 available). Full central heating system including boiler, rads and pipework: Â£6,000âÂ£11,000. Underfloor heating (wet system): Â£70âÂ£120/mÂ². All gas work must be Gas Safe registered â check the register before instructing anyone. OFTEC registered for oil boilers.',
+      benchmarks: ['Boiler replacement only: Â£2.4kâÂ£4.8k', 'Full central heating system SE: Â£6.5kâÂ£11k', 'Heat pump + UFH whole house: Â£18kâÂ£28k']
     },
     structural: {
       title:'Structural works details', s1l:'Number of openings / beams', s1min:1, s1max:10, s1v:1, s1u:'',
       s2l:'Beam span (metres)', s2min:2, s2max:12, s2v:4, s2show:true, extrasShow:true,
       base:{budget:2200,mid:3800,premium:6500}, labour:0.55, mats:0.30, prelims:0.15,
-      warning:'⚠ Structural costs vary enormously depending on job complexity. This estimate covers standard RSJ beam installations only. Underpinning, subsidence repair, basement conversions or complex load-bearing changes will cost significantly more. Always obtain a structural engineer report (£500–£1,200) before proceeding — never start structural work without one.',
-      tip:'Single RSJ installation (standard span, making good both sides): £2,500–£5,500 in SE England. Complex multi-beam steel frames: £8,000–£25,000. Chimney breast removal: £1,500–£3,500. Load-bearing wall removal with temporary support, steel and decoration: £3,500–£8,000. Underpinning: £1,200–£1,800 per linear metre — highly variable based on foundation type and soil conditions.',
-      benchmarks: ['Single RSJ (4m span) SE: £3k–£5.5k', 'Chimney breast removal + RSJ: £3.5k–£7k', 'Complex multi-beam frame: £10k–£30k']
+      warning:'â  Structural costs vary enormously depending on job complexity. This estimate covers standard RSJ beam installations only. Underpinning, subsidence repair, basement conversions or complex load-bearing changes will cost significantly more. Always obtain a structural engineer report (Â£500âÂ£1,200) before proceeding â never start structural work without one.',
+      tip:'Single RSJ installation (standard span, making good both sides): Â£2,500âÂ£5,500 in SE England. Complex multi-beam steel frames: Â£8,000âÂ£25,000. Chimney breast removal: Â£1,500âÂ£3,500. Load-bearing wall removal with temporary support, steel and decoration: Â£3,500âÂ£8,000. Underpinning: Â£1,200âÂ£1,800 per linear metre â highly variable based on foundation type and soil conditions.',
+      benchmarks: ['Single RSJ (4m span) SE: Â£3kâÂ£5.5k', 'Chimney breast removal + RSJ: Â£3.5kâÂ£7k', 'Complex multi-beam frame: Â£10kâÂ£30k']
     },
     decoration: {
-      title:'Decoration details', s1l:'Area to decorate (m²)', s1min:20, s1max:400, s1v:100, s1u:'m²',
+      title:'Decoration details', s1l:'Area to decorate (mÂ²)', s1min:20, s1max:400, s1v:100, s1u:'mÂ²',
       s2l:'Number of rooms', s2min:1, s2max:15, s2v:4, s2show:false, extrasShow:false,
       base:{budget:20,mid:38,premium:65}, labour:0.65, mats:0.25, prelims:0.10,
       warning: null,
-      tip:'Professional decorators in SE England charge £200–£300/day (2026 rates). Full interior repaint of a 100m² house takes 7–10 working days including preparation. New plaster always requires a mist coat first (diluted emulsion) — skipping this causes peeling. Specialist finishes: limewash £45–£85/m², microcement £80–£150/m², decorative panelling £60–£120/m² installed. Materials (paint, filler, masking) add £8–£18/m² depending on quality.',
-      benchmarks: ['100m² full repaint SE (professional): £3.5k–£6k', 'Same area specialist finishes: £7k–£14k', '4-bed house full redecoration London: £6k–£10k']
+      tip:'Professional decorators in SE England charge Â£200âÂ£300/day (2026 rates). Full interior repaint of a 100mÂ² house takes 7â10 working days including preparation. New plaster always requires a mist coat first (diluted emulsion) â skipping this causes peeling. Specialist finishes: limewash Â£45âÂ£85/mÂ², microcement Â£80âÂ£150/mÂ², decorative panelling Â£60âÂ£120/mÂ² installed. Materials (paint, filler, masking) add Â£8âÂ£18/mÂ² depending on quality.',
+      benchmarks: ['100mÂ² full repaint SE (professional): Â£3.5kâÂ£6k', 'Same area specialist finishes: Â£7kâÂ£14k', '4-bed house full redecoration London: Â£6kâÂ£10k']
     }
   };
 
@@ -934,7 +937,7 @@
   function toggleExtra(key, cost, row) {
     const cb = document.getElementById('cb-' + key);
     if (extras[key]) { delete extras[key]; cb.textContent = ''; cb.classList.remove('checked'); }
-    else { extras[key] = cost; cb.textContent = '✓'; cb.classList.add('checked'); }
+    else { extras[key] = cost; cb.textContent = 'â'; cb.classList.add('checked'); }
     updateEst();
   }
 
@@ -962,7 +965,7 @@
       if (currentTrade === 'loft') {
         s2factor = s2 === 0 ? 0.72 : (1 + (s2 - 1) * 0.45);
       } else if (currentTrade === 'structural') {
-        // Structural: beam span matters more than count — span multiplier
+        // Structural: beam span matters more than count â span multiplier
         s2factor = (1 + (s2 - 2) * 0.18); // span from 2m baseline
         s2factor = Math.max(0.5, s2factor);
       } else {
@@ -973,9 +976,9 @@
     let extraTotal = Object.values(extras).reduce((a, b) => a + b, 0);
     let total = base + extraTotal;
 
-    // Apply minimum cost floors — real jobs have fixed costs regardless of size
+    // Apply minimum cost floors â real jobs have fixed costs regardless of size
     const minimums = {
-      bathroom:   5500,   // smallest bathroom renovation is still ~£5.5k
+      bathroom:   5500,   // smallest bathroom renovation is still ~Â£5.5k
       kitchen:    7000,   // smallest kitchen still has plumbing, electrics, units
       electrical: 3500,   // minimum call-out + consumer unit work
       plumbing:   2500,   // minimum heating job
@@ -989,34 +992,34 @@
     const hi = Math.round(total * 1.25 / 100) * 100;
     const mid = (lo + hi) / 2;
 
-    document.getElementById('est-range').textContent = '£' + lo.toLocaleString() + ' – £' + hi.toLocaleString();
-    document.getElementById('bk-labour').textContent = '£' + Math.round(mid * d.labour / 100) * 100 > 999 ? '£' + (Math.round(mid * d.labour / 100) * 100).toLocaleString() : '£' + Math.round(mid * d.labour);
-    document.getElementById('bk-materials').textContent = '£' + (Math.round(mid * d.mats / 100) * 100).toLocaleString();
-    document.getElementById('bk-prelims').textContent = '£' + (Math.round(mid * d.prelims / 100) * 100).toLocaleString();
-    document.getElementById('bk-labour').textContent = '£' + (Math.round(mid * d.labour / 100) * 100).toLocaleString();
+    document.getElementById('est-range').textContent = 'Â£' + lo.toLocaleString() + ' â Â£' + hi.toLocaleString();
+    document.getElementById('bk-labour').textContent = 'Â£' + Math.round(mid * d.labour / 100) * 100 > 999 ? 'Â£' + (Math.round(mid * d.labour / 100) * 100).toLocaleString() : 'Â£' + Math.round(mid * d.labour);
+    document.getElementById('bk-materials').textContent = 'Â£' + (Math.round(mid * d.mats / 100) * 100).toLocaleString();
+    document.getElementById('bk-prelims').textContent = 'Â£' + (Math.round(mid * d.prelims / 100) * 100).toLocaleString();
+    document.getElementById('bk-labour').textContent = 'Â£' + (Math.round(mid * d.labour / 100) * 100).toLocaleString();
 
     const qLabel = qualKey === 'budget' ? 'Budget spec' : qualKey === 'mid' ? 'Mid-Range spec' : 'Premium spec';
-    document.getElementById('est-context').textContent = regionName + ' · ' + qLabel + ' · ' + s1 + (d.s1u || '');
+    document.getElementById('est-context').textContent = regionName + ' Â· ' + qLabel + ' Â· ' + s1 + (d.s1u || '');
 
     // Show VAT reminder
     const vatEl = document.getElementById('vat-note');
     if (vatEl) {
       const vatAmt = Math.round(mid * 0.20 / 100) * 100;
-      vatEl.textContent = 'All figures ex-VAT. Add 20% for most residential projects (£' + vatAmt.toLocaleString() + '). New builds and some conversions may qualify for 0% or 5% VAT — confirm with HMRC or your contractor.';
+      vatEl.textContent = 'All figures ex-VAT. Add 20% for most residential projects (Â£' + vatAmt.toLocaleString() + '). New builds and some conversions may qualify for 0% or 5% VAT â confirm with HMRC or your contractor.';
     }
 
     // Update accuracy confidence message
     const confEl = document.getElementById('confidence-msg');
     if (confEl) {
       const spread = Math.round(((hi - lo) / mid) * 100);
-      confEl.textContent = 'Estimate accuracy: ±' + Math.round(spread/2) + '%. Real quotes typically fall within this range for standard projects. Complex sites, access issues or unusual specification will move costs outside this band.';
+      confEl.textContent = 'Estimate accuracy: Â±' + Math.round(spread/2) + '%. Real quotes typically fall within this range for standard projects. Complex sites, access issues or unusual specification will move costs outside this band.';
     }
 
     const perSqm = Math.round(mid / s1);
-    document.getElementById('per-sqm-val').textContent = '£' + perSqm.toLocaleString() + '/m²';
+    document.getElementById('per-sqm-val').textContent = 'Â£' + perSqm.toLocaleString() + '/mÂ²';
 
     const contingency = Math.round(mid * 0.15 / 100) * 100;
-    document.getElementById('contingency-val').textContent = '£' + contingency.toLocaleString();
+    document.getElementById('contingency-val').textContent = 'Â£' + contingency.toLocaleString();
   }
 
   function postcodeToRegion(pc) {
@@ -1059,15 +1062,15 @@
       overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
       overlay.innerHTML = `
         <div style="background:var(--navy-2,#111b2e);border:1px solid rgba(0,201,167,0.25);border-radius:16px;padding:2rem;max-width:420px;width:100%;position:relative;">
-          <button onclick="document.getElementById('save-gate-overlay').remove()" style="position:absolute;top:12px;right:16px;background:transparent;border:none;color:#8892a4;font-size:20px;cursor:pointer;">✕</button>
-          <div style="font-size:32px;margin-bottom:12px">💾</div>
+          <button onclick="document.getElementById('save-gate-overlay').remove()" style="position:absolute;top:12px;right:16px;background:transparent;border:none;color:#8892a4;font-size:20px;cursor:pointer;">â</button>
+          <div style="font-size:32px;margin-bottom:12px">ð¾</div>
           <h3 style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#e2e8f0;margin:0 0 8px">Save your estimate</h3>
           ${lo ? `<div style="background:rgba(0,201,167,0.06);border:1px solid rgba(0,201,167,0.15);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
             <div style="font-size:11px;color:#8892a4;margin-bottom:4px">${ctx}</div>
-            <div style="font-size:18px;font-weight:700;color:#e2e8f0">${lo} – ${hi}</div>
+            <div style="font-size:18px;font-weight:700;color:#e2e8f0">${lo} â ${hi}</div>
           </div>` : ''}
           <p style="font-size:13px;color:#8892a4;margin:0 0 16px;line-height:1.5">Create a free account to save this estimate, share it with builders, and track your project.</p>
-          <a href="signup.html" style="display:block;text-align:center;padding:12px;border-radius:10px;background:linear-gradient(135deg,#00c9a7,#4dffd2);color:#0b1120;font-weight:700;font-family:inherit;text-decoration:none;font-size:14px;margin-bottom:10px">Create free account →</a>
+          <a href="signup.html" style="display:block;text-align:center;padding:12px;border-radius:10px;background:linear-gradient(135deg,#00c9a7,#4dffd2);color:#0b1120;font-weight:700;font-family:inherit;text-decoration:none;font-size:14px;margin-bottom:10px">Create free account â</a>
           <a href="login.html" style="display:block;text-align:center;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);color:#8892a4;font-family:inherit;text-decoration:none;font-size:13px">Already have an account? Sign in</a>
         </div>`;
       document.body.appendChild(overlay);
@@ -1091,7 +1094,7 @@
     const result = await EQ.saveProject(project);
 
     if (result === 'limit_reached') {
-      if (confirm(`Free plan allows 3 saved projects. Upgrade to Pro for unlimited? (£9.99/mo)`)) {
+      if (confirm(`Free plan allows 3 saved projects. Upgrade to Pro for unlimited? (Â£9.99/mo)`)) {
         goToStripe('homeowner_pro', user.email);
       }
       return;
@@ -1103,7 +1106,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: `[Estiquote] Estimate saved — ${user.name} · ${currentTrade} · ${estimate}`,
+          _subject: `[Estiquote] Estimate saved â ${user.name} Â· ${currentTrade} Â· ${estimate}`,
           form_type: 'Saved Estimate',
           user_name: user.name,
           user_email: user.email || 'Unknown',
@@ -1121,8 +1124,8 @@
     const original = btn.textContent;
     const projects = EQ.getProjects();
     btn.textContent = EQ.isPro()
-      ? '✓ Saved to dashboard'
-      : `✓ Saved (${projects.length}/3 free projects)`;
+      ? 'â Saved to dashboard'
+      : `â Saved (${projects.length}/3 free projects)`;
     btn.style.background = 'rgba(0,201,167,0.15)';
     btn.style.color = 'var(--teal-light)';
     btn.style.border = '1px solid rgba(0,201,167,0.3)';
@@ -1135,7 +1138,7 @@
     }, 2500);
   }
 
-  // ── PLAN GATING ──────────────────────────────────────────
+  // ââ PLAN GATING ââââââââââââââââââââââââââââââââââââââââââ
   const FREE_PROJECT_LIMIT = 3;
 
   // Use EQ auth system
@@ -1180,10 +1183,10 @@
     // Save button label
     const saveBtn = document.querySelector('.btn-save');
     if (saveBtn) {
-      if (!getUser()) { saveBtn.textContent = '💾 Sign in to save'; }
+      if (!getUser()) { saveBtn.textContent = 'ð¾ Sign in to save'; }
       else if (!pro) {
         const existing = JSON.parse(localStorage.getItem('eq_projects') || '[]');
-        if (existing.length >= FREE_PROJECT_LIMIT) saveBtn.textContent = `💾 Limit reached (${FREE_PROJECT_LIMIT} free)`;
+        if (existing.length >= FREE_PROJECT_LIMIT) saveBtn.textContent = `ð¾ Limit reached (${FREE_PROJECT_LIMIT} free)`;
       }
     }
 
@@ -1195,12 +1198,12 @@
     }
   }
 
-  // ── SAVE PROJECT (with free limit) ───────────────────────
+  // ââ SAVE PROJECT (with free limit) âââââââââââââââââââââââ
 
   function exportPDF() {
     const user = getUser();
     if (!isPro()) {
-      if (confirm('PDF export is a Pro feature (£9.99/mo). Upgrade now?')) {
+      if (confirm('PDF export is a Pro feature (Â£9.99/mo). Upgrade now?')) {
         goToStripe('homeowner_pro', user ? user.email : null);
       }
     } else {
@@ -1208,7 +1211,7 @@
     }
   }
 
-  // ── QUOTE COMPARISON (Pro) ───────────────────────────────
+  // ââ QUOTE COMPARISON (Pro) âââââââââââââââââââââââââââââââ
   let quotes = [];
 
   function addQuote() {
@@ -1234,40 +1237,40 @@
     }
 
     container.innerHTML = quotes.map(q => {
-      const amt = parseFloat(q.amount.replace(/[£,]/g,'')) || 0;
+      const amt = parseFloat(q.amount.replace(/[Â£,]/g,'')) || 0;
       let verdict = '', verdictColor = '';
       if (amt > 0 && midEst > 0) {
         const diff = ((amt - midEst) / midEst) * 100;
-        if (diff > 20)       { verdict = `▲ ${diff.toFixed(0)}% above estimate — high`;  verdictColor = '#f07050'; }
-        else if (diff > 5)   { verdict = `▲ ${diff.toFixed(0)}% above estimate`;         verdictColor = '#f0a050'; }
-        else if (diff < -20) { verdict = `▼ ${Math.abs(diff).toFixed(0)}% below — check spec carefully`; verdictColor = '#50c882'; }
-        else if (diff < -5)  { verdict = `▼ ${Math.abs(diff).toFixed(0)}% below estimate`; verdictColor = '#50c882'; }
-        else                 { verdict = '✓ Within fair range';                           verdictColor = 'var(--teal-light)'; }
+        if (diff > 20)       { verdict = `â² ${diff.toFixed(0)}% above estimate â high`;  verdictColor = '#f07050'; }
+        else if (diff > 5)   { verdict = `â² ${diff.toFixed(0)}% above estimate`;         verdictColor = '#f0a050'; }
+        else if (diff < -20) { verdict = `â¼ ${Math.abs(diff).toFixed(0)}% below â check spec carefully`; verdictColor = '#50c882'; }
+        else if (diff < -5)  { verdict = `â¼ ${Math.abs(diff).toFixed(0)}% below estimate`; verdictColor = '#50c882'; }
+        else                 { verdict = 'â Within fair range';                           verdictColor = 'var(--teal-light)'; }
       }
       return `
         <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
           <div style="display:flex;gap:8px;margin-bottom:6px;align-items:center">
             <input value="${q.name}" placeholder="Contractor name" oninput="quotes.find(x=>x.id===${q.id}).name=this.value"
               style="flex:1;padding:6px 10px;font-size:13px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--sans);outline:none;">
-            <input value="${q.amount}" placeholder="£ amount" oninput="quotes.find(x=>x.id===${q.id}).amount=this.value;renderQuotes()"
+            <input value="${q.amount}" placeholder="Â£ amount" oninput="quotes.find(x=>x.id===${q.id}).amount=this.value;renderQuotes()"
               style="width:110px;padding:6px 10px;font-size:13px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--sans);outline:none;">
-            <button onclick="removeQuote(${q.id})" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;padding:0 4px;">✕</button>
+            <button onclick="removeQuote(${q.id})" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;padding:0 4px;">â</button>
           </div>
           ${verdict ? `<div style="font-size:11px;font-weight:600;color:${verdictColor}">${verdict}</div>` : ''}
         </div>`;
     }).join('');
   }
 
-  // ── WHITE-LABEL PDF (Trade) ──────────────────────────────
+  // ââ WHITE-LABEL PDF (Trade) ââââââââââââââââââââââââââââââ
   function exportWhiteLabelPDF() {
     const user  = getUser();
     const range = document.getElementById('est-range').textContent;
     const ctx   = document.getElementById('est-context').textContent;
-    const labour    = document.getElementById('bk-labour')?.textContent    || '—';
-    const materials = document.getElementById('bk-materials')?.textContent || '—';
-    const prelims   = document.getElementById('bk-prelims')?.textContent   || '—';
-    const perSqm    = document.getElementById('per-sqm-val')?.textContent  || '—';
-    const cont      = document.getElementById('contingency-val')?.textContent || '—';
+    const labour    = document.getElementById('bk-labour')?.textContent    || 'â';
+    const materials = document.getElementById('bk-materials')?.textContent || 'â';
+    const prelims   = document.getElementById('bk-prelims')?.textContent   || 'â';
+    const perSqm    = document.getElementById('per-sqm-val')?.textContent  || 'â';
+    const cont      = document.getElementById('contingency-val')?.textContent || 'â';
 
     const win = window.open('', '_blank');
     win.document.write(`<!DOCTYPE html><html><head><title>Estiquote Cost Report</title>
@@ -1295,7 +1298,7 @@
   .footer{margin-top:32px;padding-top:16px;border-top:1px solid #e5eaf0;font-size:11px;color:#9aabb8;line-height:1.8}
   @media print{body{padding:20px}}
 </style></head><body>
-<!-- TEST MODE BANNER — remove when Stripe goes live -->
+<!-- TEST MODE BANNER â remove when Stripe goes live -->
 
 <div class="header">
   <div>
@@ -1320,26 +1323,26 @@
   </div>
 </div>
 
-<div class="info-row"><span class="info-lbl">Cost per m²</span><span class="info-val">${perSqm}</span></div>
+<div class="info-row"><span class="info-lbl">Cost per mÂ²</span><span class="info-val">${perSqm}</span></div>
 <div class="info-row"><span class="info-lbl">Recommended contingency (15%)</span><span class="info-val">${cont}</span></div>
 <div class="info-row"><span class="info-lbl">Region</span><span class="info-val">${regionName}</span></div>
 <div class="info-row"><span class="info-lbl">Specification</span><span class="info-val" style="text-transform:capitalize">${qualKey}</span></div>
 <div class="info-row"><span class="info-lbl">Trade category</span><span class="info-val" style="text-transform:capitalize">${currentTrade}</span></div>
-<div class="info-row"><span class="info-lbl">Data sources</span><span class="info-val">BCIS, BMF, ONS — Updated Jan 2025</span></div>
+<div class="info-row"><span class="info-lbl">Data sources</span><span class="info-val">BCIS, BMF, ONS â Updated Jan 2025</span></div>
 
-<div class="warning">⚠ This estimate is indicative only and does not constitute a quote or contract. Actual costs may vary based on site conditions, specification changes, and contractor rates. Always obtain at least 3 written quotes from qualified contractors. All figures shown are exclusive of VAT.</div>
+<div class="warning">â  This estimate is indicative only and does not constitute a quote or contract. Actual costs may vary based on site conditions, specification changes, and contractor rates. Always obtain at least 3 written quotes from qualified contractors. All figures shown are exclusive of VAT.</div>
 
 <div class="footer">
-  Powered by Estiquote · estiquote.co.uk · A trading brand of SSH Ltd<br>
+  Powered by Estiquote Â· estiquote.co.uk Â· A trading brand of SSH Ltd<br>
   Estimates based on BCIS Building Cost Information Service, BMF, and ONS construction price indices.<br>
-  © ${new Date().getFullYear()} Estiquote Ltd. This report may be shared with clients for informational purposes.
+  Â© ${new Date().getFullYear()} Estiquote Ltd. This report may be shared with clients for informational purposes.
 </div>
 </body></html>`);
     win.document.close();
     setTimeout(() => win.print(), 500);
   }
 
-  // ── CLIENT SHARE LINK (Trade) ─────────────────────────────
+  // ââ CLIENT SHARE LINK (Trade) âââââââââââââââââââââââââââââ
   function generateShareLink() {
     const range   = document.getElementById('est-range').textContent;
     const ctx     = document.getElementById('est-context').textContent;
@@ -1369,13 +1372,13 @@
     if (!url) return;
     navigator.clipboard.writeText(url).then(() => {
       const btn = document.getElementById('copy-share-btn');
-      if (btn) { btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 2000); }
+      if (btn) { btn.textContent = 'â Copied'; setTimeout(() => btn.textContent = 'Copy', 2000); }
     });
   }
 
   function toggleMenu() { document.getElementById('navMobile').classList.toggle('open'); }
 
-  // ── INIT ─────────────────────────────────────────────────
+  // ââ INIT âââââââââââââââââââââââââââââââââââââââââââââââââ
   const urlParams = new URLSearchParams(window.location.search);
   const tradePar = urlParams.get('trade');
   if (tradePar && document.getElementById('t-' + tradePar)) {
@@ -1394,13 +1397,13 @@
     const ctx = document.getElementById('est-context')?.textContent || '';
     const lo  = document.getElementById('result-lo')?.textContent  || '';
     const hi  = document.getElementById('result-hi')?.textContent  || '';
-    const txt = 'My home improvement estimate from Estiquote: ' + ctx + ' — ' + lo + ' to ' + hi + '. Free at estiquote.co.uk/estimator.html';
+    const txt = 'My home improvement estimate from Estiquote: ' + ctx + ' â ' + lo + ' to ' + hi + '. Free at estiquote.co.uk/estimator.html';
     if (navigator.share) {
       navigator.share({ title: 'My Estiquote estimate', text: txt, url: 'https://estiquote.co.uk/estimator.html' }).catch(() => {});
     } else {
       navigator.clipboard.writeText(txt).then(() => {
         const btn = document.getElementById('share-estimate-btn');
-        if (btn) { btn.textContent = '✓ Copied to clipboard'; setTimeout(() => btn.innerHTML = '📤 Share this estimate', 2500); }
+        if (btn) { btn.textContent = 'â Copied to clipboard'; setTimeout(() => btn.innerHTML = 'ð¤ Share this estimate', 2500); }
       });
     }
   }
