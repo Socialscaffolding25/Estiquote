@@ -149,19 +149,9 @@
   (async () => {
     await EQ.init();
     const user = await EQ.getUser();
-    if (user) // Send welcome email via Netlify function
-      try {
-        await fetch('/.netlify/functions/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'welcome',
-            to: email,
-            data: { name: first }
-          })
-        });
-      } catch(e) { /* non-blocking */ }
+    if (user) {
       window.location.href = 'dashboard.html';
+    }
   })();
 
   let selectedPlan = 'free';
