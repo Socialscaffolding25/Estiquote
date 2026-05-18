@@ -63,7 +63,7 @@
 
 .hero-h1 {
   font-family: var(--serif);
-  font-size: clamp(38px, 6vw, 70px);
+  font-size: clamp(28px, 7vw, 70px);
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -1.5px;
@@ -416,4 +416,36 @@
 @media (max-width: 600px) {
   .trades-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 6rem 1.25rem 3rem; overflow-x: hidden; }
+  .hero-inner { width: 100%; overflow: hidden; }
+  .hero-h1 { font-size: clamp(26px, 9vw, 42px); letter-spacing: -0.5px; word-break: break-word; }
+  .hero-sub { font-size: 15px; max-width: 100%; }
+  .hero-stats { flex-wrap: wrap; gap: 0.75rem; }
+  .hero-stats .stat-div { display: none; }
+  .hero-stats .stat { flex: 1 1 40%; min-width: 80px; }
+  .stat-num { font-size: 20px; }
+  .stat-desc { font-size: 10px; }
+  .hero-badge { font-size: 11px; padding: 5px 10px; max-width: 100%; white-space: normal; }
+  .btn-xl { font-size: 15px; padding: 14px 24px; width: 100%; text-align: center; justify-content: center; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .wa-btn { bottom: 80px !important; right: 16px !important; width: 48px !important; height: 48px !important; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 6rem 1.25rem 3rem; overflow-x: hidden; }
+  .hero-inner { width: 100%; overflow: hidden; }
+  .hero-h1 { font-size: clamp(26px, 9vw, 42px); letter-spacing: -0.5px; word-break: break-word; }
+  .hero-sub { font-size: 15px; max-width: 100%; }
+  .hero-stats { flex-wrap: wrap; gap: 0.75rem; }
+  .hero-stats .stat-div { display: none; }
+  .hero-stats .stat { flex: 1 1 40%; min-width: 80px; }
+  .stat-num { font-size: 20px; }
+  .stat-desc { font-size: 10px; }
+  .hero-badge { font-size: 11px; padding: 5px 10px; max-width: 100%; white-space: normal; }
+  .btn-xl { font-size: 15px; padding: 14px 24px; width: 100%; text-align: center; justify-content: center; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .wa-btn { bottom: 80px !important; right: 16px !important; width: 48px !important; height: 48px !important; }
 }
