@@ -215,7 +215,29 @@
 <script src="js/auth.js"></script>
 <script src="js/stripe-links.js"></script>
 </head>
-<body>
+<body style="display:none">
+<script>
+// Admin auth gate — only allow known admin email
+(async () => {
+  // Wait for EQ to be ready
+  const poll = (fn, ms=50, max=40) => new Promise((res,rej) => {
+    let n=0; const t=setInterval(()=>{ if(fn()){clearInterval(t);res();}else if(++n>max){clearInterval(t);rej();} },ms);
+  });
+  try {
+    await poll(() => typeof EQ !== 'undefined' && typeof EQ.init === 'function');
+    await EQ.init();
+    const user = await EQ.getUser();
+    const ADMIN_EMAIL = 'estiquoteofficial@gmail.com';
+    if (user && user.email === ADMIN_EMAIL) {
+      document.body.style.display = '';
+    } else {
+      window.location.href = 'index.html';
+    }
+  } catch(e) {
+    window.location.href = 'index.html';
+  }
+})();
+</script>
 
 <nav class="nav nav-scrolled">
   <div class="nav-inner">
