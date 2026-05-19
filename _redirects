@@ -5,3 +5,14 @@
 
 # 404 fallback
 /*    /404.html    404
+
+# www redirect — once estiquote.co.uk is connected
+https://www.estiquote.co.uk/* https://estiquote.co.uk/:splat 301!
+
+# Clean URL aliases
+/signup   /signup.html   200
+/login    /login.html    200
+/pricing  /pricing.html  200
+/contact  /contact.html  200
+/builders /builders.html 200
+/dashboard /dashboard.html 200
