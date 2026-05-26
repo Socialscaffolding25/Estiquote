@@ -11,11 +11,11 @@ const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 // UPDATE THESE with your real Stripe Price IDs from the dashboard
 const PRICE_TO_PLAN = {
   // Test mode price IDs — replace with live price IDs when you go live
-  'price_homeowner_pro':      'pro',
-  'price_homeowner_trade':    'trade',
-  'price_builder_listed':     'builder_listed',
-  'price_builder_featured':   'builder_featured',
-  'price_builder_pro':        'builder_pro',
+  'price_1TbFbh3tWQ1K54o6suwcNMpo': 'pro',
+  'price_1TbFef3tWQ1K54o6TfVaEjtY': 'trade',
+  'price_1TbFgM3tWQ1K54o6rjWHzsjL': 'builder_listed',
+  'price_1TbFhp3tWQ1K54o6JJSaUVyd': 'builder_featured',
+  'price_1TbFlK3tWQ1K54o6kJgT9F9e': 'builder_pro',
 };
 
 exports.handler = async (event) => {
