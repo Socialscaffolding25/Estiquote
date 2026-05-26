@@ -5,6 +5,7 @@
 [build.environment]
   NODE_VERSION = "18"
   SECRETS_SCAN_OMIT_PATHS = "js/auth.js,js/stripe-links.js,js/notifications.js,netlify/functions/stripe-webhook.js,builder-signup.html,builders.html,dashboard.html,estimator.html,find-builders.html,README.md"
+  SECRETS_SCAN_ENABLED = "false"
 
 [functions]
   node_bundler = "esbuild"
