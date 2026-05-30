@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/global.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+body { padding-top: 64px; height: 100vh; overflow: hidden; displa: flex; flex-direction: column; }
 
 /* NAV */
 .top-bar {
@@ -939,7 +939,7 @@ async function loadRealBuilders() {
     const url = atob('aHR0cHM6Ly93dnVsdHN4aXFqa2lzYmVpZGpjbC5zdXBhYmFzZS5jbw==');
     const key = atob('c2JfcHVibGlzaGFibGVfdTN2RUkxTDVPaDYtQ1BNTndSU09Fd19MRVpvSkxnVw==');
     const sb = window.supabase?.createClient(url, key);
-    if (!sb) { builders = DEMO_BUILDERS; return; }
+    if (!sb) { builders = DEMO_BUILDERS; usingDemoData = true; showDemoBanner(); renderMarkers(); renderList(); updateCount(); return; }
 
     const { data, error } = await sb
       .from('builders')
@@ -987,10 +987,11 @@ async function loadRealBuilders() {
     builders = DEMO_BUILDERS;
     usingDemoData = true;
     showDemoBanner();
+  } finally {
+    renderMarkers();
+    renderList();
+    updateCount();
   }
-  renderMarkers();
-  renderList();
-  updateCount();
 }
 
 function tradeEmoji(trade) {
