@@ -805,8 +805,8 @@
   function isPro(user) { return !!(user && (user.pro === true || user.plan === 'pro' || user.plan === 'trade')); }
   function isTrade(user) { return !!(user && user.plan === 'trade'); }
 
-  async function renderProjects(container, limit, user) {
-    const allProjects = await EQ.getProjects();
+  async function renderProjects(container, limit, user, projectsData) {
+    const allProjects = projectsData !== undefined ? projectsData : await EQ.getProjects();
     const pro = isPro(user);
     const visibleProjects = pro ? allProjects : allProjects.slice(0, FREE_PROJECT_LIMIT);
     const display = limit ? visibleProjects.slice(0, limit) : visibleProjects; // Supabase returns newest first
@@ -889,8 +889,10 @@
     if (banner2) banner2.style.display = pro ? 'none' : 'flex';
 
     applyDashboardGating(user, pro, trade);
-    await renderProjects(document.getElementById('recent-projects-content'), 5, user);
-    await renderProjects(document.getElementById('all-projects-content'), null, user);
+    await Promise.all([
+      renderProjects(document.getElementById('recent-projects-content'), 5, user, projects),
+      renderProjects(document.getElementById('all-projects-content'), null, user, projects)
+    ]);
     if (user.email)    { const el = document.getElementById('settingsEmail');    if(el) el.value = user.email; }
     if (user.postcode) { const el = document.getElementById('settingsPostcode'); if(el) el.value = user.postcode; }
     if (user.name)     { const el = document.getElementById('settingsName');     if(el) el.value = user.name; }
