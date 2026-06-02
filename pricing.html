@@ -88,29 +88,9 @@ body { padding-top: 80px; }
   <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
-<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
-  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
-</div>
-<script>
-(function(){
-  function checkStripeMode(){
-    if(typeof STRIPE_LINKS !== 'undefined'){
-      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
-        var b = document.getElementById('test-mode-banner');
-        if(b) b.style.display = 'block';
-      }
-    } else {
-      setTimeout(checkStripeMode, 300);
-    }
-  }
-  checkStripeMode();
-})();
-</script>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
-
-
-<nav class="nav nav-scrolled" style="top:37px">
+<nav class="nav nav-scrolled">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
     <div class="nav-links">
@@ -161,18 +141,7 @@ body { padding-top: 80px; }
         <div class="plan-name">Free</div>
         <div class="plan-price">£0</div>
         <div class="plan-period">forever</div>
-        
-  <!-- ANNUAL / MONTHLY TOGGLE -->
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:2rem;">
-    <span id="toggle-monthly-label" style="font-size:14px;color:var(--text);font-weight:600">Monthly</span>
-    <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer">
-      <input type="checkbox" id="annual-toggle" onchange="toggleBilling()" style="opacity:0;width:0;height:0">
-      <span style="position:absolute;inset:0;background:rgba(255,255,255,0.1);border-radius:28px;transition:0.3s;border:1px solid var(--border)"></span>
-      <span id="toggle-knob" style="position:absolute;left:3px;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s"></span>
-    </label>
-    <span id="toggle-annual-label" style="font-size:14px;color:var(--text-dim)">Annual <span style="background:rgba(0,201,167,0.12);color:var(--teal-light);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:4px">Save 20%</span></span>
-  </div>
-<div class="plan-desc">Everything you need to get a solid ballpark on your project before you call anyone.</div>
+        <div class="plan-desc">Everything you need to get a solid ballpark on your project before you call anyone.</div>
         <ul class="features-list">
           <li><span class="feat-check">✓</span> All 8 trade categories</li>
           <li><span class="feat-check">✓</span> 6 UK regions</li>
@@ -303,20 +272,41 @@ body { padding-top: 80px; }
         <div class="compare-cell compare-head">Checkatrade</div>
         <div class="compare-cell compare-head">Estiquote</div>
       </div>
-      ${[
-        ['Monthly cost','£80–370/mo','£29–99/mo'],
-        ['Lead type','Shared with 3–4 builders','Exclusive to you'],
-        ['Annual lock-in','Yes — 14-day trap','No — monthly, cancel any time'],
-        ['You own your reviews','No','Yes — always'],
-        ['Homeowner budget-qualified','No','Yes — every single one'],
-        ['Compliance document storage','No','Yes (Featured+)'],
-        ['Founded by','Canadian asset fund','Active UK contractor'],
-      ].map(([f,ct,eq],i) => `
       <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">${f}</div>
-        <div class="compare-cell compare-cell-bad">${ct}</div>
-        <div class="compare-cell compare-cell-good">${eq}</div>
-      </div>`).join('')}
+        <div class="compare-cell compare-cell-dark">Monthly cost</div>
+        <div class="compare-cell compare-cell-bad">£80–370/mo</div>
+        <div class="compare-cell compare-cell-good">£29–99/mo</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">Lead type</div>
+        <div class="compare-cell compare-cell-bad">Shared with 3–4 builders</div>
+        <div class="compare-cell compare-cell-good">Exclusive to you</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">Annual lock-in</div>
+        <div class="compare-cell compare-cell-bad">Yes — 14-day trap</div>
+        <div class="compare-cell compare-cell-good">No — monthly, cancel any time</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">You own your reviews</div>
+        <div class="compare-cell compare-cell-bad">No</div>
+        <div class="compare-cell compare-cell-good">Yes — always</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">Homeowner budget-qualified</div>
+        <div class="compare-cell compare-cell-bad">No</div>
+        <div class="compare-cell compare-cell-good">Yes — every single one</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">Compliance document storage</div>
+        <div class="compare-cell compare-cell-bad">No</div>
+        <div class="compare-cell compare-cell-good">Yes (Featured+)</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-cell-dark">Founded by</div>
+        <div class="compare-cell compare-cell-bad">Canadian asset fund</div>
+        <div class="compare-cell compare-cell-good">Active UK contractor</div>
+      </div>
     </div>
 
     <div style="text-align:center;">
@@ -356,7 +346,7 @@ body { padding-top: 80px; }
 <footer class="footer">
   <div class="container">
     <div style="text-align:center;font-size:12px;color:var(--text-dim);padding:2rem 0">
-      © 2026 Estiquote Ltd · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a> · All estimates are indicative only
+      © 2026 Labii Reatum Ltd t/a Estiquote · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a> · All estimates are indicative only
     </div>
   </div>
 </footer>
@@ -413,7 +403,7 @@ function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential")
 </script>
 
 <!-- WHATSAPP CHAT BUTTON -->
-<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote"
    target="_blank" rel="noopener"
    aria-label="Chat with us on WhatsApp"
    style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
@@ -443,7 +433,7 @@ function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential")
     homeowner_trade:  { monthly: '£29',    annual: '£23.20', stripe_m: STRIPE_LINKS.homeowner_trade,  stripe_a: STRIPE_LINKS.homeowner_trade },
     builder_listed:   { monthly: '£29',    annual: '£23.20', stripe_m: STRIPE_LINKS.builder_listed,   stripe_a: STRIPE_LINKS.builder_listed },
     builder_featured: { monthly: '£59',    annual: '£47.20', stripe_m: STRIPE_LINKS.builder_featured, stripe_a: STRIPE_LINKS.builder_featured },
-    builder_pro:      { monthly: '£99',    annual: '£79.20', stripe_m: STRIPE_LINKS.builder_pro,      stripe_a: STRIPE_LINKS.builder_pro },
+    builder_pro:      { monthly: '£95',    annual: '£79.20', stripe_m: STRIPE_LINKS.builder_pro,      stripe_a: STRIPE_LINKS.builder_pro },
   };
 
   function toggleBilling() {
