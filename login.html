@@ -44,6 +44,21 @@
 <script src="js/auth.js"></script>
 <script src="js/stripe-links.js"></script>
   <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+  <link rel="canonical" href="https://estiquote.co.uk/login.html">
+  <meta name="theme-color" content="#00c9a7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Estiquote">
+  <link rel="manifest" href="manifest.json">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estiquote.co.uk/login.html">
+  <meta property="og:title" content="Sign In — Estiquote">
+  <meta property="og:description" content="Sign in to your Estiquote account to access your saved estimates and dashboard.">
+  <meta property="og:image" content="https://estiquote.co.uk/og-image.png">
+  <meta property="og:site_name" content="Estiquote">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sign In — Estiquote">
+  <meta name="twitter:description" content="Sign in to your Estiquote account to access your saved estimates and dashboard.">
 </head>
 <body>
 <div class="shell">
@@ -139,7 +154,7 @@
     if (result.success) {
       showInfo('Password reset email sent to <strong>' + email + '</strong>. Check your inbox.');
     } else {
-      showErr('Could not send reset email. Please contact estiquoteofficial@gmail.com');
+      showErr('Could not send reset email. Please contact hello@estiquote.co.uk');
     }
   }
 
@@ -173,7 +188,7 @@ function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential")
 </script>
 
 <!-- WHATSAPP CHAT BUTTON -->
-<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote"
    target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
    style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
    title="Chat with us on WhatsApp">
