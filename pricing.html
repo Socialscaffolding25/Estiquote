@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pricing — Estiquote | Homeowner & Builder Plans</title>
+<title>Pricing — Estiquote | Homeowner &amp; Builder Plans</title>
 <meta name="description" content="Simple, transparent pricing. Homeowners from £0. Builders from £29/month — cancel any time, no lock-in, better leads than Checkatrade.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
@@ -24,13 +24,6 @@ body { padding-top: 80px; }
 .aud-tab.active { background:var(--teal-dim); border-color:var(--teal); color:var(--teal-light); }
 .aud-panel { display:none; }
 .aud-panel.active { display:block; }
-.toggle-row { display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:2.5rem; }
-.toggle-label { font-size:14px;color:var(--text-muted); }
-.toggle-label.active { color:var(--text);font-weight:500; }
-.toggle { width:44px;height:24px;border-radius:12px;background:var(--teal);position:relative;cursor:pointer;border:none; }
-.toggle::after { content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#0b1120;top:3px;right:3px;transition:var(--transition); }
-.toggle.monthly::after { right:auto;left:3px; }
-.save-badge { font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(80,200,130,0.12);border:1px solid rgba(80,200,130,0.3);color:rgba(100,220,160,0.9);font-weight:600; }
 .plans-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:3rem; }
 .plan-card { background:var(--navy-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;position:relative;transition:var(--transition); }
 .plan-card:hover { border-color:var(--border-hover);transform:translateY(-2px); }
@@ -88,9 +81,29 @@ body { padding-top: 80px; }
   <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
+  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
+</div>
+<script>
+(function(){
+  function checkStripeMode(){
+    if(typeof STRIPE_LINKS !== 'undefined'){
+      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
+        var b = document.getElementById('test-mode-banner');
+        if(b) b.style.display = 'block';
+      }
+    } else {
+      setTimeout(checkStripeMode, 300);
+    }
+  }
+  checkStripeMode();
+})();
+</script>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
-<nav class="nav nav-scrolled">
+
+
+<nav class="nav nav-scrolled" style="top:37px">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
     <div class="nav-links">
@@ -107,6 +120,7 @@ body { padding-top: 80px; }
   </div>
   <div class="nav-mobile" id="nm">
     <a href="estimator.html">Estimator</a>
+    <a href="materials.html">Material prices</a>
     <a href="builders.html">For Builders</a>
     <a href="find-builders.html">Find builders</a>
     <a href="pricing.html">Pricing</a>
@@ -130,12 +144,6 @@ body { padding-top: 80px; }
 
   <!-- ══ HOMEOWNER PLANS ══ -->
   <div class="aud-panel active" id="panel-homeowners">
-    <div class="toggle-row">
-      <span class="toggle-label active" id="monthly-label">Monthly</span>
-      <button class="toggle monthly" id="billing-toggle" onclick="toggleBilling()"></button>
-      <span class="toggle-label" id="annual-label">Annual</span>
-      <span class="save-badge">Save 20%</span>
-    </div>
     <div class="plans-grid">
       <div class="plan-card">
         <div class="plan-name">Free</div>
@@ -272,41 +280,20 @@ body { padding-top: 80px; }
         <div class="compare-cell compare-head">Checkatrade</div>
         <div class="compare-cell compare-head">Estiquote</div>
       </div>
+      ${[
+        ['Monthly cost','£80–370/mo','£29–99/mo'],
+        ['Lead type','Shared with 3–4 builders','Exclusive to you'],
+        ['Annual lock-in','Yes — 14-day trap','No — monthly, cancel any time'],
+        ['You own your reviews','No','Yes — always'],
+        ['Homeowner budget-qualified','No','Yes — every single one'],
+        ['Compliance document storage','No','Yes (Featured+)'],
+        ['Founded by','Canadian asset fund','Active UK contractor'],
+      ].map(([f,ct,eq],i) => `
       <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">Monthly cost</div>
-        <div class="compare-cell compare-cell-bad">£80–370/mo</div>
-        <div class="compare-cell compare-cell-good">£29–99/mo</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">Lead type</div>
-        <div class="compare-cell compare-cell-bad">Shared with 3–4 builders</div>
-        <div class="compare-cell compare-cell-good">Exclusive to you</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">Annual lock-in</div>
-        <div class="compare-cell compare-cell-bad">Yes — 14-day trap</div>
-        <div class="compare-cell compare-cell-good">No — monthly, cancel any time</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">You own your reviews</div>
-        <div class="compare-cell compare-cell-bad">No</div>
-        <div class="compare-cell compare-cell-good">Yes — always</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">Homeowner budget-qualified</div>
-        <div class="compare-cell compare-cell-bad">No</div>
-        <div class="compare-cell compare-cell-good">Yes — every single one</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">Compliance document storage</div>
-        <div class="compare-cell compare-cell-bad">No</div>
-        <div class="compare-cell compare-cell-good">Yes (Featured+)</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">Founded by</div>
-        <div class="compare-cell compare-cell-bad">Canadian asset fund</div>
-        <div class="compare-cell compare-cell-good">Active UK contractor</div>
-      </div>
+        <div class="compare-cell compare-cell-dark">${f}</div>
+        <div class="compare-cell compare-cell-bad">${ct}</div>
+        <div class="compare-cell compare-cell-good">${eq}</div>
+      </div>`).join('')}
     </div>
 
     <div style="text-align:center;">
@@ -346,28 +333,17 @@ body { padding-top: 80px; }
 <footer class="footer">
   <div class="container">
     <div style="text-align:center;font-size:12px;color:var(--text-dim);padding:2rem 0">
-      © 2026 Labii Reatum Ltd t/a Estiquote · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a> · All estimates are indicative only
+      © 2026 Estiquote Ltd · <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a> · All estimates are indicative only
     </div>
   </div>
 </footer>
 
 <script>
-  let isAnnual = false;
   function showAudience(id, btn) {
     document.querySelectorAll('.aud-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.aud-tab').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
     btn.classList.add('active');
-  }
-  function toggleBilling() {
-    isAnnual = !isAnnual;
-    document.getElementById('billing-toggle').classList.toggle('monthly', !isAnnual);
-    document.getElementById('monthly-label').classList.toggle('active', !isAnnual);
-    document.getElementById('annual-label').classList.toggle('active', isAnnual);
-    document.getElementById('pro-price').textContent = isAnnual ? '£7.99' : '£9.99';
-    document.getElementById('pro-period').textContent = isAnnual ? 'per month, billed annually' : 'per month · 14-day free trial';
-    document.getElementById('trade-price').textContent = isAnnual ? '£23' : '£29';
-    document.getElementById('trade-period').textContent = isAnnual ? 'per month, billed annually' : 'per month';
   }
   function toggleFaq(el) {
     const wasOpen = el.classList.contains('open');
@@ -403,7 +379,7 @@ function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential")
 </script>
 
 <!-- WHATSAPP CHAT BUTTON -->
-<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote"
+<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" 
    target="_blank" rel="noopener"
    aria-label="Chat with us on WhatsApp"
    style="position:fixed;bottom:80px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;"
@@ -425,37 +401,5 @@ function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential")
   }
 })();
 </script>
-
-  <script>
-  let isAnnual = false;
-  const prices = {
-    homeowner_pro:    { monthly: '£9.99',  annual: '£7.99',  stripe_m: STRIPE_LINKS.homeowner_pro,    stripe_a: STRIPE_LINKS.homeowner_pro },
-    homeowner_trade:  { monthly: '£29',    annual: '£23.20', stripe_m: STRIPE_LINKS.homeowner_trade,  stripe_a: STRIPE_LINKS.homeowner_trade },
-    builder_listed:   { monthly: '£29',    annual: '£23.20', stripe_m: STRIPE_LINKS.builder_listed,   stripe_a: STRIPE_LINKS.builder_listed },
-    builder_featured: { monthly: '£59',    annual: '£47.20', stripe_m: STRIPE_LINKS.builder_featured, stripe_a: STRIPE_LINKS.builder_featured },
-    builder_pro:      { monthly: '£95',    annual: '£79.20', stripe_m: STRIPE_LINKS.builder_pro,      stripe_a: STRIPE_LINKS.builder_pro },
-  };
-
-  function toggleBilling() {
-    isAnnual = document.getElementById('annual-toggle').checked;
-    const knob = document.getElementById('toggle-knob');
-    const annualLabel = document.getElementById('toggle-annual-label');
-    const monthlyLabel = document.getElementById('toggle-monthly-label');
-    knob.style.transform = isAnnual ? 'translateX(24px)' : 'translateX(0)';
-    document.getElementById('annual-toggle').parentElement.querySelector('span').style.background = isAnnual ? 'rgba(0,201,167,0.25)' : 'rgba(255,255,255,0.1)';
-    annualLabel.style.color = isAnnual ? 'var(--text)' : 'var(--text-dim)';
-    monthlyLabel.style.color = isAnnual ? 'var(--text-dim)' : 'var(--text)';
-
-    // Update displayed prices
-    document.querySelectorAll('[data-plan]').forEach(el => {
-      const plan = el.dataset.plan;
-      const field = el.dataset.field;
-      if (prices[plan]) {
-        if (field === 'price') el.textContent = isAnnual ? prices[plan].annual : prices[plan].monthly;
-        if (field === 'period') el.textContent = isAnnual ? '/mo, billed annually' : '/month';
-      }
-    });
-  }
-  </script>
 </body>
 </html>
