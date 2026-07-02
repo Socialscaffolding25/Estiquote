@@ -22,6 +22,7 @@ body { padding-top: 80px; }
 .audience-tabs { display:flex; gap:8px; justify-content:center; margin-bottom:3rem; }
 .aud-tab { padding:10px 28px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; border:1px solid var(--border); color:var(--text-muted); background:transparent; transition:var(--transition); }
 .aud-tab.active { background:var(--teal-dim); border-color:var(--teal); color:var(--teal-light); }
+.aud-tab .soon-badge { font-size:10px; background:rgba(245,158,11,0.15); color:#f5b942; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:700; letter-spacing:0.3px; vertical-align:middle; }
 .aud-panel { display:none; }
 .aud-panel.active { display:block; }
 .plans-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:3rem; }
@@ -52,6 +53,11 @@ body { padding-top: 80px; }
 .compare-cell-dark { background:var(--navy-3);color:var(--text); }
 .compare-cell-bad { background:rgba(239,68,68,0.06);color:#ef4444;text-align:center; }
 .compare-cell-good { background:rgba(0,201,167,0.06);color:var(--teal-light);font-weight:600;text-align:center; }
+
+.soon-panel { background:var(--navy-2); border:1px solid rgba(245,158,11,0.25); border-radius:var(--radius-lg); padding:4rem 2rem; text-align:center; }
+.soon-icon { font-size:40px; margin-bottom:1rem; }
+.soon-title { font-family:var(--serif); font-size:26px; font-weight:800; color:var(--text); margin-bottom:0.75rem; }
+.soon-body { font-size:15px; color:var(--text-muted); max-width:520px; margin:0 auto 1.75rem; line-height:1.7; }
 
 .faq-section { max-width:700px;margin:0 auto; }
 .faq-item { border-bottom:1px solid var(--border);padding:1.25rem 0;cursor:pointer; }
@@ -109,8 +115,6 @@ body { padding-top: 80px; }
     <div class="nav-links">
       <a href="estimator.html" class="nav-link">Estimator</a>
       <a href="materials.html" class="nav-link">Material prices</a>
-      <a href="builders.html" class="nav-link">For Builders</a>
-      <a href="find-builders.html" class="nav-link">Find builders</a>
       <a href="pricing.html" class="nav-link" style="color:var(--teal)">Pricing</a>
       <a href="login.html" class="nav-link">Sign in</a>
       <button onclick="EQ.signOut()" id="logout-btn" style="display:none;padding:8px 16px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:13px;cursor:pointer;" aria-label="Sign out">Sign out</button>
@@ -121,8 +125,6 @@ body { padding-top: 80px; }
   <div class="nav-mobile" id="nm">
     <a href="estimator.html">Estimator</a>
     <a href="materials.html">Material prices</a>
-    <a href="builders.html">For Builders</a>
-    <a href="find-builders.html">Find builders</a>
     <a href="pricing.html">Pricing</a>
     <a href="login.html">Sign in</a>
     <a href="signup.html" class="mobile-cta">Get started free</a>
@@ -139,7 +141,7 @@ body { padding-top: 80px; }
   <!-- AUDIENCE TABS -->
   <div class="audience-tabs">
     <button class="aud-tab active" onclick="showAudience('homeowners',this)">🏠 Homeowners &amp; Professionals</button>
-    <button class="aud-tab" onclick="showAudience('builders',this)">🏗 Builders &amp; Tradespeople</button>
+    <button class="aud-tab" onclick="showAudience('builders',this)">🏗 Builders &amp; Tradespeople <span class="soon-badge">Coming soon</span></button>
   </div>
 
   <!-- ══ HOMEOWNER PLANS ══ -->
@@ -207,97 +209,13 @@ body { padding-top: 80px; }
     </div>
   </div>
 
-  <!-- ══ BUILDER PLANS ══ -->
+  <!-- ══ BUILDER PLANS — COMING SOON ══ -->
   <div class="aud-panel" id="panel-builders">
-    <div style="background:rgba(0,201,167,0.04);border:1px solid rgba(0,201,167,0.15);border-radius:12px;padding:16px 20px;margin-bottom:2rem;text-align:center;">
-      <div style="font-size:14px;font-weight:700;color:var(--teal-light);margin-bottom:4px">Every homeowner already knows their budget before they contact you</div>
-      <div style="font-size:13px;color:var(--text-muted)">No shared leads. No race to the bottom. Cancel any time.</div>
-    </div>
-
-    <div class="plans-grid">
-      <div class="plan-card">
-        <div class="plan-name">Listed</div>
-        <div class="plan-price">£29</div>
-        <div class="plan-period">per month · cancel any time</div>
-        <div class="plan-desc">Get found by budget-aware homeowners in your area. A professional profile with direct, exclusive enquiry contact.</div>
-        <ul class="features-list">
-          <li><span class="feat-check">✓</span> Map listing with full profile</li>
-          <li><span class="feat-check">✓</span> Direct exclusive enquiries</li>
-          <li><span class="feat-check">✓</span> 5 portfolio photos</li>
-          <li><span class="feat-check">✓</span> Verified badge</li>
-          <li><span class="feat-check">✓</span> Customer review collection</li>
-          <li><span class="feat-check">✓</span> Contact details visible</li>
-          <li class="excluded"><span class="feat-x">✗</span> Priority placement</li>
-          <li class="excluded"><span class="feat-x">✗</span> Analytics dashboard</li>
-        </ul>
-        <button onclick="goToStripe('builder_listed')" class="btn-outline" style="display:block;text-align:center;padding:14px;width:100%;cursor:pointer">Get listed →</button>
-        <div class="vs-note">Checkatrade basic: <strong>£80–100/mo</strong> for shared leads</div>
-      </div>
-      <div class="plan-card featured">
-        <div class="plan-badge">Most popular</div>
-        <div class="plan-name">Featured</div>
-        <div class="plan-price">£59</div>
-        <div class="plan-period">per month · cancel any time</div>
-        <div class="plan-desc">Priority placement, project gallery, and response analytics. Stand out to homeowners who are ready to build.</div>
-        <ul class="features-list">
-          <li><span class="feat-check">✓</span> Everything in Listed</li>
-          <li><span class="feat-check">✓</span> Priority placement in results</li>
-          <li><span class="feat-check">✓</span> 20 portfolio photos</li>
-          <li><span class="feat-check">✓</span> Response time badge</li>
-          <li><span class="feat-check">✓</span> Compliance document storage</li>
-          <li><span class="feat-check">✓</span> Enquiry analytics dashboard</li>
-          <li><span class="feat-check">✓</span> Monthly performance report</li>
-          <li class="excluded"><span class="feat-x">✗</span> Top placement guarantee</li>
-        </ul>
-        <button onclick="goToStripe('builder_featured')" class="btn-primary" style="display:block;text-align:center;width:100%;cursor:pointer">Get featured →</button>
-        <div class="vs-note">Checkatrade enhanced: <strong>£150–200/mo</strong> + still shared leads</div>
-      </div>
-      <div class="plan-card">
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">£99</div>
-        <div class="plan-period">per month · cancel any time</div>
-        <div class="plan-desc">Top of search results in your area. Full analytics and verified professional status. Support from builders who get it.</div>
-        <ul class="features-list">
-          <li><span class="feat-check">✓</span> Everything in Featured</li>
-          <li><span class="feat-check">✓</span> Top placement — first in area</li>
-          <li><span class="feat-check">✓</span> Unlimited portfolio photos</li>
-          <li><span class="feat-check">✓</span> Verified professional status</li>
-          <li><span class="feat-check">✓</span> Lead value analytics</li>
-          <li><span class="feat-check">✓</span> Priority builder support</li>
-          <li><span class="feat-check">✓</span> Estiquote Pro badge</li>
-          <li><span class="feat-check">✓</span> Data export</li>
-        </ul>
-        <button onclick="goToStripe('builder_pro')" class="btn-outline" style="display:block;text-align:center;padding:14px;width:100%;cursor:pointer">Go Pro →</button>
-        <div class="vs-note">Checkatrade Pro: <strong>£300–370/mo</strong> for the same visibility</div>
-      </div>
-    </div>
-
-    <!-- COMPARISON BAR -->
-    <div class="compare-bar">
-      <div class="compare-bar-title">Estiquote vs Checkatrade — the honest numbers</div>
-      <div class="compare-row">
-        <div class="compare-cell compare-head"></div>
-        <div class="compare-cell compare-head">Checkatrade</div>
-        <div class="compare-cell compare-head">Estiquote</div>
-      </div>
-      ${[
-        ['Monthly cost','£80–370/mo','£29–99/mo'],
-        ['Lead type','Shared with 3–4 builders','Exclusive to you'],
-        ['Annual lock-in','Yes — 14-day trap','No — monthly, cancel any time'],
-        ['You own your reviews','No','Yes — always'],
-        ['Homeowner budget-qualified','No','Yes — every single one'],
-        ['Compliance document storage','No','Yes (Featured+)'],
-        ['Founded by','Canadian asset fund','Active UK contractor'],
-      ].map(([f,ct,eq],i) => `
-      <div class="compare-row">
-        <div class="compare-cell compare-cell-dark">${f}</div>
-        <div class="compare-cell compare-cell-bad">${ct}</div>
-        <div class="compare-cell compare-cell-good">${eq}</div>
-      </div>`).join('')}
-    </div>
-
-    <div style="text-align:center;">
-      <a href="builders.html" class="btn-ghost">Learn more about builder plans →</a>
+    <div class="soon-panel">
+      <div class="soon-icon">🏗</div>
+      <div class="soon-title">Builder listings are coming in Phase 2</div>
+      <div class="soon-body">We're launching the homeowner cost estimator first. Builder profiles, the local map and exclusive enquiries are next on the roadmap — get in touch if you'd like early access when we open it up.</div>
+      <a href="mailto:estiquoteofficial@gmail.com?subject=Builder%20early%20access" class="btn-primary" style="display:inline-block;padding:14px 28px;text-decoration:none">Register your interest →</a>
     </div>
   </div>
 
@@ -312,10 +230,6 @@ body { padding-top: 80px; }
       <div class="faq-a">Our estimates are based on BCIS, BMF, and ONS data, calibrated against real project quotes. They're accurate enough to spot a bad quote and enter negotiations informed — not a substitute for a professional tender. Always get 3 quotes from vetted contractors.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Can builders really cancel any time?<span class="faq-toggle">+</span></div>
-      <div class="faq-a">Yes. Monthly billing, no annual commitment, no 14-day cancellation trap. Cancel from your dashboard and billing stops at end of the current month. Your profile data is always yours to export — unlike Checkatrade where everything disappears when you stop paying.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">How often are prices updated?<span class="faq-toggle">+</span></div>
       <div class="faq-a">Material prices are updated monthly based on BCIS and ONS data. Regional labour multipliers are reviewed quarterly. Pro users receive an email alert whenever significant price movements occur.</div>
     </div>
@@ -324,8 +238,8 @@ body { padding-top: 80px; }
       <div class="faq-a">All estimates are shown ex-VAT. Most building contractors charge 20% VAT. Some conversions and new builds may qualify for reduced rates — we flag this where relevant.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">What areas do builder listings cover?<span class="faq-toggle">+</span></div>
-      <div class="faq-a">We launched in SE England (Sussex, Surrey, Kent) and are expanding nationally. Register now outside our coverage area and you'll go live automatically when we reach your region — at founding member pricing.</div>
+      <div class="faq-q">When do builder listings launch?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Builder profiles and the local builder map are launching in Phase 2, shortly after the homeowner estimator goes live. Email us at estiquoteofficial@gmail.com to register interest and we'll let you know as soon as it opens.</div>
     </div>
   </div>
 </div>
