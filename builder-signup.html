@@ -6,8 +6,8 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="shortcut icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>List Your Business — Estiquote for Builders</title>
-<meta name="description" content="Get found by homeowners actively planning projects in your area. List your trade business on Estiquote from £29/month.">
+<title>List Your Business — Estiquote for Builders (Coming Soon)</title>
+<meta name="description" content="Estiquote's builder marketplace is launching in Phase 2. Register your interest to be first in line when local builder listings open.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -48,9 +48,9 @@
     align-items: center;
     gap: 8px;
     font-size: 11px;
-    background: rgba(0,201,167,0.08);
-    border: 1px solid rgba(0,201,167,0.2);
-    color: rgba(77,255,214,0.9);
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.25);
+    color: #f5b942;
     border-radius: 4px;
     padding: 5px 12px;
     margin-bottom: 1.5rem;
@@ -91,69 +91,19 @@
   /* SIGNUP CARD */
   .signup-card {
     background: var(--navy-2);
-    border: 1px solid rgba(0,201,167,0.2);
+    border: 1px solid rgba(245,158,11,0.25);
     border-radius: var(--radius-lg);
     padding: 2rem;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 80px rgba(0,201,167,0.05);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    text-align: center;
   }
 
-  .sc-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .sc-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; }
-
-  /* PLAN SELECTOR */
-  .plan-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 1.5rem;
-  }
-
-  .plan-opt {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    background: rgba(255,255,255,0.02);
-  }
-
-  .plan-opt:hover { border-color: var(--border-hover); }
-  .plan-opt.selected { border-color: var(--teal); background: var(--teal-dim); }
-
-  .po-left { display: flex; align-items: center; gap: 10px; }
-  .po-radio {
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.2);
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: var(--transition);
-  }
-
-  .plan-opt.selected .po-radio { border-color: var(--teal); background: var(--teal); }
-  .plan-opt.selected .po-radio::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--navy); }
-
-  .po-name { font-size: 14px; font-weight: 600; color: var(--text); }
-  .po-desc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-  .po-price { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--teal-light); white-space: nowrap; }
-  .po-period { font-size: 10px; color: var(--text-dim); text-align: right; }
-
-  .po-badge {
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 3px;
-    background: linear-gradient(135deg, var(--teal), var(--teal-light));
-    color: var(--navy);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
+  .sc-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .sc-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+  .sc-icon { font-size: 36px; margin-bottom: 1rem; }
 
   /* FORM */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; }
   .form-group { margin-bottom: 10px; }
   .form-group.full { grid-column: 1 / -1; }
 
@@ -381,36 +331,16 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/auth.js"></script>
-<script src="js/stripe-links.js"></script>
   <script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
-<div id="test-mode-banner" style="display:none;background:rgba(245,158,11,0.12);border-bottom:1px solid rgba(245,158,11,0.3);padding:8px 1.5rem;text-align:center;font-size:12px;color:rgba(245,200,80,0.9);font-family:'Instrument Sans',sans-serif;position:fixed;top:0;left:0;right:0;z-index:200;letter-spacing:0.3px;">
-  ⚡ <strong>Demo mode</strong> — Payments are in Stripe test mode. No real charges will be made. Use card <strong>4242 4242 4242 4242</strong> to test.
-</div>
-<script>
-(function(){
-  function checkStripeMode(){
-    if(typeof STRIPE_LINKS !== 'undefined'){
-      if(STRIPE_LINKS.homeowner_pro && STRIPE_LINKS.homeowner_pro.includes('test_')){
-        var b = document.getElementById('test-mode-banner');
-        if(b) b.style.display = 'block';
-      }
-    } else {
-      setTimeout(checkStripeMode, 300);
-    }
-  }
-  checkStripeMode();
-})();
-</script>
-<!-- TEST MODE BANNER — remove when Stripe goes live -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
 
 
 <nav class="nav nav-scrolled">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
     <div class="nav-links">
-      <a href="find-builders.html" class="nav-link">Find builders</a>
       <a href="estimator.html" class="nav-link">Estimator</a>
       <a href="pricing.html" class="nav-link">Homeowner pricing</a>
       <a href="login.html" class="nav-link">Sign in</a>
@@ -420,7 +350,6 @@
     </button>
   </div>
   <div class="nav-mobile" id="navMobile">
-    <a href="find-builders.html">Find builders</a>
     <a href="estimator.html">Estimator</a>
     <a href="login.html">Sign in</a>
   </div>
@@ -430,9 +359,9 @@
 <div class="builder-hero">
   <div class="hero-inner">
     <div>
-      <div class="builder-tag">For builders & contractors</div>
+      <div class="builder-tag">⚠ Builder listings — Phase 2, coming soon</div>
       <h1 class="builder-h1">Leads that already<br><em>know their budget.</em></h1>
-      <p class="builder-sub">Every homeowner who finds you on Estiquote has just priced up their project. They know what fair costs look like. They're ready to call. These are the best leads in construction.</p>
+      <p class="builder-sub">We're launching Estiquote with the homeowner cost estimator first. Builder profiles, the local map and exclusive enquiries are next on the roadmap. Register below and we'll email you the moment listings open — with founding member pricing locked in.</p>
       <div class="builder-proof">
         <div class="proof-item"><div class="proof-dot"></div>Verified business profile</div>
         <div class="proof-item"><div class="proof-dot"></div>Live map listing</div>
@@ -442,52 +371,11 @@
       </div>
     </div>
 
-    <!-- SIGNUP CARD -->
+    <!-- INTEREST CARD -->
     <div class="signup-card">
-      <div class="sc-title">Get listed today</div>
-      <div class="sc-sub">Start appearing in searches immediately on approval</div>
-
-      <div class="plan-selector">
-        <div class="plan-opt" onclick="selectPlan(this,'listed')" id="plan-listed">
-          <div class="po-left">
-            <div class="po-radio"></div>
-            <div>
-              <div class="po-name">Listed</div>
-              <div class="po-desc">Map pin + basic profile</div>
-            </div>
-          </div>
-          <div style="text-align:right">
-            <div class="po-price">£29</div>
-            <div class="po-period">per month</div>
-          </div>
-        </div>
-        <div class="plan-opt selected" onclick="selectPlan(this,'featured')" id="plan-featured">
-          <div class="po-left">
-            <div class="po-radio"></div>
-            <div>
-              <div class="po-name">Featured <span class="po-badge">POPULAR</span></div>
-              <div class="po-desc">Priority placement + photos + reviews</div>
-            </div>
-          </div>
-          <div style="text-align:right">
-            <div class="po-price">£59</div>
-            <div class="po-period">per month</div>
-          </div>
-        </div>
-        <div class="plan-opt" onclick="selectPlan(this,'pro')" id="plan-pro">
-          <div class="po-left">
-            <div class="po-radio"></div>
-            <div>
-              <div class="po-name">Pro</div>
-              <div class="po-desc">Top results + analytics + direct message</div>
-            </div>
-          </div>
-          <div style="text-align:right">
-            <div class="po-price">£99</div>
-            <div class="po-period">per month</div>
-          </div>
-        </div>
-      </div>
+      <div class="sc-icon">🏗</div>
+      <div class="sc-title">Coming in Phase 2</div>
+      <div class="sc-sub">Register your interest now and we'll email you as soon as builder listings open — no payment required today.</div>
 
       <div class="form-grid">
         <div class="form-group">
@@ -513,27 +401,27 @@
         <div class="form-group">
           <label>Primary trade</label>
           <select id="bizTrade">
-            <option>Extensions & Builds</option>
+            <option>Extensions &amp; Builds</option>
             <option>Loft Conversions</option>
             <option>Kitchen Renovation</option>
             <option>Bathroom Fit-Out</option>
             <option>Electrical Works</option>
-            <option>Plumbing & Heating</option>
+            <option>Plumbing &amp; Heating</option>
             <option>Structural Works</option>
             <option>Decoration</option>
             <option>General Builder</option>
           </select>
         </div>
         <div class="form-group full">
-          <label>Brief description of your business</label>
-          <textarea placeholder="Tell homeowners what you specialise in, your experience and area covered..." rows="3" id="bizDesc" style="resize:none"></textarea>
+          <label>Anything else we should know? (optional)</label>
+          <textarea placeholder="Trades covered, area, experience..." rows="3" id="bizDesc" style="resize:none"></textarea>
         </div>
       </div>
 
-      <button class="submit-btn" onclick="handleBuilderSignup()">
-        Get listed on Estiquote →
+      <button class="submit-btn" onclick="handleBuilderInterest()">
+        Register my interest →
       </button>
-      <p class="small-print">14-day free trial · No setup fee · Cancel any time<br>By signing up you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a></p>
+      <p class="small-print">No payment required · We'll only email you about Phase 2 launch<br>By registering you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a></p>
     </div>
   </div>
 </div>
@@ -580,41 +468,12 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="builder-steps">
-  <div class="container">
-    <div class="section-label">Simple process</div>
-    <h2 class="section-h2">Live on the map in 24 hours</h2>
-    <div class="bsteps-grid">
-      <div class="bstep">
-        <div class="bstep-num">1</div>
-        <div class="bstep-title">Sign up & choose plan</div>
-        <div class="bstep-body">Fill in your business details, pick your tier, and start your 14-day free trial.</div>
-      </div>
-      <div class="bstep">
-        <div class="bstep-num">2</div>
-        <div class="bstep-title">We verify your business</div>
-        <div class="bstep-body">Our team checks your details, insurance, and certifications within 24 hours.</div>
-      </div>
-      <div class="bstep">
-        <div class="bstep-num">3</div>
-        <div class="bstep-title">Go live on the map</div>
-        <div class="bstep-body">Your pin appears immediately. Homeowners searching your area start finding you.</div>
-      </div>
-      <div class="bstep">
-        <div class="bstep-num">4</div>
-        <div class="bstep-title">Receive direct enquiries</div>
-        <div class="bstep-body">Homeowners contact you directly. No middleman, no lead auction, no markup.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TIERS COMPARISON -->
+<!-- TIERS COMPARISON (launch pricing preview) -->
 <section class="tiers-section">
   <div class="container">
-    <div class="section-label">Compare tiers</div>
+    <div class="section-label">Planned pricing — Phase 2</div>
     <h2 class="section-h2">What's included</h2>
+    <p class="section-sub">Register your interest above to lock in founding member pricing when we launch.</p>
 
     <table class="tiers-table">
       <thead>
@@ -652,9 +511,9 @@
         <tr><td>Competitor benchmarking</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
         <tr class="tier-cta-row">
           <td></td>
-          <td><a href="#" class="tier-btn outline" onclick="selectPlanAndScroll('listed')">Get started</a></td>
-          <td><a href="#" class="tier-btn primary" onclick="selectPlanAndScroll('featured')">Get started</a></td>
-          <td><a href="#" class="tier-btn outline" onclick="selectPlanAndScroll('pro')">Get started</a></td>
+          <td><a href="#" class="tier-btn outline" onclick="document.querySelector('.signup-card').scrollIntoView({behavior:'smooth',block:'center'});return false;">Register interest</a></td>
+          <td><a href="#" class="tier-btn primary" onclick="document.querySelector('.signup-card').scrollIntoView({behavior:'smooth',block:'center'});return false;">Register interest</a></td>
+          <td><a href="#" class="tier-btn outline" onclick="document.querySelector('.signup-card').scrollIntoView({behavior:'smooth',block:'center'});return false;">Register interest</a></td>
         </tr>
       </tbody>
     </table>
@@ -678,28 +537,28 @@
     <h2 class="section-h2">Builder FAQ</h2>
     <div class="faq-grid">
       <div class="faq-item">
-        <div class="faq-q">How quickly will I appear on the map?</div>
-        <div class="faq-a">We verify all businesses within 24 hours of signup. Once verified, your pin goes live immediately and you start appearing in searches.</div>
+        <div class="faq-q">When does this launch?</div>
+        <div class="faq-a">We're launching Estiquote with the homeowner cost estimator first. Builder listings and the local map follow in Phase 2. Register your interest and we'll email you the moment it opens.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Will I be charged anything today?</div>
+        <div class="faq-a">No. Registering your interest is free and doesn't require payment details. You'll only be asked to pay once listings go live and you choose to subscribe.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Is there a contract or minimum term?</div>
         <div class="faq-a">No contract, no minimum term. Monthly rolling subscription. Cancel any time from your dashboard — you keep access until the end of the billing period.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">What area do I appear in?</div>
-        <div class="faq-a">You appear in searches centred on your postcode, within the homeowner's chosen radius. You can set a coverage area of up to 50 miles from your base.</div>
+        <div class="faq-q">What area will listings cover?</div>
+        <div class="faq-a">You'll appear in searches centred on your postcode, within the homeowner's chosen radius. You'll be able to set a coverage area of up to 50 miles from your base.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Do you check our insurance and qualifications?</div>
-        <div class="faq-a">Yes. We verify public liability insurance and relevant trade qualifications (Gas Safe, NICEIC, etc.) before awarding the Verified badge. This protects both you and homeowners.</div>
+        <div class="faq-q">Will you check our insurance and qualifications?</div>
+        <div class="faq-a">Yes. We'll verify public liability insurance and relevant trade qualifications (Gas Safe, NICEIC, etc.) before awarding the Verified badge. This protects both you and homeowners.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Can I list multiple trades?</div>
-        <div class="faq-a">Yes — your profile can show all the trades you cover. You appear in searches for every trade you list, not just your primary one.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How do homeowners contact me?</div>
-        <div class="faq-a">Via a direct enquiry form that sends to your email and phone. Pro tier also gets a direct message inbox. We never sell or share your contact details with third parties.</div>
+        <div class="faq-q">What do I get for registering early?</div>
+        <div class="faq-a">Early registrants lock in founding member pricing and get first access when we open listings in your area.</div>
       </div>
     </div>
   </div>
@@ -713,30 +572,17 @@
 </footer>
 
 <script>
-  let selectedPlan = 'featured';
-
   window.addEventListener('scroll', () => {
     document.querySelector('.nav').classList.toggle('nav-scrolled', window.scrollY > 40);
   });
 
-  function selectPlan(el, plan) {
-    document.querySelectorAll('.plan-opt').forEach(p => p.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedPlan = plan;
-  }
-
-  function selectPlanAndScroll(plan) {
-    selectPlan(document.getElementById('plan-' + plan), plan);
-    document.querySelector('.signup-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  async function handleBuilderSignup() {
+  async function handleBuilderInterest() {
     const name  = document.getElementById('bizName').value.trim();
     const email = document.getElementById('bizEmail').value.trim();
     const phone = document.getElementById('bizPhone').value.trim();
 
-    if (!name || !email || !phone) {
-      showFormError('Please fill in your business name, email and phone number to continue.');
+    if (!name || !email) {
+      showFormError('Please fill in your business name and email so we can contact you.');
       return;
     }
 
@@ -744,38 +590,28 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    const planPrice = selectedPlan === 'listed' ? '£29/mo' : selectedPlan === 'featured' ? '£59/mo' : '£99/mo';
-    // Map selected plan to valid stripe-links.js key
-    const stripeKeyMap = {
-      listed:   'builder_listed',
-      featured: 'builder_featured',
-      pro:      'builder_pro'
-    };
-    const stripeKey = stripeKeyMap[selectedPlan] || 'builder_listed';
-
-    // 1. Send application details to Formspree
     try {
       await fetch('https://formspree.io/f/xwvadzvz', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: `[Estiquote] New builder listing application — ${name}`,
-          form_type: 'Builder Listing Application',
+          _subject: `[Estiquote] Phase 2 builder interest — ${name}`,
+          form_type: 'Builder Phase 2 Interest',
           business_name: name,
           contact_name: document.getElementById('contactName').value,
           email, phone,
           postcode: document.getElementById('bizPostcode').value.toUpperCase(),
           primary_trade: document.getElementById('bizTrade').value,
-          plan: `${selectedPlan.toUpperCase()} — ${planPrice}`,
           description: document.getElementById('bizDesc').value,
           submitted_at: new Date().toLocaleString('en-GB')
         })
       });
-    } catch (e) {}
-
-    // 2. Go to Stripe — with fallback if link not configured yet
-    btn.textContent = 'Redirecting to payment...';
-    setTimeout(() => goToStripe(stripeKey, email), 600);
+      btn.textContent = "You're on the list ✓";
+    } catch (e) {
+      showFormError('Something went wrong. Please try again or email estiquoteofficial@gmail.com');
+      btn.textContent = 'Register my interest →';
+      btn.disabled = false;
+    }
   }
 
   function showFormError(msg) {
