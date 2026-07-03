@@ -1,7 +1,7 @@
 // ================================================================
 // ESTIQUOTE — Resend Email Function
 // Handles: welcome emails, enquiry confirmations, builder alerts,
-//          material price alerts, upgrade confirmations
+//          material price alerts, upgrade confirmations, estimate summaries
 // Requires: RESEND_API_KEY env var in Netlify
 // ================================================================
 
@@ -78,6 +78,24 @@ const templates = {
       <a href="https://estiquote.co.uk/estimator.html" class="btn">Run my first estimate →</a>
       <div class="divider"></div>
       <p class="p" style="font-size:13px;color:#888">Questions? Just reply to this email — we read everything.</p>
+    `)
+  }),
+
+  estimate_summary: ({ trade, context, estimate, perSqm, extras }) => ({
+    subject: `Your Estiquote estimate — ${trade || 'your project'} · ${estimate}`,
+    html: baseTemplate(`
+      <h1 class="h1">Here's the number you asked for.</h1>
+      <p class="p">You ran a cost estimate on Estiquote${trade ? ` for a ${String(trade).toLowerCase()} project` : ''}. We've saved the details below so you have it to hand when you're talking to builders.</p>
+      <div class="highlight">
+        ${context ? `<p style="font-size:12px;color:#888;margin-bottom:4px">${context}</p>` : ''}
+        <p style="font-size:22px;font-weight:800;color:#0b1120;margin:4px 0 0">${estimate}</p>
+        ${perSqm ? `<p style="font-size:12px;color:#888;margin-top:4px">${perSqm}</p>` : ''}
+      </div>
+      ${extras ? `<p class="p" style="font-size:13px;color:#888">Extras included in this estimate: ${extras}</p>` : ''}
+      <p class="p">Use this as your benchmark when comparing quotes. As a rule of thumb, be curious about any quote more than 20% above or below this range — ask the builder to explain the difference.</p>
+      <a href="https://estiquote.co.uk/estimator.html" class="btn">Run another estimate →</a>
+      <div class="divider"></div>
+      <p class="p" style="font-size:13px;color:#888">Want to save estimates permanently, export a PDF, or track material prices over time? <a href="https://estiquote.co.uk/signup.html" style="color:#00c9a7">Create a free account →</a></p>
     `)
   }),
 
