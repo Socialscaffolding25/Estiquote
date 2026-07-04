@@ -13,6 +13,12 @@ function getClient() {
   }
   return _supabase;
 }
+function withTimeout(promise, ms = 8000) {
+  return Promise.race([
+    promise,
+    new Promise((resolve) => setTimeout(() => resolve(null), ms))
+  ]);
+}
 
 const EQ = {
 
@@ -69,8 +75,9 @@ const EQ = {
     try {
     const sb = getClient();
     if (!sb) return null;
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) return null;
+        const authResult = await withTimeout(sb.auth.getUser());
+    const user = authResult?.data?.user;
+      if (!user) return null;
     let { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
     // If profile missing (race condition on signup), create it now
     if (!profile) {
@@ -115,8 +122,9 @@ const EQ = {
   async upgradePlan(plan) {
     const sb = getClient();
     if (!sb) return;
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) return;
+        const authResult = await withTimeout(sb.auth.getUser());
+    const user = authResult?.data?.user;
+if (!user) return;
     await sb.from('profiles').update({
       plan, plan_activated_at: new Date().toISOString(), subscription_status: 'active'
     }).eq('id', user.id);
@@ -141,8 +149,9 @@ const EQ = {
     try {
     const sb = getClient();
     if (!sb) return [];
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) return [];
+        const authResult = await withTimeout(sb.auth.getUser());
+    const user = authResult?.data?.user;
+if (!user) return [];
     const { data } = await sb.from('projects')
       .select('*').eq('user_id', user.id)
       .order('created_at', { ascending: false });
@@ -153,8 +162,9 @@ const EQ = {
   async saveProject(project) {
     const sb = getClient();
     if (!sb) return false;
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) return false;
+        const authResult = await withTimeout(sb.auth.getUser());
+    const user = authResult?.data?.user;
+if (!user) return false;
     const profile = this.getUserSync();
     const projects = await this.getProjects();
     if (!this.isPro(profile) && projects.length >= 3) return 'limit_reached';
@@ -226,8 +236,9 @@ const EQ = {
         this.updateNav(null);
       }
     });
-    const { data: { session } } = await sb.auth.getSession();
-    if (session?.user) {
+        const sessionResult = await withTimeout(sb.auth.getSession());
+    const session = sessionResult?.data?.session;
+if (session?.user) {
       const user = await this.getUser();
       this.updateNav(user);
     }
