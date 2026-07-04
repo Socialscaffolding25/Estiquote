@@ -604,9 +604,9 @@
           <span class="slider-label" id="s2-label">Number of storeys</span>
           <span class="slider-val" id="s2-val">1</span>
         </div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);text-align:center;flex:1">Budget</span><span style="font-size:11px;color:var(--text-dim);text-align:center;flex:1">Mid-range</span><span style="font-size:11px;color:var(--text-dim);text-align:center;flex:1">Premium</span></div>
+        
         <input type="range" id="s2" min="1" aria-label="Specification level" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" max="3" value="1" step="1" oninput="updateEst();updateSpecLabel(this.value)">
-        <div id="spec-label-live" style="text-align:center;font-size:12px;font-weight:700;color:var(--teal-light);margin-top:6px;">Budget spec selected</div>
+        <div id="spec-label-live" style="display:none;">Budget spec selected</div>
       </div>
 
       <div style="margin-top:1rem">
