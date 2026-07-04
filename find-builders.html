@@ -879,7 +879,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
       <div class="sidebar-count" id="builderCount">Finding builders near <strong>Tunbridge Wells</strong>...</div>
       <div class="sort-row">
         <span class="sort-label">Sort by</span>
-        <select class="sort-select" onchange="sortBuilders(this.value)">
+        <select class="sort-select" aria-label="Sort builders by" onchange="sortBuilders(this.value)">
           <option value="distance">Nearest first</option>
           <option value="rating">Highest rated</option>
           <option value="tier">Featured first</option>
@@ -916,7 +916,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
     <div class="radius-control">
       <div class="rc-label">Search radius</div>
       <div class="rc-val" id="radiusVal">10 miles</div>
-      <input type="range" id="radiusSlider" min="2" max="50" value="10" step="1" oninput="updateRadius(this.value)">
+      <input type="range" id="radiusSlider" aria-label="Search radius in miles" min="2" max="50" value="10" step="1" oninput="updateRadius(this.value)">
     </div>
 
     <!-- BUILDER DETAIL PANEL -->
