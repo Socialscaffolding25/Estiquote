@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,9 +13,9 @@
   --navy-4: #1f2f47;
   --border: rgba(255,255,255,0.07);
   --border-hover: rgba(0,201,167,0.4);
-  --text: #eef2f7;
-  --text-muted: rgba(238,242,247,0.55);
-  --text-dim: rgba(238,242,247,0.28);
+  --text: #f5f8fb;
+  --text-muted: rgba(238,242,247,0.72);
+  --text-dim: rgba(238,242,247,0.48);
   --serif: 'Syne', system-ui, sans-serif;
   --sans: 'Instrument Sans', system-ui, sans-serif;
   --radius: 10px;
@@ -31,8 +31,11 @@ body {
   font-family: var(--sans);
   background: var(--navy);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.7;
+  letter-spacing: 0.1px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
@@ -108,11 +111,11 @@ body {
 
 /* SECTION LABELS */
 .section-label {
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--teal);
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 10px;
 }
 
@@ -121,12 +124,13 @@ body {
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 800;
   color: var(--text);
-  line-height: 1.1;
+  line-height: 1.15;
   margin-bottom: 12px;
 }
 
 .section-sub {
-  font-size: 16px;
+  font-size: 17px;
+  line-height: 1.7;
   color: var(--text-muted);
   max-width: 520px;
 }
@@ -181,8 +185,8 @@ body {
 .nav-link {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 12.5px;
-  font-weight: 400;
+  font-size: 13.5px;
+  font-weight: 500;
   transition: var(--transition);
   white-space: nowrap;
 }
@@ -274,10 +278,10 @@ input::placeholder, textarea::placeholder { color: var(--text-dim); }
 select option { background: #18263d; }
 label {
   display: block;
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--text-muted);
   margin-bottom: 6px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* RANGE SLIDER */
@@ -440,3 +444,9 @@ button { cursor: pointer; }
     height: 46px !important;
   }
 }
+
+/* ── READABILITY FLOOR — catches the site's many inline font-size:11-13px labels/badges ── */
+[style*="font-size:11px"], [style*="font-size: 11px"],
+[style*="font-size:10px"], [style*="font-size: 10px"] { font-size: 12px !important; }
+[style*="font-size:12px"], [style*="font-size: 12px"],
+[style*="font-size:13px"], [style*="font-size: 13px"] { font-size: 13.5px !important; }
