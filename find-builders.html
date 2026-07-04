@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/global.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css';">
 <style>
 body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
@@ -929,7 +929,7 @@ body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-d
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';document.head.appendChild(s);"></script>
 <script>
 // ============================================================
 // DEMO BUILDER DATA — shown only when real DB returns 0 results
@@ -1635,7 +1635,16 @@ document.getElementById('map').addEventListener('click', function(e) {
 });
 
 // Init
-initMap();
+(function startMap(attempt) {
+  if (typeof L !== 'undefined') { initMap(); return; }
+  if (attempt >= 40) {
+    var mapEl = document.getElementById('map');
+    if (mapEl) mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-family:var(--sans);text-align:center;padding:2rem;">Map failed to load. Please refresh the page.</div>';
+    return;
+  }
+  setTimeout(function() { startMap(attempt + 1); }, 100);
+})(0);
+
 </script>
 
 <!-- COOKIE CONSENT -->
