@@ -336,6 +336,25 @@
 
   .btn-pdf:hover { border-color: var(--border-hover); color: var(--teal-light); }
 
+    .btn-email {
+          width: 100%;
+          padding: 12px;
+          border-radius: var(--radius);
+          background: transparent;
+          border: 1px solid var(--border);
+          color: var(--text-muted);
+          font-family: var(--sans);
+          font-size: 14px;
+          cursor: pointer;
+          transition: var(--transition);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+    }
+
+  .btn-email:hover { border-color: var(--border-hover); color: var(--teal-light); }
+
   .pro-lock {
     display: flex;
     align-items: center;
@@ -694,6 +713,7 @@
 
     <div class="actions-stack">
       <button class="btn-save" onclick="saveProject()">💾 Save this estimate</button>
+      <button class="btn-email" onclick="emailEstimate()">✉️ Email me this estimate</button>
       <button class="btn-pdf" onclick="exportPDF()">📄 Export as PDF <span style="font-size:10px;opacity:0.5;margin-left:4px">Pro</span></button>
       <div class="pro-lock" id="pdf-lock">
         <span class="lock-icon">🔒</span>
@@ -1114,6 +1134,121 @@
       applyPlanGating(); // refresh save button label
     }, 2500);
   }
+  
+    async function emailEstimate() {
+      const btn = document.querySelector('.btn-email');
+      const user = await EQ.getUser();
+      const estimate = document.getElementById('est-range')?.textContent || '';
+      const context = document.getElementById('est-context')?.textContent || '';
+      const perSqm = document.getElementById('per-sqm-val')?.textContent || '';
+      const extrasList = Object.keys(extras).join(', ') || 'None';
+
+      const sendTo = async (email, notifyLead) => {
+        const originalLabel = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch('/.netlify/functions/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'estimate_summary',
+              to: email,
+              data: { trade: currentTrade, context: context, estimate: estimate, perSqm: perSqm, extras: extrasList }
+            })
+          });
+          if (!res.ok) throw new Error('send failed');
+          if (notifyLead) {
+            try {
+              fetch('https://formspree.io/f/xwvadzvz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                  _subject: '[Estiquote] Anonymous estimate email capture - ' + email,
+                  form_type: 'Anonymous Estimate Email',
+                  email: email, trade: currentTrade, region: regionName, quality: qualKey,
+                  estimate_range: estimate,
+                  captured_at: new Date().toLocaleString('en-GB')
+                })
+              });
+            } catch (e) {}
+          }
+          btn.textContent = 'Sent - check your inbox';
+          setTimeout(function () { btn.textContent = originalLabel; btn.disabled = false; }, 3000);
+        } catch (e) {
+          btn.textContent = originalLabel;
+          btn.disabled = false;
+          alert('Something went wrong sending that email. Please try again or email estiquoteofficial@gmail.com');
+        }
+      };
+
+      if (user && user.email) {
+        sendTo(user.email, false);
+        return;
+      }
+
+      const overlay = document.createElement('div');
+      overlay.id = 'email-estimate-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+
+      const box = document.createElement('div');
+      box.style.cssText = 'background:var(--navy-2,#111b2e);border:1px solid rgba(0,201,167,0.25);border-radius:16px;padding:2rem;max-width:380px;width:100%;position:relative;';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.textContent = String.fromCharCode(10005);
+      closeBtn.style.cssText = 'position:absolute;top:12px;right:16px;background:transparent;border:none;color:#8892a4;font-size:20px;cursor:pointer;';
+      closeBtn.onclick = function () { overlay.remove(); };
+
+      const iconEl = document.createElement('div');
+      iconEl.style.cssText = 'font-size:28px;margin-bottom:10px';
+      iconEl.textContent = String.fromCharCode(9993);
+
+      const titleEl = document.createElement('h3');
+      titleEl.style.cssText = 'font-family:var(--serif);font-size:19px;font-weight:700;color:var(--text);margin:0 0 8px';
+      titleEl.textContent = 'Email me this estimate';
+
+      const descEl = document.createElement('p');
+      descEl.style.cssText = 'font-size:13px;color:var(--text-muted);margin:0 0 14px;line-height:1.6';
+      descEl.textContent = 'No account needed - we will just send this number to your inbox so you have it to hand.';
+
+      const inputEl = document.createElement('input');
+      inputEl.type = 'email';
+      inputEl.id = 'email-estimate-input';
+      inputEl.placeholder = 'you@example.com';
+      inputEl.style.cssText = 'margin-bottom:10px';
+
+      const errEl = document.createElement('div');
+      errEl.id = 'email-estimate-err';
+      errEl.style.cssText = 'display:none;color:#f87171;font-size:12px;margin-bottom:8px';
+
+      const sendBtn = document.createElement('button');
+      sendBtn.className = 'btn-primary';
+      sendBtn.style.cssText = 'width:100%;justify-content:center;';
+      sendBtn.textContent = 'Send it to me';
+
+      box.appendChild(closeBtn);
+      box.appendChild(iconEl);
+      box.appendChild(titleEl);
+      box.appendChild(descEl);
+      box.appendChild(inputEl);
+      box.appendChild(errEl);
+      box.appendChild(sendBtn);
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+
+      sendBtn.onclick = function () {
+        const val = inputEl.value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(val)) {
+          errEl.textContent = 'Please enter a valid email address.';
+          errEl.style.display = 'block';
+          return;
+        }
+        overlay.remove();
+        sendTo(val, true);
+      };
+    }
+
 
   // ── PLAN GATING ──────────────────────────────────────────
   const FREE_PROJECT_LIMIT = 3;
