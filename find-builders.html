@@ -1,4 +1,122 @@
-link.cta { color: var(--teal-light); font-weight: 600; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Local Builders — Estiquote</title>
+<meta name="description" content="Find verified local builders, contractors and tradespeople near you. Search by trade, read reviews, and contact directly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+body { padding-top: 64px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+/* NAV */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(11,17,32,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1.5rem;
+}
+
+.top-logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--teal-light);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.top-logo span { color: var(--text); opacity: 0.4; }
+
+.search-bar {
+  flex: 1;
+  max-width: 520px;
+  display: flex;
+  gap: 8px;
+}
+
+.search-bar input {
+  flex: 1;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.search-bar input:focus { border-color: var(--teal); background: rgba(0,201,167,0.08); box-shadow: 0 0 0 3px rgba(0,201,167,0.15); } .search-bar input { border-color: rgba(0,201,167,0.4) !important; }
+.search-bar input::placeholder { color: rgba(255,255,255,0.5); } .search-bar input { border-color: rgba(0,201,167,0.45) !important; background: rgba(255,255,255,0.1) !important; min-width: 200px !important; }
+
+.search-btn {
+  height: 40px;
+  padding: 0 16px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.search-btn:hover { opacity: 0.88; }
+
+.trade-filters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+
+.trade-filters::-webkit-scrollbar { display: none; }
+
+.filter-pill {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.filter-pill:hover { border-color: var(--border-hover); color: var(--teal-light); }
+.filter-pill.active { border-color: var(--teal); background: var(--teal-dim); color: var(--teal-light); font-weight: 500; }
+
+.top-nav-links { display: flex; gap: 1rem; margin-left: auto; flex-shrink: 0; }
+.top-nav-link { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: var(--transition); white-space: nowrap; }
+.top-nav-link:hover { color: var(--text); }
+.top-nav-link.cta { color: var(--teal-light); font-weight: 600; }
 
 /* MAIN LAYOUT */
 .map-layout {
