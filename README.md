@@ -3,9 +3,10 @@
 ## ✅ Code complete — manual actions required before going live
 
 ### CRITICAL (do these first)
+- [ ] Rotate the exposed Supabase service credential immediately in the Supabase dashboard.
 - [ ] Set 8 Netlify environment variables (Site config → Environment variables)
       SUPABASE_URL = https://wvultsxiqjkisbeidjcl.supabase.co
-      SUPABASE_SERVICE_KEY = sb_secret_y6LTrgfgEr4zj5P20GYKxg_8qrX8nC3
+      SUPABASE_SERVICE_KEY = [rotated secret — store in Netlify only; never commit]
       STRIPE_SECRET_KEY = [from Stripe dashboard — live mode]
       STRIPE_WEBHOOK_SECRET = [from Stripe webhook config]
       RESEND_API_KEY = [from resend.com]
@@ -54,4 +55,5 @@
 4. Add file → Upload files → Cmd+A all files → drag in
 5. Commit with version message
 6. Netlify auto-deploys in ~30 seconds
+
 NEVER upload the zip file itself — always unzip first.
