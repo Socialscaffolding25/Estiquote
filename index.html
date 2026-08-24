@@ -1,417 +1,267 @@
-<!DOCTYPE html>
-<html lang="en" style="scroll-behavior:smooth">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estiquote — UK Home Improvement Cost Estimator 2026</title>
-<meta name="description" content="Know what your extension, loft conversion or kitchen should cost before calling a builder. Free regional UK cost estimates.">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="apple-touch-icon" href="apple-touch-icon.svg">
-<link rel="shortcut icon" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://wvultsxiqjkisbeidjcl.supabase.co">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/global.css">
-<link rel="stylesheet" href="css/landing.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/stripe-links.js"></script>
-<meta name="theme-color" content="#00c9a7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Estiquote">
-<link rel="manifest" href="manifest.json">
-<link rel="canonical" href="https://estiquote.co.uk/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://estiquote.co.uk/">
-<meta property="og:title" content="Estiquote — Know what your home improvement should cost">
-<meta property="og:description" content="Free regional cost estimates for UK home improvement projects. Extensions, loft conversions, kitchens, bathrooms and more.">
-<meta property="og:image" content="https://estiquote.co.uk/og-image.png">
-<meta property="og:site_name" content="Estiquote">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Estiquote — Know what your home improvement should cost">
-<meta name="twitter:description" content="Free regional cost estimates for UK home improvement projects.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Estiquote",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
-  "description": "UK home improvement cost estimator. Free regional cost estimates for extensions, loft conversions, kitchens, bathrooms and more.",
-  "url": "https://estiquote.co.uk",
-  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}
-}
-</script>
-<script defer data-domain="estiquote.co.uk" src="https://plausible.io/js/script.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <meta name="description" content="Estiquote is the country-aware iPhone app for planning home-project costs, comparing written quotes and avoiding expensive surprises.">
+  <link rel="canonical" href="https://estiquote.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estiquote.app/">
+  <meta property="og:title" content="Estiquote — Know the number before you call anyone">
+  <meta property="og:description" content="Country-aware home-project cost guidance, local material units and quote comparison for iPhone.">
+  <meta property="og:image" content="https://estiquote.app/Brand/Web-AppIcon.png">
+  <meta name="twitter:card" content="summary">
+  <title>Estiquote — Know the number before you call anyone</title>
+  <link rel="icon" type="image/png" href="Brand/Web-AppIcon.png">
+  <link rel="apple-touch-icon" href="Brand/Web-AppIcon.png">
+  <link rel="stylesheet" href="css/site.css">
+  <script src="js/retire-legacy-pwa.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Estiquote",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "iOS 17 or later",
+    "description": "Country-aware home-project cost guidance, local material units and quote comparison for iPhone.",
+    "url": "https://estiquote.app/",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "GBP"
+    }
+  }
+  </script>
 </head>
 <body>
-<a href="#main-content" class="skip-to-content">Skip to main content</a>
-<div class="hero-bg-dots"></div>
-<div class="hero-bg-glow"></div>
+  <header class="site-header">
+    <div class="shell nav-wrap">
+      <a class="brand" href="#top" aria-label="Estiquote home">
+        <img class="brand-mark" src="Brand/Web-AppIcon.png" alt="" width="44" height="44">
+        <span class="brand-wordmark">Estiquote</span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#global">Country pricing</a>
+        <a href="#pricing">Pricing</a>
+        <a class="nav-button" href="#download">Get the iPhone app</a>
+      </nav>
+      <a class="mobile-nav-button" href="#download">Get app</a>
+    </div>
+  </header>
 
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">Esti<span>quote</span></a>
-    <div class="nav-links">
-      <a href="estimator.html" class="nav-link">Estimator</a>
-      <a href="materials.html" class="nav-link">Material prices</a>
-      <a href="pricing.html" class="nav-link">Pricing</a>
-      <a href="login.html" class="nav-link" id="nav-signin">Sign in</a>
-      <a href="signup.html" class="nav-cta" id="nav-cta">Get started free</a>
-    </div>
-    <button class="nav-burger" id="navBurger" onclick="toggleMenu()" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="nav-mobile" id="navMobile">
-    <a href="estimator.html">Estimator</a>
-    <a href="materials.html">Material prices</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="login.html">Sign in</a>
-    <a href="signup.html" class="mobile-cta">Get started free</a>
-  </div>
-</nav>
-
-<main id="main-content">
-<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">UK Home Improvement Cost Estimator 2026 — Extension, Loft, Kitchen &amp; Bathroom Prices</h1>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <div class="badge-dot"></div>
-      Updated Jun 2026 &mdash; gov.uk (DBT) data
-    </div>
-    <h2 class="hero-h1">Know the number<br>before you call<br><em>anyone.</em></h2>
-    <p class="hero-sub">Instant, accurate cost estimates for any UK home improvement project. Regional pricing. Real data. Free.</p>
-    <div class="hero-actions">
-      <a href="estimator.html" class="btn-primary btn-xl">Get my free estimate →</a>
-      <a href="#how-it-works" class="btn-ghost">How it works</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num">8</span>
-        <span class="stat-desc">trade categories</span>
-      </div>
-      <div class="stat-div"></div>
-      <div class="stat">
-        <span class="stat-num">6</span>
-        <span class="stat-desc">UK regions</span>
-      </div>
-      <div class="stat-div"></div>
-      <div class="stat">
-        <span class="stat-num">£0</span>
-        <span class="stat-desc">always free to use</span>
-      </div>
-      <div class="stat-div"></div>
-      <div class="stat">
-        <span class="stat-num">90s</span>
-        <span class="stat-desc">to your estimate</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-card">
-      <div class="hc-eyebrow">Estimated project cost</div>
-      <div class="hc-range">£60,200 – £87,800</div>
-      <div class="hc-detail">30m² extension · South East · Mid-range spec</div>
-      <div class="hc-bars">
-        <div class="hc-bar-row">
-          <span style="width:80px">Labour</span>
-          <div class="hc-bar"><div class="hc-bar-fill" style="width:51%"></div></div>
-          <span>£37,800</span>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span>Global guide estimates · free to start</div>
+        <h1>Know the number<br>before you call<br><em>anyone.</em></h1>
+        <p class="hero-lede">Country-aware home-project cost guidance, material benchmarks and quote comparison—built for the expensive decisions you do not want to guess.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#download">Get the free app <span aria-hidden="true">→</span></a>
+          <a class="button button-quiet" href="#how-it-works">See how it works</a>
         </div>
-        <div class="hc-bar-row">
-          <span style="width:80px">Materials</span>
-          <div class="hc-bar"><div class="hc-bar-fill" style="width:37%"></div></div>
-          <span>£27,400</span>
-        </div>
-        <div class="hc-bar-row">
-          <span style="width:80px">Prelims</span>
-          <div class="hc-bar"><div class="hc-bar-fill" style="width:12%"></div></div>
-          <span>£8,900</span>
+        <div class="hero-proof" aria-label="Estiquote highlights">
+          <span><strong>8</strong> project types</span>
+          <span><strong>175</strong> App Store markets</span>
+          <span><strong>Free</strong> to start</span>
+          <span><strong>90s</strong> to estimate</span>
         </div>
       </div>
-      <div class="hc-update">
-        <span class="hc-up">▲</span>
-        Steel +8.5% · Timber +7.6% · Rebar -5.2% (12mo to Apr 2026)
+
+      <div class="phone-stage" aria-label="Estiquote running on iPhone">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="phone">
+          <img src="Brand/Web-Home.png" alt="Estiquote home screen showing the approved house, estimate and check identity with project choices">
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Product principles">
+      <div class="shell trust-inner">
+        <span class="trust-label">Built for clearer project decisions</span>
+        <span>Local currency</span>
+        <span>Local units and currency</span>
+        <span>Apple in-app purchase</span>
+        <span class="trust-updated">No account required</span>
+      </div>
+    </section>
+
+    <section class="section shell" id="how-it-works">
+      <div class="section-heading">
+        <div class="eyebrow">A calmer starting point</div>
+        <h2>Useful knowledge before a quote becomes a commitment.</h2>
+        <p>Estiquote turns a few project choices into a planning range you can understand, save and take into contractor conversations.</p>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <span class="step-number">01</span>
+          <h3>Choose the project</h3>
+          <p>Start with an extension or full new build, loft, kitchen, bathroom, electrical, plumbing, structural work or decoration.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">02</span>
+          <h3>Set the local context</h3>
+          <p>Choose the country, local area type, approximate size, finish and relevant extras. Extra allowances scale with the project type and size.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">03</span>
+          <h3>Compare with confidence</h3>
+          <p>Understand the likely breakdown, hold a contingency and compare like-for-like written quotes before committing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="global">
+      <div class="shell global-grid">
+        <div>
+          <div class="eyebrow">Country-aware, not symbol-swapped</div>
+          <h2>A US estimate is different from a UK estimate.</h2>
+          <p class="section-lede">Estiquote changes the currency, planning value and construction units for your selected country. US projects use square feet and US material quantities; the UK and most other markets use metric units. Bundled World Bank economy-wide purchasing-power data translates the UK guide baseline and works offline.</p>
+          <div class="country-list" aria-label="Example supported countries">
+            <span>United States · USD</span>
+            <span>United Kingdom · GBP</span>
+            <span>Australia · AUD</span>
+            <span>Canada · CAD</span>
+            <span>India · INR</span>
+            <span>Japan · JPY</span>
+          </div>
+          <div class="model-note">
+            <strong>Clear about the limits.</strong>
+            <p>Purchasing-power data is not a live construction index or supplier feed. Unit conversions preserve equivalent quantities, but local pack sizes and trade conventions can vary. Actual prices vary by city, access, taxes, specification and contractor.</p>
+          </div>
+        </div>
+
+        <div class="material-card">
+          <div class="material-card-head">
+            <div>
+              <span class="eyebrow">Example market</span>
+              <h3>United States</h3>
+            </div>
+            <span class="currency-pill">USD</span>
+          </div>
+          <div class="material-row"><span>Steel <small>per US short ton</small></span><strong>US$2,867</strong></div>
+          <div class="material-row"><span>Timber <small>per 1,000 board ft</small></span><strong>US$1,708</strong></div>
+          <div class="material-row"><span>Bricks <small>each</small></span><strong>US$1.74</strong></div>
+          <div class="material-row"><span>Cement <small>per 94 lb bag</small></span><strong>US$19.90</strong></div>
+          <p>Illustrative 2025 bundled-model values. These are planning guides, not live supplier quotes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="trades">
+      <div class="section-heading">
+        <div class="eyebrow">Eight practical starting points</div>
+        <h2>From first idea to written quotes.</h2>
+      </div>
+      <div class="trade-grid">
+        <article><span>01</span><b>Extension / Build</b><small>New space and major builds</small></article>
+        <article><span>02</span><b>Loft Conversion</b><small>Roof-space conversions</small></article>
+        <article><span>03</span><b>Kitchen Renovation</b><small>Cabinetry, fit and finishes</small></article>
+        <article><span>04</span><b>Bathroom Fit-Out</b><small>Fixtures, tiling and labour</small></article>
+        <article><span>05</span><b>Electrical Works</b><small>Rewires and electrical work</small></article>
+        <article><span>06</span><b>Plumbing &amp; Heating</b><small>Heating and plumbing work</small></article>
+        <article><span>07</span><b>Structural Works</b><small>Beams, walls and structure</small></article>
+        <article><span>08</span><b>Decoration</b><small>Internal finishing work</small></article>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="shell feature-grid">
+        <div class="report-preview">
+          <img src="Brand/Web-Project-Pass.png" alt="Estiquote Project Pass screen showing a numbered, project-specific schedule of works">
+        </div>
+        <div class="feature-copy">
+          <div class="eyebrow">A real schedule of works</div>
+          <h2>See exactly what sits behind the number.</h2>
+          <ul class="feature-list">
+            <li><strong>See every section.</strong><span>A numbered, project-specific schedule with labour, materials and preliminaries that reconcile to the planning midpoint.</span></li>
+            <li><strong>Compare written quotes.</strong><span>See whether each contractor total sits below, within or above the guide.</span></li>
+            <li><strong>Share a real PDF.</strong><span>Project Pass creates a project report; Trade adds markup, client totals, quote comparison and your business logo.</span></li>
+            <li><strong>Keep the work local.</strong><span>Projects and quote entries are stored on your iPhone in this version.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="pricing">
+      <div class="section-heading centered">
+        <div class="eyebrow">Pay where the value is</div>
+        <h2>One project for homeowners. Unlimited work for trades.</h2>
+        <p>Download Estiquote free from the App Store, then unlock Project Pass or Trade inside the iPhone app through Apple. The app shows the price for your App Store country before you buy, and Restore Purchases recovers eligible access on your Apple ID.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">No charge <small>No card required</small></div>
+          <ul>
+            <li>One saved top-line estimate</li>
+            <li>All eight project types</li>
+            <li>Country and local-area adjustment</li>
+            <li>Preview material guide</li>
+          </ul>
+          <a class="button button-outline" href="#download">Download the free app</a>
+        </article>
+
+        <article class="plan plan-featured">
+          <div class="plan-badge">Homeowner choice</div>
+          <div class="plan-name">Project Pass</div>
+          <div class="plan-price">£9.99 <small>One-time Apple purchase · local App Store price may vary</small></div>
+          <ul>
+            <li>Numbered, project-specific schedule of works</li>
+            <li>Labour, materials and preliminaries reconciled to the midpoint</li>
+            <li>Complete country-aware material guide</li>
+            <li>Shareable project PDF</li>
+            <li>Replace the active project when you are ready</li>
+            <li>No recurring homeowner charge</li>
+          </ul>
+          <a class="button button-primary" href="#download">Download free, unlock in app <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="plan">
+          <div class="plan-name">Trade</div>
+          <div class="plan-price">£19.99/month <small>Auto-renewing Apple subscription · local App Store price may vary</small></div>
+          <ul>
+            <li>Everything in Project Pass</li>
+            <li>Unlimited saved projects</li>
+            <li>Markup and client totals</li>
+            <li>Your business logo on client PDFs</li>
+            <li>Written quote comparison</li>
+          </ul>
+          <a class="button button-outline" href="#download">Download free, choose Trade</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="download-section" id="download">
+      <div class="shell download-card">
+        <div>
+          <div class="eyebrow">App Store launch in preparation</div>
+          <h2>Download free.<br>Unlock when it helps.</h2>
+          <p>This website will send you directly to Estiquote’s App Store product page. The iPhone app handles Project Pass and Trade purchases securely through Apple. Estiquote is being prepared for all 175 supported App Store markets, with no account required.</p>
+        </div>
+        <div class="download-actions">
+          <span class="store-button">App Store link available at launch</span>
+          <span class="download-note">Free download · upgrade inside the app · Apple handles billing</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <a class="brand" href="#top">
+        <img class="brand-mark" src="Brand/Web-AppIcon.png" alt="" width="38" height="38">
+        <span class="brand-wordmark">Estiquote</span>
+      </a>
+      <p>Country-aware home-project cost guidance.</p>
+      <div>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-inner">
-    <span class="trust-label">Data sources</span>
-    <span class="trust-sep">·</span>
-    <span class="trust-logo">BCIS Building Cost Information Service</span>
-    <span class="trust-sep">·</span>
-    <span class="trust-logo">BMF Builders Merchant Federation</span>
-    <span class="trust-sep">·</span>
-    <span class="trust-logo">ONS Construction Price Index</span>
-    <span class="trust-sep">·</span>
-    <span class="trust-logo">Updated monthly</span>
-  </div>
-</div>
-
-<!-- TRADES -->
-<section class="trades-section">
-  <div class="container">
-    <div class="section-label">What do you need?</div>
-    <h2 class="section-h2">Pick a trade to get your estimate</h2>
-    <div class="trades-grid" id="tradesGrid">
-      <a href="estimator.html?trade=extension" class="trade-tile">
-        <div class="tile-icon">🏗</div>
-        <div class="tile-name">Extension / Build</div>
-        <div class="tile-range">£1,500–£3,200/m²</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=loft" class="trade-tile">
-        <div class="tile-icon">🔨</div>
-        <div class="tile-name">Loft Conversion</div>
-        <div class="tile-range">£28k–£72k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=kitchen" class="trade-tile">
-        <div class="tile-icon">🍳</div>
-        <div class="tile-name">Kitchen Renovation</div>
-        <div class="tile-range">£8k–£45k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=bathroom" class="trade-tile">
-        <div class="tile-icon">🚿</div>
-        <div class="tile-name">Bathroom Fit-Out</div>
-        <div class="tile-range">£4k–£18k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=electrical" class="trade-tile">
-        <div class="tile-icon">⚡</div>
-        <div class="tile-name">Electrical Works</div>
-        <div class="tile-range">£400–£12k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=plumbing" class="trade-tile">
-        <div class="tile-icon">🔧</div>
-        <div class="tile-name">Plumbing &amp; Heating</div>
-        <div class="tile-range">£300–£8.5k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=structural" class="trade-tile">
-        <div class="tile-icon">🏛</div>
-        <div class="tile-name">Structural Works</div>
-        <div class="tile-range">£2k–£35k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-      <a href="estimator.html?trade=decoration" class="trade-tile">
-        <div class="tile-icon">🎨</div>
-        <div class="tile-name">Decoration</div>
-        <div class="tile-range">£200–£4.5k</div>
-        <div class="tile-arrow">→</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how-it-works">
-  <div class="container">
-    <div class="section-label">Simple process</div>
-    <h2 class="section-h2">Get your estimate in 90 seconds</h2>
-    <div class="steps-row">
-      <div class="step-card">
-        <div class="step-num">01</div>
-        <div class="step-title">Pick your trade</div>
-        <div class="step-body">Select the type of work you need done — extension, kitchen, bathroom, electrical, structural, and more.</div>
-      </div>
-      <div class="step-connector">→</div>
-      <div class="step-card">
-        <div class="step-num">02</div>
-        <div class="step-title">Set your region &amp; spec</div>
-        <div class="step-body">Tell us where you are and the quality level you're aiming for. Costs vary by up to 38% across UK regions.</div>
-      </div>
-      <div class="step-connector">→</div>
-      <div class="step-card">
-        <div class="step-num">03</div>
-        <div class="step-title">Get your estimate</div>
-        <div class="step-body">See an accurate cost range with full labour, materials and prelims breakdown. Save it, share it, compare quotes against it.</div>
-      </div>
-    </div>
-    <div class="how-cta">
-      <a href="estimator.html" class="btn-primary btn-lg">Try the estimator free →</a>
-      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.07);justify-content:center;">
-        <div style="font-size:13px;color:var(--text-muted);"><strong style="color:var(--text);">Free</strong> during early access</div>
-        <div style="font-size:13px;color:var(--text-muted);">&#xB7;&nbsp;<strong style="color:var(--teal-light);">No card required</strong></div>
-        <div style="font-size:13px;color:var(--text-muted);">&#xB7;&nbsp;<strong style="color:var(--text);">SSH Ltd</strong> &mdash; UK registered</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <div class="container">
-    <div class="section-label">What homeowners say</div>
-    <h2 class="section-h2">Built for people who hate being overcharged</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <div class="t-quote">"Finally a tool that gives you a real number, not a vague range. The regional pricing is what makes it useful — London vs South East makes a real difference."</div>
-        <div class="t-author">James T. — East Grinstead</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <div class="t-quote">"As an architect I use Estiquote to give clients a realistic ballpark before we even start. The material price tracker is genuinely useful for project planning."</div>
-        <div class="t-author">Rachel K. — Brighton</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING PREVIEW -->
-<section class="pricing-preview">
-  <div class="container">
-    <div class="section-label">Simple pricing</div>
-    <h2 class="section-h2">Start free. Upgrade when you need more.</h2>
-    <div class="plans-grid">
-      <div class="plan-card">
-        <div class="plan-name">Free</div>
-        <div class="plan-price">£0</div>
-        <div class="plan-period">forever</div>
-        <ul class="plan-features">
-          <li>✓ All 8 trade categories</li>
-          <li>✓ 6 UK regions</li>
-          <li>✓ 3 saved projects</li>
-          <li>✓ Basic material index</li>
-          <li class="dim">✗ PDF export</li>
-          <li class="dim">✗ Full breakdown</li>
-        </ul>
-        <a href="signup.html" class="btn-outline" style="display:block;text-align:center;padding:12px">Get started free</a>
-      </div>
-      <div class="plan-card plan-featured">
-        <div class="plan-badge">Most popular</div>
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">£9.99</div>
-        <div class="plan-period">per month · 14-day free trial</div>
-        <ul class="plan-features">
-          <li>✓ Everything in Free</li>
-          <li>✓ Unlimited projects</li>
-          <li>✓ PDF export</li>
-          <li>✓ Full cost breakdown</li>
-          <li>✓ Quote comparison</li>
-          <li>✓ Material price alerts</li>
-        </ul>
-        <button onclick="(async()=>{const u=EQ.getUserSync();goToStripe('homeowner_pro',u?u.email:null);})()" class="btn-primary" style="display:block;width:100%;text-align:center;padding:12px;cursor:pointer">Start free trial →</button>
-      </div>
-      <div class="plan-card">
-        <div class="plan-name">Trade</div>
-        <div class="plan-price">£29</div>
-        <div class="plan-period">per month</div>
-        <ul class="plan-features">
-          <li>✓ Everything in Pro</li>
-          <li>✓ White-label PDFs</li>
-          <li>✓ Client share links</li>
-          <li>✓ API access</li>
-          <li>✓ CSV export</li>
-          <li>✓ Priority support</li>
-        </ul>
-        <button onclick="(async()=>{const u=EQ.getUserSync();goToStripe('homeowner_trade',u?u.email:null);})()" class="btn-outline" style="display:block;width:100%;text-align:center;padding:12px;cursor:pointer">Get started</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-cta">
-  <div class="container">
-    <h2 class="cta-h2">Know the number.<br>Call with confidence.</h2>
-    <p class="cta-sub">Join thousands of UK homeowners who get an estimate before they call a builder.</p>
-    <a href="estimator.html" class="btn-primary btn-xl">Get my free estimate →</a>
-    <p style="font-size:12px;color:var(--text-dim);margin-top:1rem">Free forever · No credit card required · Takes 90 seconds</p>
-  </div>
-</section>
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-logo">Esti<span style="opacity:0.45">quote</span></div>
-        <p class="footer-desc">UK home improvement cost intelligence. Know the number before you call anyone.</p>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">For Homeowners</div>
-        <a href="estimator.html">Cost estimator</a>
-        <a href="materials.html">Material prices</a>
-        <a href="find-builders.html">Find builders</a>
-        <a href="pricing.html">Pricing</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">For Builders</div>
-        <a href="builders.html">Why Estiquote</a>
-        <a href="builder-signup.html">List your business</a>
-        <a href="pricing.html?for=builders">Builder pricing</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Legal</div>
-        <a href="privacy.html">Privacy policy</a>
-        <a href="terms.html">Terms of service</a>
-        <a href="contact.html">Contact</a>
-        <a href="review.html">Leave a review</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Estiquote Ltd. All estimates are indicative only. <a href="privacy.html" style="color:var(--text-dim)">Privacy</a> · <a href="terms.html" style="color:var(--text-dim)">Terms</a></span>
-    </div>
-  </div>
-</footer>
-
-<!-- COOKIE CONSENT -->
-<div id="eq-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#111b2e;border-top:1px solid rgba(0,201,167,0.2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-  <p style="font-size:12px;color:#8892a4;margin:0;line-height:1.5;flex:1;min-width:200px;">We use essential cookies to keep you signed in and save your estimates. Plausible Analytics is cookieless and privacy-friendly. <a href="privacy.html" style="color:#00c9a7;">Privacy policy</a></p>
-  <div style="display:flex;gap:8px;flex-shrink:0;">
-    <button onclick="eqCookieDecline()" style="padding:8px 16px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#6b7a8d;font-family:inherit;font-size:12px;cursor:pointer;">Essential only</button>
-    <button onclick="eqCookieAccept()" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#00c9a7,#4dffd6);border:none;color:#0b1120;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Accept all</button>
-  </div>
-</div>
-
-<!-- WHATSAPP CHAT BUTTON -->
-<a href="https://wa.me/447809900940?text=Hi%2C%20I%20have%20a%20question%20about%20Estiquote" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" style="position:fixed;bottom:90px;right:20px;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;" title="Chat with us on WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
-<script>
-(function(){
-  if(!localStorage.getItem("eq_cookie_consent")){
-    var b=document.getElementById("eq-cookie");
-    if(b) setTimeout(function(){b.style.display="flex";},1000);
-  }
-})();
-function eqCookieAccept(){localStorage.setItem("eq_cookie_consent","all");document.getElementById("eq-cookie").style.display="none";}
-function eqCookieDecline(){localStorage.setItem("eq_cookie_consent","essential");document.getElementById("eq-cookie").style.display="none";}
-
-function toggleMenu() {
-  document.getElementById('navMobile').classList.toggle('open');
-  document.getElementById('navBurger').classList.toggle('active');
-}
-
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('nav-scrolled', window.scrollY > 40);
-});
-
-// Animate trade tiles on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      const idx = Array.from(document.querySelectorAll('.trade-tile, .step-card, .testimonial-card, .plan-card')).indexOf(entry.target); setTimeout(() => entry.target.classList.add('visible'), (idx % 4) * 80); observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.trade-tile, .step-card, .testimonial-card, .plan-card').forEach(el => observer.observe(el));
-</script>
+  </footer>
 </body>
 </html>

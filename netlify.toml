@@ -1,66 +1,116 @@
 [build]
-  publish = "."
-  functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "18"
-  SECRETS_SCAN_OMIT_PATHS = "js/auth.js,js/stripe-links.js,js/notifications.js,netlify/functions/stripe-webhook.js,builder-signup.html,builders.html,dashboard.html,estimator.html,find-builders.html,README.md"
-  SECRETS_SCAN_ENABLED = "false"
-
-[functions]
-  node_bundler = "esbuild"
+  command = "bash Tools/build-netlify-site.sh"
+  publish = ".netlify-dist"
 
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
+    Permissions-Policy = "camera=(), geolocation=(), microphone=()"
     Referrer-Policy = "strict-origin-when-cross-origin"
-        Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-            Permissions-Policy = "geolocation=(), microphone=(), camera=()"
-
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=3600, must-revalidate"
-
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=86400, must-revalidate"
-
-[[headers]]
-  for = "*.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-
-[[redirects]]
-  from = "/api/stripe-webhook"
-  to = "/.netlify/functions/stripe-webhook"
-  status = 200
-
-[[redirects]]
-  from = "/api/send-email"
-  to = "/.netlify/functions/send-email"
-  status = 200
-
-[[redirects]]
-  from = "/api/push-notify"
-  to = "/.netlify/functions/push-notify"
-  status = 200
-
-[[redirects]]
-  from = "/api/find-merchants"
-  to = "/.netlify/functions/find-merchants"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 404
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
 
 [[headers]]
   for = "/*.html"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://buy.stripe.com https://fonts.googleapis.com https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://wvultsxiqjkisbeidjcl.supabase.co https://api.postcodes.io https://formspree.io https://plausible.io https://resend.com; frame-src https://buy.stripe.com; img-src 'self' data: https:;"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Clear-Site-Data = "\"cache\""
+
+[[headers]]
+  for = "/Brand/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+# Retire bookmarks and search results from the superseded web application.
+# The native iPhone app now owns estimating, materials, accounts and purchases.
+[[redirects]]
+  from = "/estimator.html"
+  to = "/#download"
+  status = 301
+
+[[redirects]]
+  from = "/materials.html"
+  to = "/#global"
+  status = 301
+
+[[redirects]]
+  from = "/pricing.html"
+  to = "/#pricing"
+  status = 301
+
+[[redirects]]
+  from = "/login.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/signup.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/dashboard.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/admin.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/builder-signup.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/builders.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/find-builders.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/estimate-view.html"
+  to = "/#download"
+  status = 301
+
+[[redirects]]
+  from = "/review.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/set-password.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/contact.html"
+  to = "/support.html"
+  status = 301
+
+[[redirects]]
+  from = "/api-docs.html"
+  to = "/"
+  status = 301
