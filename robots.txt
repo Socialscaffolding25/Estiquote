@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://estiquote.app/sitemap.xml
+Sitemap: https://estiquote.co.uk/sitemap.xml
