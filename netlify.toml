@@ -1,6 +1,14 @@
+
 [build]
-  command = "bash Tools/build-netlify-site.sh"
+  command = "mkdir -p .netlify-empty-functions && bash Tools/build-netlify-site.sh"
   publish = ".netlify-dist"
+  functions = ".netlify-empty-functions"
+
+[build.environment]
+  # The Supabase project URL is a public endpoint embedded in the retired web
+  # application, not a credential. Keep Netlify's protection enabled for every
+  # real secret while excluding this one known false positive.
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
 
 [[headers]]
   for = "/*"
