@@ -12,5 +12,6 @@ cp js/retire-legacy-pwa.js "$dist/js/retire-legacy-pwa.js"
 cp Brand/Web-AppIcon.png "$dist/Brand/Web-AppIcon.png"
 cp Brand/Web-Home.png "$dist/Brand/Web-Home.png"
 cp Brand/Web-Project-Pass.png "$dist/Brand/Web-Project-Pass.png"
+cp Brand/Download_on_the_App_Store_Badge.svg "$dist/Brand/Download_on_the_App_Store_Badge.svg"
 
 echo "Built Estiquote website in $dist"

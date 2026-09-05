@@ -139,7 +139,10 @@ h1 em { color: var(--teal-light); font-style: normal; }
 .download-card h2 { margin: 14px 0 16px; font-size: clamp(37px, 4vw, 56px); line-height: 1.02; }
 .download-card p { max-width: 580px; margin-bottom: 0; color: var(--muted); font-size: 15px; line-height: 1.68; }
 .download-actions { flex: 0 0 235px; }
-.store-button { display: block; padding: 15px 17px; border: 1px solid rgba(255, 255, 255, .27); border-radius: 12px; background: #05070b; text-align: center; font-size: 14px; font-weight: 750; }
+.app-store-link { display: block; width: fit-content; margin: 0 auto; border-radius: 10px; transition: transform .2s ease, opacity .2s ease; }
+.app-store-link:hover { transform: translateY(-2px); }
+.app-store-link:focus-visible { outline: 3px solid var(--teal-light); outline-offset: 5px; }
+.app-store-badge { width: 180px; height: auto; }
 .download-note { display: block; margin-top: 11px; color: var(--dim); font-size: 10px; text-align: center; }
 
 .site-footer { border-top: 1px solid var(--border); }
@@ -147,6 +150,7 @@ h1 em { color: var(--teal-light); font-style: normal; }
 .footer-inner p { margin: 0; }
 .footer-inner > div { display: flex; gap: 18px; margin-left: auto; }
 .footer-inner a:hover { color: var(--teal-light); }
+.apple-credit { padding: 0 0 24px; color: var(--dim); font-size: 9px; line-height: 1.5; }
 
 .legal-main { min-height: calc(100vh - 100px); padding: 128px 0 90px; }
 .legal-shell { width: min(760px, calc(100% - 40px)); margin: 0 auto; }
@@ -171,7 +175,7 @@ h1 em { color: var(--teal-light); font-style: normal; }
   .plan ul { min-height: auto; }
   .download-card { align-items: flex-start; flex-direction: column; padding: 40px 30px; }
   .download-actions { width: 100%; flex-basis: auto; }
-  .store-button { width: min(250px, 100%); }
+  .app-store-link { margin-left: 0; }
 }
 
 @media (max-width: 580px) {
@@ -201,5 +205,5 @@ h1 em { color: var(--teal-light); font-style: normal; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .button { transition: none; }
+  .button, .app-store-link { transition: none; }
 }
