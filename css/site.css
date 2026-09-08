@@ -22,7 +22,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
+a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--teal-light); outline-offset: 4px; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 14px; background: var(--teal-light); color: var(--navy); transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); }
+[id] { scroll-margin-top: 90px; }
+.guide-teasers h3 a { text-decoration: underline; text-underline-offset: 4px; }
+.guide-teasers a:hover { color: var(--teal-light); }
+.footer-inner > div { flex-wrap: wrap; }
 img { display: block; max-width: 100%; }
+.phone img, .report-preview img { height: auto; }
 .shell { width: min(var(--shell), calc(100% - 48px)); margin: 0 auto; }
 
 .site-header {
@@ -206,4 +214,9 @@ h1 em { color: var(--teal-light); font-style: normal; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .button, .app-store-link { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .desktop-nav { display: none; }
+  .mobile-nav-button { display: inline-flex; }
 }

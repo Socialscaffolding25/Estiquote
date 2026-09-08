@@ -1,0 +1,64 @@
+/* Readable, responsive guides using the existing Estiquote palette. */
+.guide-shell { width: min(840px, calc(100% - 40px)); margin: 0 auto; padding: 110px 0 72px; }
+.guide-nav { display: flex; align-items: center; gap: 18px; font-size: 14px; }
+.breadcrumbs { color: #b8c7d3; font-size: 13px; line-height: 1.7; margin-bottom: 30px; overflow-wrap: anywhere; }
+.guide-heading h1 { font-size: clamp(34px, 6vw, 58px); line-height: 1.08; overflow-wrap: anywhere; }
+.guide-intro { font-size: 20px; line-height: 1.65; color: #d0dce5; }
+.guide-byline, .guide-small { color: #b8c7d3; font-size: 13px; line-height: 1.7; }
+.guide-byline { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.guide-contents { background: var(--navy-2); padding: 24px; border: 1px solid var(--border); border-radius: 16px; margin: 28px 0 38px; }
+.guide-contents h2 { font-size: 20px; letter-spacing: -.4px; }
+.guide-contents ol { margin: 0; padding-left: 22px; }
+.guide-contents li { padding: 6px 0; line-height: 1.5; }
+.guide-shell a:not(.button):not(.guide-card) { color: var(--teal-light); text-decoration: underline; text-underline-offset: 3px; }
+.guide-body { font-size: 17px; line-height: 1.8; color: #d0dce5; overflow-wrap: anywhere; }
+.guide-body h2 { margin: 40px 0 14px; font-size: clamp(24px, 4vw, 30px); line-height: 1.25; color: var(--text); letter-spacing: -.7px; }
+.guide-body ul, .guide-body ol { padding-left: 24px; }
+.guide-body li { margin: 12px 0; }
+.guide-body strong { color: var(--text); }
+.guide-body blockquote { margin: 24px 0; padding: 20px; background: var(--navy-2); border-left: 3px solid var(--teal); }
+.table-scroll { max-width: 100%; overflow-x: auto; margin: 26px 0; border: 1px solid #4e6575; border-radius: 12px; }
+.guide-body table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; }
+.guide-body caption { padding: 14px; text-align: left; color: #d0dce5; }
+.guide-body th, .guide-body td { padding: 14px; text-align: left; vertical-align: top; border-top: 1px solid #4e6575; }
+.guide-body thead th { color: var(--teal-light); background: var(--navy-2); }
+.guide-body th[scope="row"] { min-width: 140px; color: var(--text); font-weight: 600; }
+.guide-cta { margin-top: 44px; padding: 28px; border-radius: 20px; background: linear-gradient(120deg, #17243a, #0b3532); border: 1px solid var(--teal); }
+.guide-cta h2 { font-size: 27px; line-height: 1.25; }
+.guide-cta p { line-height: 1.7; color: #d0dce5; }
+.guide-cta .button { height: auto; padding: 14px 18px; text-align: center; line-height: 1.5; }
+.guide-cta .guide-small { margin: 18px 0 0; }
+.guide-related { margin-top: 40px; }
+.guide-related h2 { font-size: 24px; }
+.guide-related li { padding: 8px 0; line-height: 1.6; }
+.guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 30px 0; }
+.guide-card { padding: 24px; background: var(--navy-2); border: 1px solid #4e6575; border-radius: 16px; }
+.guide-card:hover { border-color: var(--teal); }
+.guide-card h2 { font-size: 25px; line-height: 1.25; letter-spacing: -.6px; }
+.guide-card p { line-height: 1.7; color: #d0dce5; }
+.guide-card span { color: var(--teal-light); font-weight: 700; }
+.guide-shell :target { scroll-margin-top: 94px; }
+@media (max-width: 600px) {
+  .guide-grid { grid-template-columns: 1fr; }
+  .guide-shell { padding-top: 98px; }
+  .guide-intro { font-size: 18px; }
+  .guide-contents, .guide-cta { padding: 20px; }
+  .guide-nav { gap: 12px; font-size: 13px; }
+}
+@media print {
+  body { background: white; color: black; overflow: visible; }
+  .site-header, .site-footer, .skip-link, .guide-contents, .guide-cta, .guide-related { display: none; }
+  .guide-shell { width: 100%; padding: 0; }
+  .guide-body, .guide-intro, .guide-byline, .breadcrumbs, .guide-body strong, .guide-body h2,
+  .guide-body th[scope="row"], .guide-body caption { color: black; }
+  .guide-shell a:not(.button):not(.guide-card) { color: black; }
+  .guide-body table { font-size: 10pt; }
+  .table-scroll { overflow: visible; border-radius: 0; }
+  .guide-body th, .guide-body td { padding: 8px; border-color: #999; }
+  .guide-body thead th { background: #eee; color: black; }
+  .guide-body th[scope="row"] { min-width: 0; }
+  .guide-body tr, .guide-body blockquote { break-inside: avoid; }
+  .guide-body h2 { break-after: avoid; }
+  .guide-body blockquote { background: white; border-color: black; }
+  @page { margin: 16mm; }
+}
